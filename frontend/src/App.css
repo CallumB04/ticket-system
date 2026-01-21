@@ -1,8 +1,54 @@
 @import "tailwindcss";
 
-* {
-    margin: 0px;
-    padding: 0px;
+:root {
+    /* Global Styles */
     box-sizing: border-box;
     scroll-behavior: smooth;
+
+    /* Variables */
+    --navbar-height: 4.5rem;
+    --sidebar-width: 18rem;
+}
+
+body {
+    @apply bg-background;
+}
+
+main {
+    @apply mt-navbar-height min-h-[calc(100vh-var(--navbar-height))] p-4 sm:p-8;
+}
+
+@theme {
+    /* Colors */
+    --color-text-primary: #;
+    --color-text-secondary: #;
+
+    --color-background: #;
+    --color-navbar-background: #;
+
+    --color-layout-border: #;
+    --color-input-border: #;
+
+    --color-button-primary: #;
+    --color-button-primary-hover: #;
+    --color-button-primary-disabled: #;
+
+    --color-button-secondary: #;
+    --color-button-secondary-hover: #;
+    --color-button-secondary-disabled: #;
+
+    --color-danger: #;
+    --color-danger-hover: #;
+
+    /* Fonts */
+    --font-sans: "Manrope", system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+    /* Sizes */
+    --height-navbar-height: var(--navbar-height);
+    --margin-navbar-height: var(--navbar-height);
+    --padding-navbar-height: var(--navbar-height);
+    --top-navbar-height: var(--navbar-height);
+    --width-sidebar-width: var(--sidebar-width);
+    --margin-sidebar-width: var(--sidebar-width);
 }
