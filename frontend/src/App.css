@@ -1,13 +1,28 @@
 @import "tailwindcss";
 
 :root {
-    /* Global Styles */
+    /* -- Global Styles--  */
+
     box-sizing: border-box;
     scroll-behavior: smooth;
 
-    /* Variables */
+    /* -- Variables--  */
+
+    /* Sizes */
     --navbar-height: 4.5rem;
     --sidebar-width: 18rem;
+
+    /* Colors */
+    --highlight-color: #2563eb;
+    --highlight-color-hover: #1d4ed8;
+    --highlight-color-soft: #93c5fd;
+
+    --primary-text-color: #0f172a;
+    --secondary-text-color: #475569;
+    --disabled-text-color: #94a3b8;
+
+    --danger-color: #dc2626;
+    --success-color: #16a34a;
 }
 
 body {
@@ -19,32 +34,57 @@ main {
 }
 
 @theme {
-    /* Colors */
-    --color-text-primary: #;
-    --color-text-secondary: #;
+    /* -- Colors -- */
 
-    --color-background: #;
-    --color-navbar-background: #;
+    /* Text */
+    --color-text-primary: var(--primary-text-color);
+    --color-text-secondary: var(--secondary-text-color);
+    --color-text-disabled: var(--disabled-text-color);
+    --color-text-placeholder: var(--disabled-text-color);
 
-    --color-layout-border: #;
-    --color-input-border: #;
+    /* Background / Surface */
+    --color-background: #f8fafc;
+    --color-surface: #fff;
+    --color-surface-muted: #f1f5f9;
 
-    --color-button-primary: #;
-    --color-button-primary-hover: #;
-    --color-button-primary-disabled: #;
+    /* Borders */
+    --color-layout-border: #e2e8f0;
+    --color-input-border: #cbd5e1;
+    --color-input-border-hover: #94a3b8;
 
-    --color-button-secondary: #;
-    --color-button-secondary-hover: #;
-    --color-button-secondary-disabled: #;
+    /* Primary Button */
+    --color-btn-primary: var(--highlight-color);
+    --color-btn-primary-hover: var(--highlight-color-hover);
+    --color-btn-primary-disabled: var(--highlight-color-soft);
+    --color-btn-primary-text: #fff;
 
-    --color-danger: #;
-    --color-danger-hover: #;
+    /* Secondary Button */
+    --color-btn-secondary-bg: #fff;
+    --color-btn-secondary-text: var(--primary-text-color);
+    --color-btn-secondary-border: #cbd5e1;
 
-    /* Fonts */
+    --color-btn-secondary-hover-bg: #f1f5f9;
+    --color-btn-secondary-hover-border: var(--disabled-text-color);
+
+    --color-btn-secondary-disabled-bg: #fff;
+    --color-btn-secondary-disabled-text: var(--dsiabled-text-color);
+    --color-btn-secondary-disabled-border: #e2e8f0;
+
+    /* Danger Button */
+    --color-btn-danger: var(--danger-color);
+    --color-btn-danger-hover: #b91c1c;
+    --color-btn-danger-disabled: #fca5a5;
+    --color-btn-danger-text: #fff;
+
+    /* Status */
+    --color-success: var(--success-color);
+    --color-danger: var(--danger-color);
+
+    /* -- Fonts -- */
     --font-sans: "Manrope", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
-    /* Sizes */
+    /* -- Sizes -- */
     --height-navbar-height: var(--navbar-height);
     --margin-navbar-height: var(--navbar-height);
     --padding-navbar-height: var(--navbar-height);
