@@ -54,6 +54,7 @@ const HomePage = () => {
                 </button>
             </span>
             <div className="bg-surface mt-2 size-20 rounded"></div>
+            <div className="bg-surface-muted mt-2 size-20 rounded"></div>
         </main>
     );
 };
