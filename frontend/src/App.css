@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Use class-based dark mode with tailwind */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
     /* -- Global Styles--  */
 
@@ -21,8 +24,51 @@
     --secondary-text-color: #475569;
     --disabled-text-color: #94a3b8;
 
+    --background-color: #f8fafc;
+    --surface-color: #fff;
+    --surface-muted-color: #f1f5f9;
+
+    --layout-border-color: #e2e8f0;
+    --input-border-color: #cbd5e1;
+    --input-border-hover-color: #94a3b8;
+
+    --btn-primary-disabled-color: #e5e7eb;
+    --btn-primary-disabled-text-color: #9ca3af;
+
+    --btn-secondary-border-color: #cbd5e1;
+    --btn-secondary-hover-bg-color: #f1f5f9;
+    --btn-secondary-disabled-bg-color: #fff;
+    --btn-secondary-disabled-border-color: #e2e8f0;
+
     --danger-color: #dc2626;
     --success-color: #16a34a;
+}
+
+/* -- Dark mode color overrides --  */
+.dark {
+    --highlight-color: #3b82f6;
+    --highlight-color-hover: #60a5fa;
+    --highlight-color-soft: #1e3a8a;
+
+    --primary-text-color: #e5e7eb;
+    --secondary-text-color: #94a3b8;
+    --disabled-text-color: #64748b;
+
+    --background-color: #020617;
+    --surface-color: #0f172a;
+    --surface-muted-color: #1e293b;
+
+    --layout-border-color: #1e293b;
+    --input-border-color: #334155;
+    --input-border-hover-color: #475569;
+
+    --btn-primary-disabled-color: #1e3a8a;
+    --btn-primary-disabled-text-color: #94a3b8;
+
+    --btn-secondary-border-color: #334155;
+    --btn-secondary-hover-bg-color: #1e293b;
+    --btn-secondary-disabled-bg-color: #020617;
+    --btn-secondary-disabled-border-color: #1e293b;
 }
 
 body {
@@ -43,32 +89,35 @@ main {
     --color-text-placeholder: var(--disabled-text-color);
 
     /* Background / Surface */
-    --color-background: #f8fafc;
-    --color-surface: #fff;
-    --color-surface-muted: #f1f5f9;
+    --color-background: var(--background-color);
+    --color-surface: var(--surface-color);
+    --color-surface-muted: var(--surface-muted-color);
 
     /* Borders */
-    --color-layout-border: #e2e8f0;
-    --color-input-border: #cbd5e1;
-    --color-input-border-hover: #94a3b8;
+    --color-layout-border: var(--layout-border-color);
+    --color-input-border: var(--input-border-color);
+    --color-input-border-hover: var(--input-border-hover-color);
 
     /* Primary Button */
     --color-btn-primary: var(--highlight-color);
     --color-btn-primary-hover: var(--highlight-color-hover);
-    --color-btn-primary-disabled: var(--highlight-color-soft);
+    --color-btn-primary-disabled: var(--btn-primary-disabled-color);
     --color-btn-primary-text: #fff;
+    --color-btn-primary-disabled-text: var(--btn-primary-disabled-text-color);
 
     /* Secondary Button */
-    --color-btn-secondary-bg: #fff;
+    --color-btn-secondary-bg: var(--surface-color);
     --color-btn-secondary-text: var(--primary-text-color);
-    --color-btn-secondary-border: #cbd5e1;
+    --color-btn-secondary-border: var(--btn-secondary-border-color);
 
-    --color-btn-secondary-hover-bg: #f1f5f9;
+    --color-btn-secondary-hover-bg: var(--btn-secondary-hover-bg-color);
     --color-btn-secondary-hover-border: var(--disabled-text-color);
 
-    --color-btn-secondary-disabled-bg: #fff;
-    --color-btn-secondary-disabled-text: var(--dsiabled-text-color);
-    --color-btn-secondary-disabled-border: #e2e8f0;
+    --color-btn-secondary-disabled-bg: var(--btn-secondary-disabled-bg-color);
+    --color-btn-secondary-disabled-text: var(--disabled-text-color);
+    --color-btn-secondary-disabled-border: var(
+        --btn-secondary-disabled-border-color
+    );
 
     /* Danger Button */
     --color-btn-danger: var(--danger-color);
