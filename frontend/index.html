@@ -4,6 +4,18 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Ticket System</title>
+        <!-- Set default background colors to prevent flashing -->
+        <style>
+            html {
+                background: #f8fafc;
+            }
+            html.dark {
+                background: #020617;
+            }
+            body {
+                margin: 0;
+            }
+        </style>
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -11,6 +23,30 @@
             href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Manrope:wght@200..800&display=swap"
             rel="stylesheet"
         />
+        <!-- Prevent flash between light + dark mode on page load -->
+        <script>
+            (function () {
+                try {
+                    // get saved theme from local storage if exists
+                    const savedTheme = localStorage.getItem("theme");
+
+                    // get user's default theme on their browser settings
+                    const prefersDark = window.matchMedia(
+                        "(prefers-color-scheme: dark)"
+                    ).matches;
+
+                    // add / remove dark theme to document classes where required
+                    if (
+                        savedTheme === "dark" ||
+                        (savedTheme === null && prefersDark)
+                    ) {
+                        document.documentElement.classList.add("dark");
+                    } else {
+                        document.documentElement.classList.remove("dark");
+                    }
+                } catch {}
+            })();
+        </script>
     </head>
     <body>
         <div id="root"></div>
