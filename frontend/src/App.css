@@ -12,8 +12,8 @@
     /* -- Variables--  */
 
     /* Sizes */
-    --navbar-height: 4.5rem;
-    --sidebar-width: 18rem;
+    --navbar-height: 64px;
+    --sidebar-width: 256px;
 
     /* Colors */
     --highlight-color: #2563eb;
