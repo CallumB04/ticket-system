@@ -4,12 +4,13 @@ import { twMerge } from "tailwind-merge";
 
 interface SidebarLinkProps {
     className?: string;
-    children: ReactNode;
+    text: string;
+    icon: ReactNode;
     to: string;
     open?: boolean; // is this the current open page?
 }
 
-const SidebarLink = ({ className, children, to, open }: SidebarLinkProps) => {
+const SidebarLink = ({ className, text, icon, to, open }: SidebarLinkProps) => {
     return (
         <Link
             to={to}
@@ -21,7 +22,8 @@ const SidebarLink = ({ className, children, to, open }: SidebarLinkProps) => {
                 className
             )}
         >
-            {children}
+            {icon}
+            <p>{text}</p>
         </Link>
     );
 };

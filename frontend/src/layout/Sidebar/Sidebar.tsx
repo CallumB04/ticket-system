@@ -18,16 +18,17 @@ const Sidebar = ({ className }: SidebarProps) => {
             )}
         >
             <SidebarLink
+                text="Dashboard"
+                icon={<LayoutDashboard />}
                 to="/dashboard"
                 open={location.pathname.includes("dashboard")}
-            >
-                <LayoutDashboard />
-                <p>Dashboard</p>
-            </SidebarLink>
-            <SidebarLink to="/teams" open={location.pathname.includes("teams")}>
-                <Users />
-                <p>Teams</p>
-            </SidebarLink>
+            />
+            <SidebarLink
+                text="Teams"
+                icon={<Users />}
+                to="/teams"
+                open={location.pathname.includes("teams")}
+            />
         </aside>
     );
 };
