@@ -15,7 +15,7 @@ const SidebarLink = ({ className, text, icon, to, open }: SidebarLinkProps) => {
         <Link
             to={to}
             className={twMerge(
-                "flex h-max w-full items-center gap-4 rounded p-3 transition-colors duration-200",
+                "flex h-max w-full items-center gap-4 rounded-md p-3 transition-colors duration-200",
                 open
                     ? "bg-highlight text-btn-primary-text"
                     : "hover:bg-surface-muted text-text-primary",
