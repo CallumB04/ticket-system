@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/CallumB04/ticket-system/backend/internal/api"
+	"github.com/go-chi/chi/v5/middleware"
 	"github.com/joho/godotenv"
 	"github.com/rs/cors"
 )
@@ -27,6 +28,11 @@ func main() {
 		frontendURLs = []string{"http://localhost:5173"}
 	}
 
+	// Wrapping mux with middleware
+	var handler http.Handler = mux
+	handler = middleware.Logger(mux)        // logging
+	handler = middleware.Recoverer(handler) // recover from panics and return 500 to client
+
 	// Configure CORS
 	c := cors.New(cors.Options{
 		AllowedOrigins:   frontendURLs,
@@ -36,7 +42,7 @@ func main() {
 	})
 
 	// Apply CORS specification to requests
-	handler := c.Handler(mux)
+	handler = c.Handler(handler)
 
 	// Start server
 	log.Println("Server is online")
