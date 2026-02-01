@@ -19,11 +19,9 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
-type ctxKey string
+const userIDKey string = "userID"
 
-const userIDKey ctxKey = "userID"
-
-// Models for supabase public keys.
+// Models for JSON Web Key's
 type jwksDoc struct {
 	Keys []jwk `json:"keys"`
 }
@@ -48,7 +46,7 @@ type jwksCache struct {
 	expiresAt time.Time
 }
 
-var globalJWKS = &jwksCache{}
+var cachedJWKS = &jwksCache{}
 
 // Verifies the Supabase JWT from the Authorization header in the request
 // and stores the Supabase user id (sub) in request context.
@@ -76,27 +74,28 @@ func AuthMiddleware(next http.Handler) http.HandlerFunc {
 
 		tok, err := parser.Parse(token, func(t *jwt.Token) (any, error) {
 			// Extract key ID from JWT header.
+			// Allow us to identify which public key was used to sign this token.
 			kid, _ := t.Header["kid"].(string)
 			if kid == "" {
 				return nil, errors.New("missing kid")
 			}
 
-			// Get keys from cache if valid, else fetch from supabase.
-			keys, err := getJWKS(supabaseURL, globalJWKS)
+			// Get keys from cache if valid, else fetch JWKS from supabase and rebuild.
+			keys, err := getJWKS(supabaseURL, cachedJWKS)
 			if err != nil {
 				return nil, err
 			}
 
-			// Fetch public key used to sign this token from the key ID (kid).
+			// Get public key used to sign this token from the key ID (kid).
 			pub, ok := keys[kid]
 			if !ok {
-				// Force a key rotation. CLear cache and refetch JWKS.
+				// Force a key rotation. Clear cache and refetch JWKS.
 				// Retry only once, to avoid infinite refresh loop.
-				globalJWKS.mu.Lock()
-				globalJWKS.expiresAt = time.Time{}
-				globalJWKS.mu.Unlock()
+				cachedJWKS.mu.Lock()
+				cachedJWKS.expiresAt = time.Time{}
+				cachedJWKS.mu.Unlock()
 
-				keys, err = getJWKS(supabaseURL, globalJWKS)
+				keys, err = getJWKS(supabaseURL, cachedJWKS)
 				if err != nil {
 					return nil, err
 				}
@@ -109,11 +108,13 @@ func AuthMiddleware(next http.Handler) http.HandlerFunc {
 			return pub, nil
 		})
 
+		// Ensure parsed token is valid
 		if err != nil || !tok.Valid {
 			util.ErrorResponse(w, http.StatusUnauthorized, "invalid token")
 			return
 		}
 
+		// Ensure second segment of the token is valid structure
 		claims, ok := tok.Claims.(jwt.MapClaims)
 		if !ok {
 			util.ErrorResponse(w, http.StatusUnauthorized, "invalid claims")
@@ -126,13 +127,14 @@ func AuthMiddleware(next http.Handler) http.HandlerFunc {
 			return
 		}
 
+		// Ensure subject (user) exists in JWT claims
 		sub, _ := claims["sub"].(string)
 		if sub == "" {
 			util.ErrorResponse(w, http.StatusUnauthorized, "missing sub")
 			return
 		}
 
-		// Store user ID (uuid) in context to use within handlers.
+		// Store sub (user ID within JWT) in context to use within handlers.
 		// Allows handlers to scope DB queries to that user.
 		ctx := context.WithValue(r.Context(), userIDKey, sub)
 		next.ServeHTTP(w, r.WithContext(ctx)) // pass request onto respective handler
@@ -152,12 +154,15 @@ func getTokenFromHeader(header string) string {
 	return strings.TrimSpace(header[len("bearer "):])
 }
 
-// Return map of key ID's (kid) to public keys
+// Retreive public keys from cache, or fetch JWKS from supabase and rebuild if required.
+// Returns map of key ID's (kid) to public keys.
+// Will use kid provided within JWT header to identify which public key was
+// used to sign this token.
 func getJWKS(supabaseURL string, cache *jwksCache) (map[string]any, error) {
 	// Allow multiple requests to read the cache at once without blocking.
 	cache.mu.RLock()
 
-	// If keys are present in cache, return them immediately.
+	// If keys are present in cache and are not expired, return them.
 	if cache.keysByKid != nil && time.Now().Before(cache.expiresAt) {
 		defer cache.mu.RUnlock()
 		return cache.keysByKid, nil
@@ -170,9 +175,9 @@ func getJWKS(supabaseURL string, cache *jwksCache) (map[string]any, error) {
 	// Add write lock to cache.
 	// Ensures only one request refreshes the cache at a time.
 	cache.mu.Lock()
-	defer cache.mu.Unlock()
+	defer cache.mu.Unlock() // Release write lock when request has finished
 
-	// Check cache again incase another request has already refreshed the cache.
+	// Check cache once more incase another request has already refreshed the cache.
 	if cache.keysByKid != nil && time.Now().Before(cache.expiresAt) {
 		return cache.keysByKid, nil
 	}
@@ -234,7 +239,7 @@ func getJWKS(supabaseURL string, cache *jwksCache) (map[string]any, error) {
 		return nil, errors.New("no jwks keys parsed")
 	}
 
-	// Cache keys for future requests.
+	// Cache public keys for future requests.
 	// Keys remain in cache for 6 hours before expiring.
 	cache.keysByKid = keys
 	cache.expiresAt = time.Now().Add(6 * time.Hour)
@@ -242,9 +247,8 @@ func getJWKS(supabaseURL string, cache *jwksCache) (map[string]any, error) {
 	return keys, nil
 }
 
-// Builds an RSA public key from base64 strings.
+// Builds an RSA public key from JWK.
 func rsaPublicKeyFromModExp(nB64URL, eB64URL string) (*rsa.PublicKey, error) {
-
 	// Decode modulus.
 	nb, err := base64.RawURLEncoding.DecodeString(nB64URL)
 	if err != nil {
@@ -273,7 +277,7 @@ func rsaPublicKeyFromModExp(nB64URL, eB64URL string) (*rsa.PublicKey, error) {
 	return &rsa.PublicKey{N: n, E: e}, nil
 }
 
-// Builds an ECDSA public key from base64 strings.
+// Builds an ECDSA public key from JWK.
 func ecdsaPublicKeyFromXY(crv, xB64URL, yB64URL string) (*ecdsa.PublicKey, error) {
 	// Decode X coordinate.
 	xb, err := base64.RawURLEncoding.DecodeString(xB64URL)
@@ -287,7 +291,7 @@ func ecdsaPublicKeyFromXY(crv, xB64URL, yB64URL string) (*ecdsa.PublicKey, error
 		return nil, err
 	}
 
-	// Select given elliptic curve.
+	// Select elliptic curve from JWK string.
 	var curve elliptic.Curve
 	switch crv {
 	case "P-256":
