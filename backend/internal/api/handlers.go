@@ -3,6 +3,7 @@ package api
 import (
 	"net/http"
 
+	"github.com/CallumB04/ticket-system/backend/internal/auth"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -16,8 +17,8 @@ func RegisterHandlers(db *pgxpool.Pool) *http.ServeMux {
 	v1.Handle("GET /", handleRoot())
 
 	// Organisations
-	v1.Handle("GET /organisations", AuthMiddleware(handleFetchOrganisations(db)))
-	v1.Handle("POST /organisations", AuthMiddleware(handleCreateOrganisation(db)))
+	v1.Handle("GET /organisations", auth.AuthMiddleware(handleFetchOrganisations(db)))
+	v1.Handle("POST /organisations", auth.AuthMiddleware(handleCreateOrganisation(db)))
 
 	// Mount v1 routes under /v1 prefix
 	mux.Handle("/v1/", http.StripPrefix("/v1", v1))

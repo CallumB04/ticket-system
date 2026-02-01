@@ -1,4 +1,4 @@
-package api
+package auth
 
 import (
 	"context"
@@ -19,7 +19,7 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
-const userIDKey string = "userID"
+const UserIDKey string = "userID"
 
 // Models for JSON Web Key's
 type jwksDoc struct {
@@ -136,7 +136,7 @@ func AuthMiddleware(next http.Handler) http.HandlerFunc {
 
 		// Store sub (user ID within JWT) in context to use within handlers.
 		// Allows handlers to scope DB queries to that user.
-		ctx := context.WithValue(r.Context(), userIDKey, sub)
+		ctx := context.WithValue(r.Context(), UserIDKey, sub)
 		next.ServeHTTP(w, r.WithContext(ctx)) // pass request onto respective handler
 	}
 }

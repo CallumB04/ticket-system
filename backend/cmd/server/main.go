@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/CallumB04/ticket-system/backend/internal/api"
+	"github.com/CallumB04/ticket-system/backend/internal/db"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/joho/godotenv"
 	"github.com/rs/cors"
@@ -19,11 +20,11 @@ func main() {
 	}
 
 	// Create connection pool to database.
-	db := api.InitDB()
-	defer db.Close() // close db connection when server closes
+	dbPool := db.InitDB()
+	defer dbPool.Close() // close db connection when server closes
 
 	// Create multiplexer and register router handlers.
-	mux := api.RegisterHandlers(db)
+	mux := api.RegisterHandlers(dbPool)
 
 	// Get frontendURLs from environment.
 	// If empty, default to localhost with common Vite port.

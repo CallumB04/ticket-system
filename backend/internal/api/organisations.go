@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/CallumB04/ticket-system/backend/internal/auth"
 	"github.com/CallumB04/ticket-system/backend/internal/util"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
@@ -32,7 +33,7 @@ type createOrganisationRequest struct {
 func handleFetchOrganisations(db *pgxpool.Pool) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Get user ID of authenticated user, provided by middleware.
-		userID := r.Context().Value(userIDKey).(string)
+		userID := r.Context().Value(auth.UserIDKey).(string)
 
 		// Query database for organisations owned by this user.
 		// $1 - Authenticated User's ID
@@ -71,7 +72,7 @@ func handleFetchOrganisations(db *pgxpool.Pool) http.HandlerFunc {
 func handleCreateOrganisation(db *pgxpool.Pool) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Get user ID of authenticated user, provided by middleware.
-		userID := r.Context().Value(userIDKey).(string)
+		userID := r.Context().Value(auth.UserIDKey).(string)
 
 		// Decode request body into request struct.
 		var body createOrganisationRequest
