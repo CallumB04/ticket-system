@@ -1,26 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
     createOrganisation,
     fetchOrganisations,
     type Organisation,
 } from "../../api";
 import { signIn, signUp } from "../../supabase/users";
-import { supabase } from "../../supabase/client";
-import { type User } from "@supabase/supabase-js";
+import { useUser } from "../../hooks/useUser";
 
 const HomePage = () => {
     const [orgs, setOrgs] = useState<Organisation[]>([]);
-    const [user, setUser] = useState<User | null>(null);
 
-    useEffect(() => {
-        const {
-            data: { subscription },
-        } = supabase.auth.onAuthStateChange((_event, session) => {
-            setUser(session?.user ?? null);
-        });
-
-        return () => subscription.unsubscribe();
-    }, []);
+    const { sessionLoading, user, signOut } = useUser();
 
     const createOrg = async () => {
         await createOrganisation({
@@ -34,17 +24,6 @@ const HomePage = () => {
         if (resp) {
             setOrgs(resp);
         }
-    };
-
-    const testSession = async () => {
-        const { data, error } = await supabase.auth.getSession();
-
-        if (error) {
-            console.error("Session error:", error);
-            return;
-        }
-
-        console.log("Current session:", data.session);
     };
 
     return (
@@ -68,10 +47,10 @@ const HomePage = () => {
                     Sign in
                 </button>
                 <button
-                    onClick={testSession}
+                    onClick={() => signOut()}
                     className="bg-btn-secondary hover:bg-btn-secondary-hover text-btn-secondary-text border-btn-secondary-border hover:border-btn-secondary-hover-border h-12 w-50 cursor-pointer rounded border-2"
                 >
-                    Test Session
+                    Sign out
                 </button>
             </span>
             <span className="mt-3 flex gap-2">
@@ -89,7 +68,7 @@ const HomePage = () => {
                 </button>
             </span>
             <p>{orgs.length === 0 ? "No orgs" : orgs.map((o) => o.name)}</p>
-            <p>{user?.email}</p>
+            <p>{sessionLoading ? "loading email..." : user?.email}</p>
             <div className="bg-surface mt-2 size-20 rounded"></div>
             <div className="bg-surface-muted mt-2 size-20 rounded"></div>
         </main>
