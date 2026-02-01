@@ -1,58 +1,95 @@
-import { useTheme } from "../../hooks/useTheme";
+import { useEffect, useState } from "react";
+import {
+    createOrganisation,
+    fetchOrganisations,
+    type Organisation,
+} from "../../api";
+import { signIn, signUp } from "../../supabase/users";
+import { supabase } from "../../supabase/client";
+import { type User } from "@supabase/supabase-js";
 
 const HomePage = () => {
-    // get light or dark mode theme
-    const { theme, toggleTheme } = useTheme();
+    const [orgs, setOrgs] = useState<Organisation[]>([]);
+    const [user, setUser] = useState<User | null>(null);
+
+    useEffect(() => {
+        const {
+            data: { subscription },
+        } = supabase.auth.onAuthStateChange((_event, session) => {
+            setUser(session?.user ?? null);
+        });
+
+        return () => subscription.unsubscribe();
+    }, []);
+
+    const createOrg = async () => {
+        await createOrganisation({
+            name: "10X Managers",
+            description: "This is a test",
+        });
+    };
+
+    const fetchOrgs = async () => {
+        const resp = await fetchOrganisations();
+        if (resp) {
+            setOrgs(resp);
+        }
+    };
+
+    const testSession = async () => {
+        const { data, error } = await supabase.auth.getSession();
+
+        if (error) {
+            console.error("Session error:", error);
+            return;
+        }
+
+        console.log("Current session:", data.session);
+    };
 
     return (
         <main>
             <p className="text-text-primary">Home Page</p>
             <span className="flex gap-2">
                 <button
-                    onClick={toggleTheme}
+                    onClick={() =>
+                        signUp("callumburgoyne04@gmail.com", "abc123abc")
+                    }
                     className="bg-btn-primary hover:bg-btn-primary-hover text-btn-primary-text h-12 w-50 cursor-pointer rounded"
                 >
-                    Enable {theme === "dark" ? "Light" : "Dark"} theme
+                    Sign up
                 </button>
-
                 <button
-                    onClick={toggleTheme}
-                    className="bg-btn-primary-disabled text-btn-primary-disabled-text h-12 w-50 rounded"
-                    disabled
-                >
-                    Enable {theme === "dark" ? "Light" : "Dark"} theme
-                </button>
-            </span>
-            <span className="mt-2 flex gap-2">
-                <button
-                    onClick={toggleTheme}
+                    onClick={() =>
+                        signIn("callumburgoyne04@gmail.com", "abc123abc")
+                    }
                     className="bg-btn-secondary hover:bg-btn-secondary-hover text-btn-secondary-text border-btn-secondary-border hover:border-btn-secondary-hover-border h-12 w-50 cursor-pointer rounded border-2"
                 >
-                    Enable {theme === "dark" ? "Light" : "Dark"} theme
+                    Sign in
                 </button>
                 <button
-                    onClick={toggleTheme}
-                    className="bg-btn-secondary-disabled text-btn-secondary-disabled-text border-btn-secondary-disabled-border h-12 w-50 rounded border-2"
-                    disabled
+                    onClick={testSession}
+                    className="bg-btn-secondary hover:bg-btn-secondary-hover text-btn-secondary-text border-btn-secondary-border hover:border-btn-secondary-hover-border h-12 w-50 cursor-pointer rounded border-2"
                 >
-                    Enable {theme === "dark" ? "Light" : "Dark"} theme
+                    Test Session
                 </button>
             </span>
-            <span className="mt-2 flex gap-2">
+            <span className="mt-3 flex gap-2">
                 <button
-                    onClick={toggleTheme}
-                    className="bg-btn-danger hover:bg-btn-danger-hover text-btn-danger-text h-12 w-50 cursor-pointer rounded"
+                    onClick={createOrg}
+                    className="bg-btn-primary hover:bg-btn-primary-hover text-btn-primary-text h-12 w-50 cursor-pointer rounded"
                 >
-                    Enable {theme === "dark" ? "Light" : "Dark"} theme
+                    Create test org
                 </button>
                 <button
-                    onClick={toggleTheme}
-                    className="bg-btn-danger-disabled text-btn-danger-disabled-text h-12 w-50 rounded"
-                    disabled
+                    onClick={fetchOrgs}
+                    className="bg-btn-secondary hover:bg-btn-secondary-hover text-btn-secondary-text border-btn-secondary-border hover:border-btn-secondary-hover-border h-12 w-50 cursor-pointer rounded border-2"
                 >
-                    Enable {theme === "dark" ? "Light" : "Dark"} theme
+                    Fetch orgs
                 </button>
             </span>
+            <p>{orgs.length === 0 ? "No orgs" : orgs.map((o) => o.name)}</p>
+            <p>{user?.email}</p>
             <div className="bg-surface mt-2 size-20 rounded"></div>
             <div className="bg-surface-muted mt-2 size-20 rounded"></div>
         </main>
