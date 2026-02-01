@@ -15,16 +15,18 @@ import (
 // Models
 
 type Organisation struct {
-	ID          int64     `json:"id"`
-	Name        string    `json:"name"`
-	Description *string   `json:"description"`
-	CreatedAt   time.Time `json:"created_at"`
-	CreatedBy   string    `json:"created_by"` // organisation owner
+	ID        string    `json:"id"`
+	Name      string    `json:"name"`
+	Slug      string    `json:"slug"`
+	LogoURL   *string   `json:"logo_url"`
+	CreatedBy string    `json:"created_by"` // organisation owner
+	CreatedAt time.Time `json:"created_at"`
 }
 
 type createOrganisationRequest struct {
-	Name        string `json:"name"`
-	Description string `json:"description"`
+	Name    string  `json:"name"`
+	Slug    string  `json:"slug"`
+	LogoURL *string `json:"logo_url"`
 }
 
 // Handlers
@@ -38,10 +40,10 @@ func handleFetchOrganisations(db *pgxpool.Pool) http.HandlerFunc {
 		// Query database for organisations owned by this user.
 		// $1 - Authenticated User's ID
 		rows, err := db.Query(r.Context(), `
-			select id, name, description, created_at, created_by
+			select id, name, slug, logo_url, created_by, created_at
 			from public.organisations
 			where created_by = $1
-			order by id desc
+			order by created_at desc
 		`, userID)
 		if err != nil {
 			log.Printf("FETCH ORGS db error: %v", err)
@@ -56,7 +58,8 @@ func handleFetchOrganisations(db *pgxpool.Pool) http.HandlerFunc {
 		var orgArr []Organisation
 		for rows.Next() {
 			var org Organisation
-			if err := rows.Scan(&org.ID, &org.Name, &org.Description, &org.CreatedAt, &org.CreatedBy); err != nil {
+			if err := rows.Scan(&org.ID, &org.Name, &org.Slug, &org.LogoURL, &org.CreatedBy, &org.CreatedAt); err != nil {
+				log.Printf("FETCH ORGS error: %v", err)
 				util.ErrorResponse(w, http.StatusInternalServerError, "db error")
 				return
 			}
@@ -88,25 +91,28 @@ func handleCreateOrganisation(db *pgxpool.Pool) http.HandlerFunc {
 			return
 		}
 
-		// Convert description to a pointer, since field is nullable in db.
-		// If description is empty, will send nil pointer.
-		description := strings.TrimSpace(body.Description)
-		var descriptionPtr *string
-		if description != "" {
-			descriptionPtr = &description
+		// Convert logoURL to a pointer, since field is nullable in db.
+		// If logoURL is empty, will send nil pointer.
+		var logoURLPtr *string
+		if body.LogoURL != nil {
+			logoURL := strings.TrimSpace(*body.LogoURL)
+			if logoURL != "" {
+				logoURLPtr = &logoURL
+			}
 		}
 
 		// Insert new organisation into db and return the inserted row.
 		// $1 - Organisation name
-		// $2 - Organisation Description (optional)
-		// $3 - Authenticated User's ID
+		// $2 - Organisation Slug
+		// $3 - Organisation Logo URL (optional)
+		// $4 - Authenticated User's ID
 		var org Organisation
 		err := db.QueryRow(r.Context(), `
-			insert into public.organisations (name, description, created_by)
-			values ($1, $2, $3)
-			returning id, name, description, created_at, created_by
-		`, body.Name, descriptionPtr, userID).Scan(
-			&org.ID, &org.Name, &org.Description, &org.CreatedAt, &org.CreatedBy,
+			insert into public.organisations (name, slug, logo_url, created_by)
+			values ($1, $2, $3, $4)
+			returning id, name, slug, logo_url, created_by, created_at
+		`, body.Name, body.Slug, logoURLPtr, userID).Scan(
+			&org.ID, &org.Name, &org.Slug, &org.LogoURL, &org.CreatedBy, &org.CreatedAt,
 		)
 		if err != nil {
 			log.Printf("CREATE ORG db error: %v", err)

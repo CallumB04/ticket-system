@@ -3,16 +3,18 @@ import { api } from ".";
 // Models
 
 export type Organisation = {
-    id: number;
+    id: string;
     name: string;
-    description: string | null;
-    created_at: string; // ISO string
+    slug: string;
+    logo_url: string | null;
     created_by: string; // uuid (owner)
+    created_at: string; // ISO string
 };
 
 export type CreateOrganisationRequest = {
     name: string;
-    description?: string;
+    slug: string;
+    logo_url?: string;
 };
 
 // API Calls
