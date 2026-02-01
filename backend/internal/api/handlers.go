@@ -16,8 +16,8 @@ func RegisterHandlers(db *pgxpool.Pool) *http.ServeMux {
 	v1.Handle("GET /", handleRoot())
 
 	// Organisations
-	v1.Handle("GET /organisations", RequireAuth(handleFetchOrganisations(db)))
-	v1.Handle("POST /organisations", RequireAuth(handleCreateOrganisation(db)))
+	v1.Handle("GET /organisations", AuthMiddleware(handleFetchOrganisations(db)))
+	v1.Handle("POST /organisations", AuthMiddleware(handleCreateOrganisation(db)))
 
 	// Mount v1 routes under /v1 prefix
 	mux.Handle("/v1/", http.StripPrefix("/v1", v1))

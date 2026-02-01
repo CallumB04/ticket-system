@@ -29,17 +29,17 @@ type jwksDoc struct {
 }
 
 type jwk struct {
-	Kid string `json:"kid"` // key ID
-	Kty string `json:"kty"` // key type - "RSA" or "EC"
+	Kid string `json:"kid"` // Key ID
+	Kty string `json:"kty"` // Key type - "RSA" or "EC"
 
 	// RSA
-	N string `json:"n"`
-	E string `json:"e"`
+	N string `json:"n"` // Modulus
+	E string `json:"e"` // Exponent
 
 	// EC
-	Crv string `json:"crv"` // e.g. "P-256"
-	X   string `json:"x"`
-	Y   string `json:"y"`
+	Crv string `json:"crv"` // Curve - e.g. "P-256"
+	X   string `json:"x"`   // X coordinate
+	Y   string `json:"y"`   // Y coordinate
 }
 
 type jwksCache struct {
@@ -53,7 +53,7 @@ var globalJWKS = &jwksCache{}
 // Verifies the Supabase JWT from the Authorization header in the request
 // and stores the Supabase user id (sub) in request context.
 // Used as middleware to run auth checks before reaching handlers.
-func RequireAuth(next http.Handler) http.Handler {
+func AuthMiddleware(next http.Handler) http.HandlerFunc {
 	// Remove potential trailing '/' from supabase url in environment variable.
 	supabaseURL := strings.TrimRight(os.Getenv("SUPABASE_URL"), "/")
 	if supabaseURL == "" {
@@ -63,7 +63,7 @@ func RequireAuth(next http.Handler) http.Handler {
 	// Construct expected JWT issuer.
 	issuer := supabaseURL + "/auth/v1"
 
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
 		// Extract JWT from request header, return 401 if missing.
 		token := getTokenFromHeader(r.Header.Get("Authorization"))
 		if token == "" {
@@ -136,7 +136,7 @@ func RequireAuth(next http.Handler) http.Handler {
 		// Allows handlers to scope DB queries to that user.
 		ctx := context.WithValue(r.Context(), userIDKey, sub)
 		next.ServeHTTP(w, r.WithContext(ctx)) // pass request onto respective handler
-	})
+	}
 }
 
 // Extracts JWT from authorization header
