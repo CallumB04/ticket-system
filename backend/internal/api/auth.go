@@ -65,7 +65,7 @@ func RequireAuth(next http.Handler) http.Handler {
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// Extract JWT from request header, return 401 if missing.
-		token := bearerToken(r.Header.Get("Authorization"))
+		token := getTokenFromHeader(r.Header.Get("Authorization"))
 		if token == "" {
 			util.ErrorResponse(w, http.StatusUnauthorized, "missing bearer token")
 			return
@@ -140,7 +140,7 @@ func RequireAuth(next http.Handler) http.Handler {
 }
 
 // Extracts JWT from authorization header
-func bearerToken(header string) string {
+func getTokenFromHeader(header string) string {
 	header = strings.TrimSpace(header) // remove leading/trailing whitespace
 
 	// Check header is prefixed by 'Bearer'
