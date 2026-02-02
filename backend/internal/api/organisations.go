@@ -23,6 +23,21 @@ type Organisation struct {
 	CreatedAt time.Time `json:"created_at"`
 }
 
+type OrganisationMember struct {
+	OrganisationID string    `json:"organisation_id"`
+	UserID         string    `json:"user_id"`
+	Role           string    `json:"role"`       // owner / admin / member
+	InvitedBy      string    `json:"invited_by"` // uuid
+	CreatedAt      time.Time `json:"created_at"`
+}
+
+// Object for sending Organisation member data to frontend
+type OrganisationMemberDTO struct {
+	User     UserProfile `json:"user"`
+	Role     string      `json:"role"`
+	JoinedAt time.Time   `json:"joined_at"` // created_at within db
+}
+
 type createOrganisationRequest struct {
 	Name    string  `json:"name"`
 	Slug    string  `json:"slug"`
@@ -68,6 +83,73 @@ func handleFetchOrganisations(db *pgxpool.Pool) http.HandlerFunc {
 
 		// Send organisations to client.
 		util.JSONResponse(w, http.StatusOK, orgArr)
+	}
+}
+
+// Returns a list of all members in a given organisation.
+func handleFetchOrganisationMembers(db *pgxpool.Pool) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		// Get organisation id from request URL
+		orgID := r.PathValue("orgID")
+		if orgID == "" {
+			util.ErrorResponse(w, http.StatusBadRequest, "orgID is required")
+			return
+		}
+
+		// Query database for members of this organisation.
+		// $1 - Organisation's ID
+		rows, err := db.Query(r.Context(), `
+			select
+			om.user_id::text,
+			om.role,
+			om.created_at as joined_at,
+			up.first_name,
+			up.last_name,
+			up.avatar_url
+			from organisation_members om
+			join user_profiles up on up.id = om.user_id
+			where om.organisation_id = $1
+			order by lower(coalesce(up.last_name, '')), lower(coalesce(up.first_name, ''))
+    	`, orgID)
+		if err != nil {
+			util.ErrorResponse(w, http.StatusInternalServerError, "error fetching organisation members")
+			return
+		}
+
+		// Close db rows after responding to client.
+		defer rows.Close()
+
+		// Append results from database query into array of members.
+		var memberArr []OrganisationMemberDTO
+		for rows.Next() {
+			var (
+				userID    string
+				role      string
+				joinedAt  time.Time
+				firstName *string
+				lastName  *string
+				avatarURL *string
+			)
+
+			if err := rows.Scan(&userID, &role, &joinedAt, &firstName, &lastName, &avatarURL); err != nil {
+				util.ErrorResponse(w, http.StatusInternalServerError, "error reading organisation members")
+				return
+			}
+
+			memberArr = append(memberArr, OrganisationMemberDTO{
+				User: UserProfile{
+					ID:        userID,
+					FirstName: firstName,
+					LastName:  lastName,
+					AvatarURL: avatarURL,
+				},
+				Role:     role,
+				JoinedAt: joinedAt,
+			})
+		}
+
+		// Send members to client.
+		util.JSONResponse(w, http.StatusOK, memberArr)
 	}
 }
 

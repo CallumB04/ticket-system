@@ -1,4 +1,5 @@
 import { api } from ".";
+import type { UserProfile } from "./profiles";
 
 // Models
 
@@ -9,6 +10,12 @@ export type Organisation = {
     logo_url: string | null;
     created_by: string; // uuid (owner)
     created_at: string; // ISO string
+};
+
+export type OrganisationMember = {
+    user: UserProfile;
+    role: string; // owner / admin / member
+    joined_at: string; // ISO string
 };
 
 export type CreateOrganisationRequest = {
@@ -22,6 +29,14 @@ export type CreateOrganisationRequest = {
 // Fetches all organisations of the signed in user
 export async function fetchOrganisations() {
     const res = await api.get<Organisation[]>("/v1/organisations");
+    return res.data;
+}
+
+// Fetches all members of an organisations
+export async function fetchOrganisationMembers(org_id: string) {
+    const res = await api.get<OrganisationMember[]>(
+        "/v1/organisations/" + org_id + "/members"
+    );
     return res.data;
 }
 
