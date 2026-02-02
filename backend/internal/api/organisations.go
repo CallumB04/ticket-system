@@ -27,7 +27,7 @@ type OrganisationMember struct {
 	OrganisationID string    `json:"organisation_id"`
 	UserID         string    `json:"user_id"`
 	Role           string    `json:"role"`       // owner / admin / member
-	InvitedBy      string    `json:"invited_by"` // uuid
+	InvitedBy      string    `json:"invited_by"` // user id
 	CreatedAt      time.Time `json:"created_at"`
 }
 
@@ -89,6 +89,9 @@ func handleFetchOrganisations(db *pgxpool.Pool) http.HandlerFunc {
 // Returns a list of all members in a given organisation.
 func handleFetchOrganisationMembers(db *pgxpool.Pool) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		// Get user ID of authenticated user, provided by middleware.
+		userID := r.Context().Value(auth.UserIDKey).(string)
+
 		// Get organisation id from request URL
 		orgID := r.PathValue("orgID")
 		if orgID == "" {
@@ -148,8 +151,17 @@ func handleFetchOrganisationMembers(db *pgxpool.Pool) http.HandlerFunc {
 			})
 		}
 
-		// Send members to client.
-		util.JSONResponse(w, http.StatusOK, memberArr)
+		// Check authenticated user belongs to this organisation members array
+		for _, m := range memberArr {
+			if m.User.ID == userID {
+				// Send members to client.
+				util.JSONResponse(w, http.StatusOK, memberArr)
+				return
+			}
+		}
+
+		// Return error to client, unauthorized access to this organisation
+		util.ErrorResponse(w, http.StatusForbidden, "You don't have access to this organisation")
 	}
 }
 
