@@ -1,8 +1,8 @@
-package api
+package models
 
 import "time"
 
-// Models
+// Database Models
 
 type UserProfile struct {
 	ID        string    `json:"id"`

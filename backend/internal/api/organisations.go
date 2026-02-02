@@ -8,35 +8,12 @@ import (
 	"time"
 
 	"github.com/CallumB04/ticket-system/backend/internal/auth"
+	"github.com/CallumB04/ticket-system/backend/internal/models"
 	"github.com/CallumB04/ticket-system/backend/internal/util"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-// Models
-
-type Organisation struct {
-	ID        string    `json:"id"`
-	Name      string    `json:"name"`
-	Slug      string    `json:"slug"`
-	LogoURL   *string   `json:"logo_url"`
-	CreatedBy string    `json:"created_by"` // organisation owner
-	CreatedAt time.Time `json:"created_at"`
-}
-
-type OrganisationMember struct {
-	OrganisationID string    `json:"organisation_id"`
-	UserID         string    `json:"user_id"`
-	Role           string    `json:"role"`       // owner / admin / member
-	InvitedBy      string    `json:"invited_by"` // user id
-	CreatedAt      time.Time `json:"created_at"`
-}
-
-// Object for sending Organisation member data to frontend
-type OrganisationMemberDTO struct {
-	User     UserProfile `json:"user"`
-	Role     string      `json:"role"`
-	JoinedAt time.Time   `json:"joined_at"` // created_at within db
-}
+// Request Models
 
 type createOrganisationRequest struct {
 	Name    string  `json:"name"`
@@ -70,9 +47,9 @@ func handleFetchOrganisations(db *pgxpool.Pool) http.HandlerFunc {
 		defer rows.Close()
 
 		// Append results from database query into array of organisations.
-		var orgArr []Organisation
+		var orgArr []models.Organisation
 		for rows.Next() {
-			var org Organisation
+			var org models.Organisation
 			if err := rows.Scan(&org.ID, &org.Name, &org.Slug, &org.LogoURL, &org.CreatedBy, &org.CreatedAt); err != nil {
 				log.Printf("FETCH ORGS error: %v", err)
 				util.ErrorResponse(w, http.StatusInternalServerError, "db error")
@@ -123,7 +100,7 @@ func handleFetchOrganisationMembers(db *pgxpool.Pool) http.HandlerFunc {
 		defer rows.Close()
 
 		// Append results from database query into array of members.
-		var memberArr []OrganisationMemberDTO
+		var memberArr []models.OrganisationMemberDTO
 		for rows.Next() {
 			var (
 				userID    string
@@ -139,8 +116,8 @@ func handleFetchOrganisationMembers(db *pgxpool.Pool) http.HandlerFunc {
 				return
 			}
 
-			memberArr = append(memberArr, OrganisationMemberDTO{
-				User: UserProfile{
+			memberArr = append(memberArr, models.OrganisationMemberDTO{
+				User: models.UserProfile{
 					ID:        userID,
 					FirstName: firstName,
 					LastName:  lastName,
@@ -200,7 +177,7 @@ func handleCreateOrganisation(db *pgxpool.Pool) http.HandlerFunc {
 		// $2 - Organisation Slug
 		// $3 - Organisation Logo URL (optional)
 		// $4 - Authenticated User's ID
-		var org Organisation
+		var org models.Organisation
 		err := db.QueryRow(r.Context(), `
 			insert into public.organisations (name, slug, logo_url, created_by)
 			values ($1, $2, $3, $4)
