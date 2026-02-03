@@ -35,7 +35,7 @@ const Popup = ({
                 {/* Popup Header */}
                 <span className="flex justify-between gap-8">
                     {/* Title + Description (optional) */}
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-0.5">
                         <PopupTitle>{title}</PopupTitle>
                         {description && (
                             <PopupDescription>{description}</PopupDescription>
