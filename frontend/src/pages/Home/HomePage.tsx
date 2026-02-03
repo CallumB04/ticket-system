@@ -8,10 +8,14 @@ import {
 } from "../../api";
 import { signIn, signUp } from "../../supabase/users";
 import { useUser } from "../../hooks/useUser";
+import Popup from "../../components/Popup/Popup";
+import Button from "../../components/Button/Button";
+import PopupButtonsContainer from "../../components/Popup/PopupButtonsContainer";
 
 const HomePage = () => {
     const [orgs, setOrgs] = useState<Organisation[]>([]);
     const [members, setMembers] = useState<OrganisationMember[]>([]);
+    const [testPopupOpen, setTestPopupOpen] = useState<boolean>(false);
 
     const { sessionLoading, user, signOut } = useUser();
 
@@ -40,50 +44,69 @@ const HomePage = () => {
 
     return (
         <main>
+            {testPopupOpen && (
+                <Popup
+                    title="Test Popup"
+                    description="This is a popup for testing purposes"
+                    closePopup={() => setTestPopupOpen(false)}
+                >
+                    <p className="text-text-primary">
+                        Lorem ipsum dolor sit amet consectetur, adipisicing
+                        elit. Soluta explicabo non dolores facere tempore
+                        consequatur placeat, reiciendis consectetur dolore quo
+                        pariatur, eum itaque provident unde beatae, voluptates
+                        nisi deleniti! Neque.
+                    </p>
+                    <PopupButtonsContainer>
+                        <Button variant="secondary" className="w-full">
+                            Close
+                        </Button>
+                        <Button variant="primary" className="w-full">
+                            Confirm
+                        </Button>
+                    </PopupButtonsContainer>
+                </Popup>
+            )}
             <p className="text-text-primary">Home Page</p>
             <span className="flex gap-2">
-                <button
+                <Button
+                    variant="primary"
                     onClick={() =>
                         signUp("callumburgoyne04@gmail.com", "abc123abc")
                     }
-                    className="bg-btn-primary hover:bg-btn-primary-hover text-btn-primary-text h-12 w-50 cursor-pointer rounded"
                 >
                     Sign up
-                </button>
-                <button
+                </Button>
+                <Button
+                    variant="secondary"
                     onClick={() =>
                         signIn("callumburgoyne04@gmail.com", "abc123abc")
                     }
-                    className="bg-btn-secondary hover:bg-btn-secondary-hover text-btn-secondary-text border-btn-secondary-border hover:border-btn-secondary-hover-border h-12 w-50 cursor-pointer rounded border-2"
                 >
                     Sign in
-                </button>
-                <button
-                    onClick={() => signOut()}
-                    className="bg-btn-secondary hover:bg-btn-secondary-hover text-btn-secondary-text border-btn-secondary-border hover:border-btn-secondary-hover-border h-12 w-50 cursor-pointer rounded border-2"
-                >
+                </Button>
+                <Button variant="secondary" onClick={() => signOut()}>
                     Sign out
-                </button>
+                </Button>
             </span>
             <span className="mt-3 flex gap-2">
-                <button
-                    onClick={createOrg}
-                    className="bg-btn-primary hover:bg-btn-primary-hover text-btn-primary-text h-12 w-50 cursor-pointer rounded"
-                >
+                <Button variant="primary" onClick={createOrg}>
                     Create test org
-                </button>
-                <button
-                    onClick={fetchOrgs}
-                    className="bg-btn-secondary hover:bg-btn-secondary-hover text-btn-secondary-text border-btn-secondary-border hover:border-btn-secondary-hover-border h-12 w-50 cursor-pointer rounded border-2"
-                >
+                </Button>
+                <Button variant="secondary" onClick={fetchOrgs}>
                     Fetch orgs
-                </button>
-                <button
-                    onClick={fetchMembers}
-                    className="bg-btn-secondary hover:bg-btn-secondary-hover text-btn-secondary-text border-btn-secondary-border hover:border-btn-secondary-hover-border h-12 w-50 cursor-pointer rounded border-2"
-                >
+                </Button>
+                <Button variant="secondary" onClick={fetchMembers}>
                     Fetch members
-                </button>
+                </Button>
+            </span>
+            <span className="mt-3 flex gap-2">
+                <Button
+                    variant="primary"
+                    onClick={() => setTestPopupOpen(true)}
+                >
+                    Open Test Popup
+                </Button>
             </span>
             <p>{orgs.length === 0 ? "No orgs" : orgs.map((o) => o.name)}</p>
             <p>
