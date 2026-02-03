@@ -9,7 +9,7 @@ interface NavbarProps {
 }
 
 const Navbar = ({ className }: NavbarProps) => {
-    const { sessionLoading, user, signOut } = useUser();
+    const { sessionLoading, user } = useUser();
 
     return (
         <nav
