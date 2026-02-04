@@ -6,11 +6,13 @@ import Navbar from "./layout/Navbar/Navbar";
 import DashboardPage from "./pages/Dashboard/DashboardPage";
 import OrganisationsPage from "./pages/Organisations/OrganisationsPage";
 import TeamsPage from "./pages/Teams/TeamsPage";
+import PopupRenderer from "./layout/PopupRenderer/PopupRenderer";
 
 function App() {
     return (
         <BrowserRouter>
             <Navbar />
+            <PopupRenderer />
             <Routes>
                 {/* Landing Page */}
                 <Route path="/" element={<HomePage />} />
