@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 import PopupTitle from "./PopupTitle";
 import PopupDescription from "./PopupDescription";
-import { X } from "lucide-react";
+import { XIcon } from "lucide-react";
 
 interface PopupProps {
     className?: string;
@@ -47,7 +47,7 @@ const Popup = ({
                     </div>
                     {/* Close Popup Icon */}
                     {!preventClose && (
-                        <X
+                        <XIcon
                             size={22}
                             className="hover:text-text-primary text-text-secondary cursor-pointer transition-colors duration-150"
                             onClick={closePopup}
