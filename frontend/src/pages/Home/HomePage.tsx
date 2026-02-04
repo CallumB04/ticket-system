@@ -7,16 +7,17 @@ import {
     type Organisation,
 } from "../../api";
 import { signIn, signUp } from "../../supabase/users";
-import Popup from "../../components/Popup/Popup";
 import Button from "../../components/Button/Button";
-import PopupButtonsContainer from "../../components/Popup/PopupButtonsContainer";
 import { useTheme } from "../../contexts/ThemeContext";
 import { useUser } from "../../contexts/UserContext";
+import { usePopup } from "../../contexts/PopupContext";
+import TestPopup from "../../layout/Popups/TestPopup";
 
 const HomePage = () => {
     const [orgs, setOrgs] = useState<Organisation[]>([]);
     const [members, setMembers] = useState<OrganisationMember[]>([]);
-    const [testPopupOpen, setTestPopupOpen] = useState<boolean>(false);
+
+    const { pushPopup, popPopup } = usePopup();
 
     const { theme, toggleTheme } = useTheme();
 
@@ -47,29 +48,6 @@ const HomePage = () => {
 
     return (
         <main>
-            {testPopupOpen && (
-                <Popup
-                    title="Test Popup"
-                    description="This is a popup for testing purposes"
-                    closePopup={() => setTestPopupOpen(false)}
-                >
-                    <p className="text-text-primary">
-                        Lorem ipsum dolor sit amet consectetur, adipisicing
-                        elit. Soluta explicabo non dolores facere tempore
-                        consequatur placeat, reiciendis consectetur dolore quo
-                        pariatur, eum itaque provident unde beatae, voluptates
-                        nisi deleniti! Neque.
-                    </p>
-                    <PopupButtonsContainer>
-                        <Button variant="secondary" className="w-full">
-                            Close
-                        </Button>
-                        <Button variant="primary" className="w-full">
-                            Confirm
-                        </Button>
-                    </PopupButtonsContainer>
-                </Popup>
-            )}
             <p className="text-text-primary">Home Page</p>
             <span className="flex gap-2">
                 <Button
@@ -106,9 +84,11 @@ const HomePage = () => {
             <span className="mt-3 flex gap-2">
                 <Button
                     variant="primary"
-                    onClick={() => setTestPopupOpen(true)}
+                    onClick={() =>
+                        pushPopup(<TestPopup closePopup={popPopup} />)
+                    }
                 >
-                    Open Test Popup
+                    Add test popup to stack
                 </Button>
                 <Button variant="primary" onClick={toggleTheme}>
                     Enable {theme === "light" ? "dark" : "light"} theme
