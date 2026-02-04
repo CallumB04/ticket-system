@@ -1,8 +1,8 @@
 import { twMerge } from "tailwind-merge";
 import Button from "../../components/Button/Button";
-import { useUser } from "../../hooks/useUser";
 import LinkButton from "../../components/Button/LinkButton";
 import { Link } from "react-router-dom";
+import { useUser } from "../../contexts/UserContext";
 
 interface NavbarProps {
     className?: string;

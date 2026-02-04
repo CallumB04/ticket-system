@@ -7,15 +7,18 @@ import {
     type Organisation,
 } from "../../api";
 import { signIn, signUp } from "../../supabase/users";
-import { useUser } from "../../hooks/useUser";
 import Popup from "../../components/Popup/Popup";
 import Button from "../../components/Button/Button";
 import PopupButtonsContainer from "../../components/Popup/PopupButtonsContainer";
+import { useTheme } from "../../contexts/ThemeContext";
+import { useUser } from "../../contexts/UserContext";
 
 const HomePage = () => {
     const [orgs, setOrgs] = useState<Organisation[]>([]);
     const [members, setMembers] = useState<OrganisationMember[]>([]);
     const [testPopupOpen, setTestPopupOpen] = useState<boolean>(false);
+
+    const { theme, toggleTheme } = useTheme();
 
     const { sessionLoading, user, signOut } = useUser();
 
@@ -106,6 +109,9 @@ const HomePage = () => {
                     onClick={() => setTestPopupOpen(true)}
                 >
                     Open Test Popup
+                </Button>
+                <Button variant="primary" onClick={toggleTheme}>
+                    Enable {theme === "light" ? "dark" : "light"} theme
                 </Button>
             </span>
             <p>{orgs.length === 0 ? "No orgs" : orgs.map((o) => o.name)}</p>

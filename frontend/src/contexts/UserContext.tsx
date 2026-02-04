@@ -1,15 +1,33 @@
-import { useCallback, useEffect, useState } from "react";
+import {
+    createContext,
+    useCallback,
+    useContext,
+    useEffect,
+    useState,
+    type ReactNode,
+} from "react";
 import type { Session, User } from "@supabase/supabase-js";
 import { supabase } from "../supabase/client";
 
-interface AuthState {
+type UserContextType = {
     sessionLoading: boolean;
     user: User | null;
     signOut: () => Promise<void>;
-}
+};
+
+const UserContext = createContext<UserContextType | undefined>(undefined);
+
+export const useUser = () => {
+    const context = useContext(UserContext);
+    if (!context) {
+        throw new Error("useUser must be used within a UserProvider");
+    }
+
+    return context;
+};
 
 // Provides the current Supabase auth state
-export function useUser(): AuthState {
+export const UserProvider = ({ children }: { children: ReactNode }) => {
     const [loading, setLoading] = useState(true);
     const [session, setSession] = useState<Session | null>(null);
 
@@ -58,9 +76,15 @@ export function useUser(): AuthState {
         }
     }, []);
 
-    return {
-        sessionLoading: loading,
-        user: session?.user ?? null,
-        signOut: signOutUser,
-    };
-}
+    return (
+        <UserContext.Provider
+            value={{
+                sessionLoading: loading,
+                user: session?.user ?? null,
+                signOut: signOutUser,
+            }}
+        >
+            {children}
+        </UserContext.Provider>
+    );
+};
