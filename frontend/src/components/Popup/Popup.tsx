@@ -9,6 +9,7 @@ interface PopupProps {
     children?: ReactNode;
     title: string;
     description?: string;
+    preventClose?: boolean; // stop popup being closed by clicking outside or 'X' icon
     closePopup?: () => void;
 }
 
@@ -17,12 +18,15 @@ const Popup = ({
     children,
     title,
     description,
+    preventClose,
     closePopup,
 }: PopupProps) => {
     return (
         <dialog
             className="fixed top-0 left-0 z-99 flex h-screen w-screen items-center justify-center bg-[#00000044] p-4 sm:p-8"
-            onMouseDown={closePopup && closePopup}
+            onMouseDown={() => {
+                if (closePopup && !preventClose) closePopup();
+            }}
         >
             <div
                 className={twMerge(
@@ -42,11 +46,13 @@ const Popup = ({
                         )}
                     </div>
                     {/* Close Popup Icon */}
-                    <X
-                        size={22}
-                        className="hover:text-text-primary text-text-secondary cursor-pointer transition-colors duration-150"
-                        onClick={closePopup}
-                    />
+                    {!preventClose && (
+                        <X
+                            size={22}
+                            className="hover:text-text-primary text-text-secondary cursor-pointer transition-colors duration-150"
+                            onClick={closePopup}
+                        />
+                    )}
                 </span>
                 {/* Popup Contents */}
                 {children}
