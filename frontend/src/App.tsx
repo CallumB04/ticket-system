@@ -12,6 +12,7 @@ function App() {
     return (
         <BrowserRouter>
             <Navbar />
+            {/* Renders popup at top position of stack (if not empty) */}
             <PopupRenderer />
             <Routes>
                 {/* Landing Page */}

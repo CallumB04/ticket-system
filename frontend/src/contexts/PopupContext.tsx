@@ -9,6 +9,7 @@ type PopupContextType = {
 
 const PopupContext = createContext<PopupContextType | undefined>(undefined);
 
+// Hook to allow all pages / components around the site to render and close every popup
 export const usePopup = () => {
     const context = useContext(PopupContext);
     if (!context) {
@@ -21,16 +22,22 @@ export const usePopup = () => {
 export const PopupProvider = ({ children }: { children: ReactNode }) => {
     const [popupStack, setPopupStack] = useState<ReactNode[]>([]);
 
+    // Add popup onto the top of the stack
+    // Popup at the top position in the stack will be rendered to the page
     const pushPopup = (popup: ReactNode) => {
         setPopupStack((prev) => [popup, ...prev]);
     };
 
+    // Remove popup currently at top position of the stack
+    // This closes the popup and renders any other popups underneath it on the stack in order
     const popPopup = () => {
         setPopupStack((prev) =>
             prev.slice(Math.min(1, prev.length), prev.length)
         );
     };
 
+    // Closes all popups
+    // Useful for redirects, etc
     const clearPopupStack = () => {
         setPopupStack([]);
     };
