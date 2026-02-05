@@ -30,14 +30,14 @@ const Popup = ({
         >
             <div
                 className={twMerge(
-                    "bg-surface flex w-max max-w-200 flex-col gap-4 rounded-md p-4 shadow",
+                    "bg-surface flex w-max max-w-240 flex-col gap-4 rounded-md p-4 shadow",
                     className
                 )}
                 // prevent popup close if mouse is dragged and unclicks outside popup
                 onMouseDown={(e) => e.stopPropagation()}
             >
                 {/* Popup Header */}
-                <span className="flex justify-between gap-8">
+                <span className="flex justify-between gap-16">
                     {/* Title + Description (optional) */}
                     <div className="flex flex-col gap-0.5">
                         <PopupTitle>{title}</PopupTitle>
