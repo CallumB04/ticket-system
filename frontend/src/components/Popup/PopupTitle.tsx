@@ -8,7 +8,12 @@ interface PopupTitleProps {
 
 const PopupTitle = ({ className, children }: PopupTitleProps) => {
     return (
-        <h2 className={twMerge("text-text-primary font-medium", className)}>
+        <h2
+            className={twMerge(
+                "text-text-primary text-lg font-medium",
+                className
+            )}
+        >
             {children}
         </h2>
     );
