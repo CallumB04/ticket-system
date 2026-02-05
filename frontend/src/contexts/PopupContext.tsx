@@ -2,7 +2,7 @@ import { createContext, useContext, useState, type ReactNode } from "react";
 
 type PopupContextType = {
     popupStack: ReactNode[];
-    pushPopup: (popup: ReactNode) => void;
+    pushPopup: (popup: ReactNode, replace?: boolean) => void;
     popPopup: () => void;
     clearPopupStack: () => void;
 };
@@ -24,7 +24,9 @@ export const PopupProvider = ({ children }: { children: ReactNode }) => {
 
     // Add popup onto the top of the stack
     // Popup at the top position in the stack will be rendered to the page
-    const pushPopup = (popup: ReactNode) => {
+    // Replace - removes current popup before displaying new one
+    const pushPopup = (popup: ReactNode, replace?: boolean) => {
+        if (replace) popPopup(); // remove popup at top position of stack before displaying new popup
         setPopupStack((prev) => [popup, ...prev]);
     };
 

@@ -33,6 +33,15 @@ const TestPopup = ({ closePopup }: TestPopupProps) => {
                 >
                     Open other popup
                 </Button>
+                <Button
+                    variant="secondary"
+                    className="w-full"
+                    onClick={() =>
+                        pushPopup(<TestPopup2 closePopup={popPopup} />, true)
+                    }
+                >
+                    Open other popup (replace)
+                </Button>
             </PopupButtonsContainer>
         </Popup>
     );
