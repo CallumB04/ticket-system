@@ -3,6 +3,8 @@ import Button from "../../components/Button/Button";
 import LinkButton from "../../components/Button/LinkButton";
 import { Link } from "react-router-dom";
 import { useUser } from "../../contexts/UserContext";
+import { usePopup } from "../../contexts/PopupContext";
+import SignupLoginPopup from "../Popups/SignupLoginPopup";
 
 interface NavbarProps {
     className?: string;
@@ -10,6 +12,7 @@ interface NavbarProps {
 
 const Navbar = ({ className }: NavbarProps) => {
     const { sessionLoading, user } = useUser();
+    const { pushPopup, popPopup } = usePopup();
 
     return (
         <nav
@@ -36,10 +39,32 @@ const Navbar = ({ className }: NavbarProps) => {
                 </LinkButton>
             ) : (
                 <span className="flex gap-2">
-                    <Button variant="primary" className="h-11 w-22">
+                    <Button
+                        variant="primary"
+                        className="h-11 w-22"
+                        onClick={() =>
+                            pushPopup(
+                                <SignupLoginPopup
+                                    closePopup={popPopup}
+                                    initialState="signup"
+                                />
+                            )
+                        }
+                    >
                         Sign up
                     </Button>
-                    <Button variant="secondary" className="h-11 w-22">
+                    <Button
+                        variant="secondary"
+                        className="h-11 w-22"
+                        onClick={() =>
+                            pushPopup(
+                                <SignupLoginPopup
+                                    closePopup={popPopup}
+                                    initialState="login"
+                                />
+                            )
+                        }
+                    >
                         Log in
                     </Button>
                 </span>
