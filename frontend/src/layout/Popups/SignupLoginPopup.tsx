@@ -1,9 +1,11 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Popup from "../../components/Popup/Popup";
 import PopupButtonsContainer from "../../components/Popup/PopupButtonsContainer";
 import Button from "../../components/Button/Button";
 import TextInput from "../../components/Input/TextInput";
 import ClickableText from "../../components/Text/ClickableText";
+import { signIn, signUp } from "../../supabase/users";
+import { AuthApiError, AuthWeakPasswordError } from "@supabase/supabase-js";
 
 type PopupState = "signup" | "login";
 
@@ -22,22 +24,55 @@ const SignupLoginPopup = ({
     const [emailInputValue, setEmailInputValue] = useState<string>("");
     const [passwordInputValue, setPasswordInputValue] = useState<string>("");
 
+    // Log in -> invalid credentials
+    // Sign up -> weak password, incorrect email, etc
+    const [errorText, setErrorText] = useState<string>("");
+
+    // Hide error text when popup state changes
+    useEffect(() => {
+        setErrorText("");
+    }, [state]);
+
     // TODO: add realistic validity checks for both inputs
     const isValidEmail: boolean = useMemo(() => {
         return emailInputValue.includes("@");
     }, [emailInputValue]);
 
     const isValidPassword: boolean = useMemo(() => {
-        return passwordInputValue.length >= 8;
+        return passwordInputValue.length >= 6;
     }, [passwordInputValue]);
 
     // Form submit handlers
-    const handleLogin = () => {
-        alert("Logged in!");
+    const handleLogin = async () => {
+        try {
+            const resp = await signIn(emailInputValue, passwordInputValue);
+            if (resp.session) {
+                closePopup();
+            }
+        } catch (error) {
+            setErrorText("Invalid login credentials, please try again");
+        }
     };
 
-    const handleSignup = () => {
-        alert("Signed up!");
+    const handleSignup = async () => {
+        try {
+            const resp = await signUp(emailInputValue, passwordInputValue);
+            if (resp.session) {
+                closePopup();
+            }
+        } catch (error) {
+            if (error instanceof AuthWeakPasswordError) {
+                setErrorText(
+                    "Password must be at least 8 characters long, and must contain at least one uppercase character and number"
+                );
+            } else if (error instanceof AuthApiError) {
+                setErrorText(
+                    "This account already exists, please log in instead"
+                );
+            } else {
+                setErrorText("There was an issue signing up, please try again");
+            }
+        }
     };
 
     return (
@@ -65,10 +100,16 @@ const SignupLoginPopup = ({
                     type="password"
                     onChange={(val) => setPasswordInputValue(val)}
                 />
+                {/* Error text (if visible) */}
+                {errorText && (
+                    <p className="text-danger max-w-96 text-xs wrap-break-word">
+                        {errorText}
+                    </p>
+                )}
                 {/* Forgot Password text */}
                 <span className="flex justify-end">
                     <ClickableText
-                        className="w-max text-xs"
+                        className="text-xs"
                         onClick={() => alert("Forgot password.")}
                     >
                         Forgot Password?
