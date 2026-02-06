@@ -25,7 +25,7 @@ const SignupLoginPopup = ({
     const [passwordInputValue, setPasswordInputValue] = useState<string>("");
 
     // Log in -> invalid credentials
-    // Sign up -> weak password, incorrect email, etc
+    // Sign up -> weak password, invalid email, etc
     const [errorText, setErrorText] = useState<string>("");
 
     // Hide error text when popup state changes
@@ -39,7 +39,7 @@ const SignupLoginPopup = ({
     }, [emailInputValue]);
 
     const isValidPassword: boolean = useMemo(() => {
-        return passwordInputValue.length >= 6;
+        return passwordInputValue.length >= 8;
     }, [passwordInputValue]);
 
     // Form submit handlers
@@ -61,14 +61,23 @@ const SignupLoginPopup = ({
                 closePopup();
             }
         } catch (error) {
+            console.error(error);
             if (error instanceof AuthWeakPasswordError) {
                 setErrorText(
                     "Password must be at least 8 characters long, and must contain at least one uppercase character and number"
                 );
             } else if (error instanceof AuthApiError) {
-                setErrorText(
-                    "This account already exists, please log in instead"
-                );
+                if (error.message.includes("already registered")) {
+                    setErrorText(
+                        "This account already exists, please log in instead"
+                    );
+                } else if (error.message.includes("invalid format")) {
+                    setErrorText("Please enter a valid email address");
+                } else {
+                    setErrorText(
+                        "There was an issue signing up, please try again"
+                    );
+                }
             } else {
                 setErrorText("There was an issue signing up, please try again");
             }
