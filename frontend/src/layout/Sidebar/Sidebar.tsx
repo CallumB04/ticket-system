@@ -1,7 +1,7 @@
 import { twMerge } from "tailwind-merge";
 import SidebarLink from "./components/SidebarLink";
 import { useLocation } from "react-router-dom";
-import { Building2Icon, LayoutDashboardIcon, UsersIcon } from "lucide-react";
+import { Building2Icon, GaugeCircleIcon, UsersIcon } from "lucide-react";
 
 interface SidebarProps {
     className?: string;
@@ -19,7 +19,7 @@ const Sidebar = ({ className }: SidebarProps) => {
         >
             <SidebarLink
                 text="Dashboard"
-                icon={<LayoutDashboardIcon size={20} />}
+                icon={<GaugeCircleIcon size={20} />}
                 to="/dashboard"
                 open={location.pathname.includes("dashboard")}
             />
