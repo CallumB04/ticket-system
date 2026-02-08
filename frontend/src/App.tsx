@@ -7,6 +7,7 @@ import DashboardPage from "./pages/Dashboard/DashboardPage";
 import OrganisationsPage from "./pages/Organisations/OrganisationsPage";
 import TeamsPage from "./pages/Teams/TeamsPage";
 import PopupRenderer from "./layout/PopupRenderer/PopupRenderer";
+import { RequireUser } from "./contexts/UserContext";
 
 function App() {
     return (
@@ -17,10 +18,15 @@ function App() {
             <Routes>
                 {/* Landing Page */}
                 <Route path="/" element={<HomePage />} />
-                {/* Application Pages */}
-                <Route path="/dashboard" element={<DashboardPage />} />
-                <Route path="/organisations" element={<OrganisationsPage />} />
-                <Route path="/teams" element={<TeamsPage />} />
+                {/* Application Pages - Protected Routes, must been logged in */}
+                <Route element={<RequireUser />}>
+                    <Route path="/dashboard" element={<DashboardPage />} />
+                    <Route
+                        path="/organisations"
+                        element={<OrganisationsPage />}
+                    />
+                    <Route path="/teams" element={<TeamsPage />} />
+                </Route>
                 {/* Not found page - all un-routed paths */}
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>

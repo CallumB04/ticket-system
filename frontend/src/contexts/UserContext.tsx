@@ -8,6 +8,7 @@ import {
 } from "react";
 import type { Session, User } from "@supabase/supabase-js";
 import { supabase } from "../supabase/client";
+import { Navigate, Outlet } from "react-router-dom";
 
 type UserContextType = {
     sessionLoading: boolean;
@@ -87,4 +88,19 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
             {children}
         </UserContext.Provider>
     );
+};
+
+// Wraps protected routes to ensure user is logged in
+export const RequireUser = () => {
+    const { user, sessionLoading } = useUser();
+
+    if (user) {
+        return <h1>Loading...</h1>;
+    }
+
+    if (!user) {
+        return <Navigate to="/" replace />;
+    }
+
+    return <Outlet />;
 };
