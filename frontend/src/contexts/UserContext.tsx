@@ -14,6 +14,7 @@ import { fetchUserProfile, type UserProfile } from "../api/profiles";
 type UserContextType = {
     sessionLoading: boolean;
     user: User | null;
+    userProfileLoading: boolean;
     userProfile: UserProfile | null;
     signOut: () => Promise<void>;
 };
@@ -31,8 +32,13 @@ export const useUser = () => {
 
 // Provides the current Supabase auth state
 export const UserProvider = ({ children }: { children: ReactNode }) => {
-    const [loading, setLoading] = useState(true);
+    // Session
+    const [sessionLoading, setSessionLoading] = useState<boolean>(true);
     const [session, setSession] = useState<Session | null>(null);
+
+    // User Profile
+    const [userProfileLoading, setUserProfileLoading] =
+        useState<boolean>(false);
     const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
 
     useEffect(() => {
@@ -52,7 +58,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
                 console.error("unexpected error getting session:", err);
                 setSession(null);
             } finally {
-                if (mounted) setLoading(false);
+                if (mounted) setSessionLoading(false);
             }
         })();
 
@@ -61,7 +67,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
             (_event, newSession) => {
                 if (!mounted) return;
                 setSession(newSession ?? null);
-                setLoading(false);
+                setSessionLoading(false);
             }
         );
 
@@ -75,6 +81,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
+                setUserProfileLoading(true);
                 const profile = await fetchUserProfile();
                 if (profile) {
                     setUserProfile(profile);
@@ -84,6 +91,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
             } catch (err) {
                 setUserProfile(null);
                 console.error("error fetching user profile:", err);
+            } finally {
+                setUserProfileLoading(false);
             }
         };
 
@@ -102,9 +111,10 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     return (
         <UserContext.Provider
             value={{
-                sessionLoading: loading,
+                sessionLoading,
                 user: session?.user ?? null,
-                userProfile: userProfile,
+                userProfileLoading,
+                userProfile,
                 signOut: signOutUser,
             }}
         >
