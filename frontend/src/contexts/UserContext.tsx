@@ -94,7 +94,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 export const RequireUser = () => {
     const { user, sessionLoading } = useUser();
 
-    if (user) {
+    if (sessionLoading) {
         return <h1>Loading...</h1>;
     }
 
