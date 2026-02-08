@@ -9,10 +9,12 @@ import {
 import type { Session, User } from "@supabase/supabase-js";
 import { supabase } from "../supabase/client";
 import { Navigate, Outlet } from "react-router-dom";
+import { fetchUserProfile, type UserProfile } from "../api/profiles";
 
 type UserContextType = {
     sessionLoading: boolean;
     user: User | null;
+    userProfile: UserProfile | null;
     signOut: () => Promise<void>;
 };
 
@@ -31,6 +33,7 @@ export const useUser = () => {
 export const UserProvider = ({ children }: { children: ReactNode }) => {
     const [loading, setLoading] = useState(true);
     const [session, setSession] = useState<Session | null>(null);
+    const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
 
     useEffect(() => {
         // Ensures component is mounted before updating state
@@ -68,6 +71,25 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         };
     }, []);
 
+    // Refetch user profile when user ID changes in session
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const profile = await fetchUserProfile();
+                if (profile) {
+                    setUserProfile(profile);
+                } else {
+                    setUserProfile(null);
+                }
+            } catch (err) {
+                setUserProfile(null);
+                console.error("error fetching user profile:", err);
+            }
+        };
+
+        fetchProfile();
+    }, [session?.user?.id]);
+
     // Logs out user and refreshes session
     const signOutUser = useCallback(async () => {
         const { error } = await supabase.auth.signOut();
@@ -82,6 +104,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
             value={{
                 sessionLoading: loading,
                 user: session?.user ?? null,
+                userProfile: userProfile,
                 signOut: signOutUser,
             }}
         >

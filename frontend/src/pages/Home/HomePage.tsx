@@ -21,7 +21,7 @@ const HomePage = () => {
 
     const { theme, toggleTheme } = useTheme();
 
-    const { sessionLoading, user, signOut } = useUser();
+    const { sessionLoading, user, userProfile, signOut } = useUser();
 
     const createOrg = async () => {
         await createOrganisation({
@@ -109,6 +109,16 @@ const HomePage = () => {
                       ))}
             </p>
             <p>{sessionLoading ? "loading email..." : user?.email}</p>
+            <p>
+                {userProfile
+                    ? `First Name: ${userProfile.first_name}`
+                    : "Loading first name"}
+            </p>
+            <p>
+                {userProfile
+                    ? `Last Name: ${userProfile.last_name}`
+                    : "Loading last name"}
+            </p>
             <div className="bg-surface mt-2 size-20 rounded"></div>
             <div className="bg-surface-muted mt-2 size-20 rounded"></div>
         </main>
