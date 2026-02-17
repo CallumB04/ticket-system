@@ -116,14 +116,16 @@ const SignupLoginPopup = ({
                     </p>
                 )}
                 {/* Forgot Password text */}
-                <span className="flex justify-end">
-                    <ClickableText
-                        className="text-xs"
-                        onClick={() => alert("Forgot password.")}
-                    >
-                        Forgot Password?
-                    </ClickableText>
-                </span>
+                {state === "login" && (
+                    <span className="flex justify-end">
+                        <ClickableText
+                            className="text-xs"
+                            onClick={() => alert("Forgot password.")}
+                        >
+                            Forgot Password?
+                        </ClickableText>
+                    </span>
+                )}
             </div>
             <PopupButtonsContainer>
                 <Button
