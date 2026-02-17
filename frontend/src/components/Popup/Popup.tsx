@@ -37,23 +37,24 @@ const Popup = ({
                 onMouseDown={(e) => e.stopPropagation()}
             >
                 {/* Popup Header */}
-                <span className="flex justify-between gap-16">
-                    {/* Title + Description (optional) */}
-                    <div className="flex flex-col gap-0.5">
+                <div className="flex flex-col gap-0.5">
+                    <span className="flex justify-between gap-8 sm:gap-16">
+                        {/* Title */}
                         <PopupTitle>{title}</PopupTitle>
-                        {description && (
-                            <PopupDescription>{description}</PopupDescription>
+                        {/* Close Popup Icon */}
+                        {!preventClose && (
+                            <XIcon
+                                size={22}
+                                className="hover:text-text-primary text-text-secondary shrink-0 cursor-pointer transition-colors duration-150"
+                                onClick={closePopup}
+                            />
                         )}
-                    </div>
-                    {/* Close Popup Icon */}
-                    {!preventClose && (
-                        <XIcon
-                            size={22}
-                            className="hover:text-text-primary text-text-secondary cursor-pointer transition-colors duration-150"
-                            onClick={closePopup}
-                        />
+                    </span>
+                    {/* Description (optional) */}
+                    {description && (
+                        <PopupDescription>{description}</PopupDescription>
                     )}
-                </span>
+                </div>
                 {/* Popup Contents */}
                 {children}
             </div>
