@@ -98,13 +98,13 @@ const SignupLoginPopup = ({
             <div className="space-y-3">
                 {/* Email and Password Inputs */}
                 <TextInput
-                    className="w-96"
+                    className="w-96 max-w-full"
                     label="Email"
                     type="email"
                     onChange={(val) => setEmailInputValue(val)}
                 />
                 <TextInput
-                    className="w-96"
+                    className="w-96 max-w-full"
                     label="Password"
                     type="password"
                     onChange={(val) => setPasswordInputValue(val)}
