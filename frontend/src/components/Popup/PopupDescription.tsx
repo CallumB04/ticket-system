@@ -8,7 +8,7 @@ interface PopupDescriptionProps {
 
 const PopupDescription = ({ className, children }: PopupDescriptionProps) => {
     return (
-        <p className={twMerge("text-text-secondary text-xs", className)}>
+        <p className={twMerge("text-text-secondary text-sm", className)}>
             {children}
         </p>
     );
