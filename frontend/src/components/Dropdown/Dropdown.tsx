@@ -34,7 +34,7 @@ const Dropdown = ({
     };
 
     return (
-        <div className={twMerge("space-y-1", containerClassName)}>
+        <div className={twMerge("space-y-input-label", containerClassName)}>
             {label && <InputLabel text={label} />}
             <select
                 defaultValue={defaultOption}

@@ -149,10 +149,15 @@ main {
     --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
     /* -- Sizes -- */
+
+    /* Navbar */
     --height-navbar-height: var(--navbar-height);
     --margin-navbar-height: var(--navbar-height);
     --padding-navbar-height: var(--navbar-height);
     --top-navbar-height: var(--navbar-height);
     --width-sidebar-width: var(--sidebar-width);
     --margin-sidebar-width: var(--sidebar-width);
+
+    /* Label and Input */
+    --space-input-label: 6px;
 }

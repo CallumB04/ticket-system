@@ -31,7 +31,7 @@ const Input = ({
     };
 
     return (
-        <div className={twMerge("space-y-1", containerClassName)}>
+        <div className={twMerge("space-y-input-label", containerClassName)}>
             {label && <InputLabel text={label} />}
             <input
                 type={type ?? "text"}
