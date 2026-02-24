@@ -1,5 +1,6 @@
 import { type ChangeEvent } from "react";
 import { twMerge } from "tailwind-merge";
+import InputLabel from "../Text/InputLabel";
 
 export type DropdownOption = {
     label: string;
@@ -34,11 +35,7 @@ const Dropdown = ({
 
     return (
         <div className={twMerge("space-y-1", containerClassName)}>
-            {label && (
-                <p className="text-text-primary text-xs font-semibold">
-                    {label}
-                </p>
-            )}
+            {label && <InputLabel text={label} />}
             <select
                 defaultValue={defaultOption}
                 disabled={disabled}

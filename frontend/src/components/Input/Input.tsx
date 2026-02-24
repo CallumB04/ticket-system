@@ -1,7 +1,8 @@
 import { type ChangeEvent } from "react";
 import { twMerge } from "tailwind-merge";
+import InputLabel from "../Text/InputLabel";
 
-interface TextInputProps {
+interface InputProps {
     className?: string;
     containerClassName?: string; // div containing label and input
     type?: string;
@@ -12,7 +13,7 @@ interface TextInputProps {
     onChange?: (value: string) => void;
 }
 
-const TextInput = ({
+const Input = ({
     className,
     containerClassName,
     type,
@@ -21,7 +22,7 @@ const TextInput = ({
     defaultValue,
     disabled,
     onChange,
-}: TextInputProps) => {
+}: InputProps) => {
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         // send new value to parent component
         if (onChange) {
@@ -31,11 +32,7 @@ const TextInput = ({
 
     return (
         <div className={twMerge("space-y-1", containerClassName)}>
-            {label && (
-                <p className="text-text-primary text-xs font-semibold">
-                    {label}
-                </p>
-            )}
+            {label && <InputLabel text={label} />}
             <input
                 type={type ?? "text"}
                 placeholder={placeholder ?? "Type here..."}
@@ -48,4 +45,4 @@ const TextInput = ({
     );
 };
 
-export default TextInput;
+export default Input;

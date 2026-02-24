@@ -13,7 +13,7 @@ import { useUser } from "../../contexts/UserContext";
 import { usePopup } from "../../contexts/PopupContext";
 import TestPopup from "../../layout/Popups/TestPopup";
 import Dropdown from "../../components/Dropdown/Dropdown";
-import TextInput from "../../components/Input/TextInput";
+import Input from "../../components/Input/Input";
 
 const HomePage = () => {
     const [orgs, setOrgs] = useState<Organisation[]>([]);
@@ -142,8 +142,8 @@ const HomePage = () => {
                 ]}
                 label="Option Picker"
             />
-            <TextInput defaultValue="example" />
-            <TextInput disabled defaultValue="example" />
+            <Input defaultValue="example" label="Example" />
+            <Input disabled defaultValue="example" label="Example" />
             <div className="bg-surface mt-2 size-20 rounded"></div>
             <div className="bg-surface-muted mt-2 size-20 rounded"></div>
         </main>

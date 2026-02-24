@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import Popup from "../../components/Popup/Popup";
 import PopupButtonsContainer from "../../components/Popup/PopupButtonsContainer";
 import Button from "../../components/Button/Button";
-import TextInput from "../../components/Input/TextInput";
+import Input from "../../components/Input/Input";
 import ClickableText from "../../components/Text/ClickableText";
 import { signIn, signUp } from "../../supabase/users";
 import { AuthApiError, AuthWeakPasswordError } from "@supabase/supabase-js";
@@ -97,13 +97,13 @@ const SignupLoginPopup = ({
             {/* Form */}
             <div className="space-y-3">
                 {/* Email and Password Inputs */}
-                <TextInput
+                <Input
                     className="w-96 max-w-full"
                     label="Email"
                     type="email"
                     onChange={(val) => setEmailInputValue(val)}
                 />
-                <TextInput
+                <Input
                     className="w-96 max-w-full"
                     label="Password"
                     type="password"
