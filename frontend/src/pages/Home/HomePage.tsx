@@ -12,6 +12,8 @@ import { useTheme } from "../../contexts/ThemeContext";
 import { useUser } from "../../contexts/UserContext";
 import { usePopup } from "../../contexts/PopupContext";
 import TestPopup from "../../layout/Popups/TestPopup";
+import Dropdown from "../../components/Dropdown/Dropdown";
+import TextInput from "../../components/Input/TextInput";
 
 const HomePage = () => {
     const [orgs, setOrgs] = useState<Organisation[]>([]);
@@ -48,7 +50,7 @@ const HomePage = () => {
     };
 
     return (
-        <main>
+        <main className="space-y-1">
             <p className="text-text-primary">Home Page</p>
             <span className="flex gap-2">
                 <Button
@@ -132,6 +134,16 @@ const HomePage = () => {
                     </p>
                 </>
             )}
+            <Dropdown
+                options={[
+                    { label: "All options", value: "" },
+                    { label: "Test 1", value: "test1" },
+                    { label: "Test 2", value: "test2" },
+                ]}
+                label="Option Picker"
+            />
+            <TextInput defaultValue="example" />
+            <TextInput disabled defaultValue="example" />
             <div className="bg-surface mt-2 size-20 rounded"></div>
             <div className="bg-surface-muted mt-2 size-20 rounded"></div>
         </main>
