@@ -84,7 +84,7 @@ main {
 }
 
 .input-default {
-    @apply placeholder:text-text-placeholder text-text-primary border-input-border hover:border-input-border-hover bg-surface focus:outline-highlight disabled:text-text-disabled h-11 rounded border px-3 text-sm transition-colors focus:outline-1 disabled:cursor-not-allowed;
+    @apply placeholder:text-text-placeholder text-text-primary border-input-border hover:border-input-border-hover bg-surface focus:outline-highlight disabled:text-text-disabled disabled:hover:border-input-border h-11 rounded border px-3 text-sm transition-colors focus:outline-1 disabled:cursor-not-allowed;
 }
 
 @theme {
