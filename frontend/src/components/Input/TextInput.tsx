@@ -40,10 +40,7 @@ const TextInput = ({
                 defaultValue={defaultValue}
                 disabled={disabled}
                 onChange={handleChange}
-                className={twMerge(
-                    "placeholder:text-text-placeholder text-text-primary border-input-border hover:border-input-border-hover bg-surface h-11 rounded border px-3 text-sm",
-                    className
-                )}
+                className={twMerge("input-default h-11 px-3", className)}
             />
         </div>
     );

@@ -83,6 +83,10 @@ main {
     @apply mt-navbar-height min-h-[calc(100vh-var(--navbar-height))] p-4 sm:p-8;
 }
 
+.input-default {
+    @apply placeholder:text-text-placeholder text-text-primary border-input-border hover:border-input-border-hover bg-surface focus:outline-highlight rounded border text-sm transition-colors focus:outline-1;
+}
+
 @theme {
     /* -- Colors -- */
 
