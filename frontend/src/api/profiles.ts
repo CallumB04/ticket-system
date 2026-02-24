@@ -4,9 +4,10 @@ import { api } from ".";
 
 export type UserProfile = {
     id: string;
-    first_name: string | null;
-    last_name: string | null;
-    avatar_url: string | null;
+    first_name: string;
+    last_name: string;
+    avatar_url: string;
+    country: string;
     created_at: string;
 };
 

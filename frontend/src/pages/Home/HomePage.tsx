@@ -106,6 +106,7 @@ const HomePage = () => {
                                   : "unknown name"}
                               {": "}
                               {m.role}
+                              {m.user.country}
                           </span>
                       ))}
             </p>
@@ -123,6 +124,11 @@ const HomePage = () => {
                         {userProfile
                             ? `Last Name: ${userProfile.last_name}`
                             : "Loading last name"}
+                    </p>
+                    <p>
+                        {userProfile?.country
+                            ? `Country: ${userProfile.country}`
+                            : "No country data"}
                     </p>
                 </>
             )}

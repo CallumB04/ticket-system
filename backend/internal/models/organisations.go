@@ -8,7 +8,7 @@ type Organisation struct {
 	ID        string    `json:"id"`
 	Name      string    `json:"name"`
 	Slug      string    `json:"slug"`
-	LogoURL   *string   `json:"logo_url"`
+	LogoURL   string    `json:"logo_url"`
 	CreatedBy string    `json:"created_by"` // organisation owner
 	CreatedAt time.Time `json:"created_at"`
 }

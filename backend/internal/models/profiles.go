@@ -6,9 +6,10 @@ import "time"
 
 type UserProfile struct {
 	ID        string    `json:"id"`
-	FirstName *string   `json:"first_name,omitempty"`
-	LastName  *string   `json:"last_name,omitempty"`
-	AvatarURL *string   `json:"avatar_url,omitempty"`
+	FirstName string    `json:"first_name"`
+	LastName  string    `json:"last_name"`
+	AvatarURL string    `json:"avatar_url"`
+	Country   string    `json:"country"`
 	CreatedAt time.Time `json:"created_at"`
 }
 
@@ -17,20 +18,20 @@ type UserProfile struct {
 func (up *UserProfile) GetFullName() string {
 
 	// missing both names
-	if up.FirstName == nil && up.LastName == nil {
+	if up.FirstName == "" && up.LastName == "" {
 		return ""
 	}
 
 	// missing first name
-	if up.FirstName == nil && up.LastName != nil {
-		return *up.LastName
+	if up.FirstName == "" && up.LastName != "" {
+		return up.LastName
 	}
 
 	// missing last name
-	if up.FirstName != nil && up.LastName == nil {
-		return *up.FirstName
+	if up.FirstName != "" && up.LastName == "" {
+		return up.FirstName
 	}
 
 	// both names present
-	return *up.FirstName + " " + *up.LastName
+	return up.FirstName + " " + up.LastName
 }

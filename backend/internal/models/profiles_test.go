@@ -7,9 +7,6 @@ import (
 
 func TestGetFullName(t *testing.T) {
 	// Setup Tests
-	firstName := "Callum"
-	lastName := "Burgoyne"
-
 	tests := []struct {
 		name        string
 		userProfile UserProfile
@@ -19,8 +16,8 @@ func TestGetFullName(t *testing.T) {
 			name: "existing first and last name",
 			userProfile: UserProfile{
 				ID:        "1",
-				FirstName: &firstName,
-				LastName:  &lastName,
+				FirstName: "Callum",
+				LastName:  "Burgoyne",
 				CreatedAt: time.Now(),
 			},
 			expected: "Callum Burgoyne",
@@ -28,7 +25,7 @@ func TestGetFullName(t *testing.T) {
 			name: "missing first name",
 			userProfile: UserProfile{
 				ID:        "2",
-				LastName:  &lastName,
+				LastName:  "Burgoyne",
 				CreatedAt: time.Now(),
 			},
 			expected: "Burgoyne",
@@ -36,7 +33,7 @@ func TestGetFullName(t *testing.T) {
 			name: "missing last name",
 			userProfile: UserProfile{
 				ID:        "3",
-				FirstName: &firstName,
+				FirstName: "Callum",
 				CreatedAt: time.Now(),
 			},
 			expected: "Callum",

@@ -16,9 +16,9 @@ import (
 // Request Models
 
 type createOrganisationRequest struct {
-	Name    string  `json:"name"`
-	Slug    string  `json:"slug"`
-	LogoURL *string `json:"logo_url"`
+	Name    string `json:"name"`
+	Slug    string `json:"slug"`
+	LogoURL string `json:"logo_url"`
 }
 
 // Handlers
@@ -85,7 +85,8 @@ func handleFetchOrganisationMembers(db *pgxpool.Pool) http.HandlerFunc {
 			om.created_at as joined_at,
 			up.first_name,
 			up.last_name,
-			up.avatar_url
+			up.avatar_url,
+			up.country
 			from organisation_members om
 			join user_profiles up on up.id = om.user_id
 			where om.organisation_id = $1
@@ -106,12 +107,13 @@ func handleFetchOrganisationMembers(db *pgxpool.Pool) http.HandlerFunc {
 				userID    string
 				role      string
 				joinedAt  time.Time
-				firstName *string
-				lastName  *string
-				avatarURL *string
+				firstName string
+				lastName  string
+				avatarURL string
+				country   string
 			)
 
-			if err := rows.Scan(&userID, &role, &joinedAt, &firstName, &lastName, &avatarURL); err != nil {
+			if err := rows.Scan(&userID, &role, &joinedAt, &firstName, &lastName, &avatarURL, &country); err != nil {
 				util.ErrorResponse(w, http.StatusInternalServerError, "error reading organisation members")
 				return
 			}
@@ -122,6 +124,7 @@ func handleFetchOrganisationMembers(db *pgxpool.Pool) http.HandlerFunc {
 					FirstName: firstName,
 					LastName:  lastName,
 					AvatarURL: avatarURL,
+					Country:   country,
 				},
 				Role:     role,
 				JoinedAt: joinedAt,
@@ -162,16 +165,6 @@ func handleCreateOrganisation(db *pgxpool.Pool) http.HandlerFunc {
 			return
 		}
 
-		// Convert logoURL to a pointer, since field is nullable in db.
-		// If logoURL is empty, will send nil pointer.
-		var logoURLPtr *string
-		if body.LogoURL != nil {
-			logoURL := strings.TrimSpace(*body.LogoURL)
-			if logoURL != "" {
-				logoURLPtr = &logoURL
-			}
-		}
-
 		// Insert new organisation into db and return the inserted row.
 		// $1 - Organisation name
 		// $2 - Organisation Slug
@@ -182,7 +175,7 @@ func handleCreateOrganisation(db *pgxpool.Pool) http.HandlerFunc {
 			insert into public.organisations (name, slug, logo_url, created_by)
 			values ($1, $2, $3, $4)
 			returning id, name, slug, logo_url, created_by, created_at
-		`, body.Name, body.Slug, logoURLPtr, userID).Scan(
+		`, body.Name, body.Slug, body.LogoURL, userID).Scan(
 			&org.ID, &org.Name, &org.Slug, &org.LogoURL, &org.CreatedBy, &org.CreatedAt,
 		)
 		if err != nil {
