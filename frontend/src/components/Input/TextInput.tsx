@@ -3,6 +3,7 @@ import { twMerge } from "tailwind-merge";
 
 interface TextInputProps {
     className?: string;
+    containerClassName?: string; // div containing label and input
     type?: string;
     placeholder?: string;
     label?: string;
@@ -13,6 +14,7 @@ interface TextInputProps {
 
 const TextInput = ({
     className,
+    containerClassName,
     type,
     placeholder,
     label,
@@ -28,7 +30,7 @@ const TextInput = ({
     };
 
     return (
-        <div className={twMerge("space-y-1", className)}>
+        <div className={twMerge("space-y-1", containerClassName)}>
             {label && (
                 <p className="text-text-primary text-xs font-semibold">
                     {label}
@@ -40,7 +42,7 @@ const TextInput = ({
                 defaultValue={defaultValue}
                 disabled={disabled}
                 onChange={handleChange}
-                className={twMerge("input-default h-11 px-3", className)}
+                className={twMerge("input-default", className)}
             />
         </div>
     );
