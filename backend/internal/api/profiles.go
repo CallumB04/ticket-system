@@ -74,7 +74,7 @@ func handleUpdateUserProfile(db *pgxpool.Pool) http.HandlerFunc {
 		}
 
 		// Build query to update profile in db
-		query := `UPDATE public.user_profile SET ` // base query
+		query := `UPDATE public.user_profiles SET ` // base query
 		args := []interface{}{}
 		pos := 1 // increments for each updated field, to add arg position for formatting
 
