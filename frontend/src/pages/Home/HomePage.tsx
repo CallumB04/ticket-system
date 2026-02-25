@@ -14,6 +14,7 @@ import { usePopup } from "../../contexts/PopupContext";
 import TestPopup from "../../layout/Popups/TestPopup";
 import Dropdown from "../../components/Dropdown/Dropdown";
 import Input from "../../components/Input/Input";
+import { updateUserProfile } from "../../api/profiles";
 
 const HomePage = () => {
     const [orgs, setOrgs] = useState<Organisation[]>([]);
@@ -23,8 +24,14 @@ const HomePage = () => {
 
     const { theme, toggleTheme } = useTheme();
 
-    const { sessionLoading, user, userProfileLoading, userProfile, signOut } =
-        useUser();
+    const {
+        sessionLoading,
+        user,
+        userProfile,
+        userProfileLoading,
+        refetchUserProfile,
+        signOut,
+    } = useUser();
 
     const createOrg = async () => {
         await createOrganisation({
@@ -95,6 +102,34 @@ const HomePage = () => {
                 </Button>
                 <Button variant="primary" onClick={toggleTheme}>
                     Enable {theme === "light" ? "dark" : "light"} theme
+                </Button>
+            </span>
+            <span className="mt-3 flex gap-2">
+                <Button
+                    variant="primary"
+                    onClick={async () => {
+                        const resp = await updateUserProfile({
+                            first_name: "Callum",
+                        });
+                        if (resp) {
+                            refetchUserProfile();
+                        }
+                    }}
+                >
+                    Update First Name to Callum
+                </Button>
+                <Button
+                    variant="primary"
+                    onClick={async () => {
+                        const resp = await updateUserProfile({
+                            first_name: "Ballum",
+                        });
+                        if (resp) {
+                            refetchUserProfile();
+                        }
+                    }}
+                >
+                    Update First Name to Ballum
                 </Button>
             </span>
             <p>{orgs.length === 0 ? "No orgs" : orgs.map((o) => o.name)}</p>
