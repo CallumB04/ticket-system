@@ -1,6 +1,6 @@
-// Models
-
 import { api } from ".";
+
+// Models
 
 export type UserProfile = {
     id: string;
@@ -9,6 +9,13 @@ export type UserProfile = {
     avatar_url: string;
     country: string;
     created_at: string;
+};
+
+export type UpdateUserProfileRequest = {
+    first_name: string | null;
+    last_name: string | null;
+    avatar_url: string | null;
+    country: string | null;
 };
 
 // API Calls
@@ -20,7 +27,7 @@ export async function fetchUserProfile() {
 }
 
 // Updates fields of the signed in user's profile, and receive new profile data
-export async function updateUserProfile() {
-    const res = await api.patch<UserProfile>("/v1/profile");
+export async function updateUserProfile(body: UpdateUserProfileRequest) {
+    const res = await api.patch<UserProfile>("/v1/profile", body);
     return res.data;
 }
