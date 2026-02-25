@@ -11,13 +11,13 @@ const queryClient = new QueryClient();
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
         <QueryClientProvider client={queryClient}>
-            <UserProvider>
-                <ThemeProvider>
-                    <PopupProvider>
+            <PopupProvider>
+                <UserProvider>
+                    <ThemeProvider>
                         <App />
-                    </PopupProvider>
-                </ThemeProvider>
-            </UserProvider>
+                    </ThemeProvider>
+                </UserProvider>
+            </PopupProvider>
         </QueryClientProvider>
     </StrictMode>
 );
