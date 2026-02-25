@@ -10,12 +10,14 @@ import type { Session, User } from "@supabase/supabase-js";
 import { supabase } from "../supabase/client";
 import { Navigate, Outlet } from "react-router-dom";
 import { fetchUserProfile, type UserProfile } from "../api/profiles";
+import { useQuery } from "@tanstack/react-query";
 
 type UserContextType = {
     sessionLoading: boolean;
     user: User | null;
+    userProfile: UserProfile | undefined;
     userProfileLoading: boolean;
-    userProfile: UserProfile | null;
+    userProfileError: Error | null;
     signOut: () => Promise<void>;
 };
 
@@ -35,11 +37,6 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     // Session
     const [sessionLoading, setSessionLoading] = useState<boolean>(true);
     const [session, setSession] = useState<Session | null>(null);
-
-    // User Profile
-    const [userProfileLoading, setUserProfileLoading] =
-        useState<boolean>(false);
-    const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
 
     useEffect(() => {
         // Ensures component is mounted before updating state
@@ -78,26 +75,18 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     }, []);
 
     // Refetch user profile when user ID changes in session
-    useEffect(() => {
-        const fetchProfile = async () => {
-            try {
-                setUserProfileLoading(true);
-                const profile = await fetchUserProfile();
-                if (profile) {
-                    setUserProfile(profile);
-                } else {
-                    setUserProfile(null);
-                }
-            } catch (err) {
-                setUserProfile(null);
-                console.error("error fetching user profile:", err);
-            } finally {
-                setUserProfileLoading(false);
-            }
-        };
-
-        fetchProfile();
-    }, [session?.user?.id]);
+    const {
+        data: userProfile,
+        isLoading: userProfileLoading,
+        error: userProfileError,
+    } = useQuery({
+        queryKey: ["userProfile", session?.user?.id], // refetch when user id changes
+        queryFn: async () => {
+            const profile = await fetchUserProfile();
+            return profile ?? null;
+        },
+        enabled: !!session?.user?.id, // only run if user exists
+    });
 
     // Logs out user and refreshes session
     const signOutUser = useCallback(async () => {
@@ -113,8 +102,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
             value={{
                 sessionLoading,
                 user: session?.user ?? null,
-                userProfileLoading,
                 userProfile,
+                userProfileLoading,
+                userProfileError,
                 signOut: signOutUser,
             }}
         >
