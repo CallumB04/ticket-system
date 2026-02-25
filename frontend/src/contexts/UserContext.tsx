@@ -18,6 +18,7 @@ type UserContextType = {
     userProfile: UserProfile | undefined;
     userProfileLoading: boolean;
     userProfileError: Error | null;
+    refetchUserProfile: () => void;
     signOut: () => Promise<void>;
 };
 
@@ -79,6 +80,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         data: userProfile,
         isLoading: userProfileLoading,
         error: userProfileError,
+        refetch: refetchUserProfile,
     } = useQuery({
         queryKey: ["userProfile", session?.user?.id], // refetch when user id changes
         queryFn: async () => {
@@ -105,6 +107,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
                 userProfile,
                 userProfileLoading,
                 userProfileError,
+                refetchUserProfile,
                 signOut: signOutUser,
             }}
         >
