@@ -12,10 +12,10 @@ export type UserProfile = {
 };
 
 export type UpdateUserProfileRequest = {
-    first_name: string | null;
-    last_name: string | null;
-    avatar_url: string | null;
-    country: string | null;
+    first_name?: string;
+    last_name?: string;
+    avatar_url?: string;
+    country?: string;
 };
 
 // API Calls
