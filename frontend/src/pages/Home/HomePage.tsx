@@ -10,8 +10,6 @@ import { signIn, signUp } from "../../supabase/users";
 import Button from "../../components/Button/Button";
 import { useTheme } from "../../contexts/ThemeContext";
 import { useUser } from "../../contexts/UserContext";
-import { usePopup } from "../../contexts/PopupContext";
-import TestPopup from "../../layout/Popups/TestPopup";
 import Dropdown from "../../components/Dropdown/Dropdown";
 import Input from "../../components/Input/Input";
 import { updateUserProfile } from "../../api/profiles";
@@ -19,8 +17,6 @@ import { updateUserProfile } from "../../api/profiles";
 const HomePage = () => {
     const [orgs, setOrgs] = useState<Organisation[]>([]);
     const [members, setMembers] = useState<OrganisationMember[]>([]);
-
-    const { pushPopup, popPopup } = usePopup();
 
     const { theme, toggleTheme } = useTheme();
 
@@ -92,14 +88,6 @@ const HomePage = () => {
                 </Button>
             </span>
             <span className="mt-3 flex gap-2">
-                <Button
-                    variant="primary"
-                    onClick={() =>
-                        pushPopup(<TestPopup closePopup={popPopup} />)
-                    }
-                >
-                    Add test popup to stack
-                </Button>
                 <Button variant="primary" onClick={toggleTheme}>
                     Enable {theme === "light" ? "dark" : "light"} theme
                 </Button>
