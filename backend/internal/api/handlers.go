@@ -18,6 +18,7 @@ func RegisterHandlers(db *pgxpool.Pool) *http.ServeMux {
 
 	// User Profiles (non-plural route as user can only have one profile)
 	v1.Handle("GET /profile", auth.AuthMiddleware(handleFetchUserProfile(db)))
+	v1.Handle("PATCH /profile", auth.AuthMiddleware(handleUpdateUserProfile(db)))
 
 	// Organisations
 	v1.Handle("GET /organisations", auth.AuthMiddleware(handleFetchOrganisations(db)))

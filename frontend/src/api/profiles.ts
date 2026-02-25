@@ -18,3 +18,9 @@ export async function fetchUserProfile() {
     const res = await api.get<UserProfile>("/v1/profile");
     return res.data;
 }
+
+// Updates fields of the signed in user's profile, and receive new profile data
+export async function updateUserProfile() {
+    const res = await api.patch<UserProfile>("/v1/profile");
+    return res.data;
+}
