@@ -35,7 +35,7 @@ const Input = ({
             {label && <InputLabel text={label} />}
             <input
                 type={type ?? "text"}
-                placeholder={placeholder ?? "Type here..."}
+                placeholder={placeholder ?? "Type here"}
                 defaultValue={defaultValue}
                 disabled={disabled}
                 onChange={handleChange}
