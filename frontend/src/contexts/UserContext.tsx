@@ -11,6 +11,8 @@ import { supabase } from "../supabase/client";
 import { Navigate, Outlet } from "react-router-dom";
 import { fetchUserProfile, type UserProfile } from "../api/profiles";
 import { useQuery } from "@tanstack/react-query";
+import { usePopup } from "./PopupContext";
+import UserProfileSetupPopup from "../layout/Popups/UserProfileSetupPopup";
 
 type UserContextType = {
     sessionLoading: boolean;
@@ -38,6 +40,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     // Session
     const [sessionLoading, setSessionLoading] = useState<boolean>(true);
     const [session, setSession] = useState<Session | null>(null);
+
+    const { pushPopup, popPopup } = usePopup();
 
     useEffect(() => {
         // Ensures component is mounted before updating state
@@ -89,6 +93,13 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         },
         enabled: !!session?.user?.id, // only run if user exists
     });
+
+    // Display profile setup popup if user logged in has no first name
+    useEffect(() => {
+        if (userProfile && userProfile.first_name === "") {
+            pushPopup(<UserProfileSetupPopup closePopup={popPopup} />, true);
+        }
+    }, [userProfile]);
 
     // Logs out user and refreshes session
     const signOutUser = useCallback(async () => {
