@@ -6,6 +6,7 @@ import Popup from "../../components/Popup/Popup";
 import PopupButtonsContainer from "../../components/Popup/PopupButtonsContainer";
 import { ALL_COUNTRIES } from "../../constants/countries";
 import { updateUserProfile } from "../../api/profiles";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 interface UserProfileSetupPopupProps {
     closePopup: () => void;
@@ -77,7 +78,11 @@ const UserProfileSetupPopup = ({ closePopup }: UserProfileSetupPopupProps) => {
                     disabled={firstName.length < 3 || isSaving}
                     onClick={handleSave}
                 >
-                    {isSaving ? "Saving..." : "Save"}
+                    {isSaving ? (
+                        <LoadingSpinner variant="btn-disabled" />
+                    ) : (
+                        "Save"
+                    )}
                 </Button>
             </PopupButtonsContainer>
         </Popup>
