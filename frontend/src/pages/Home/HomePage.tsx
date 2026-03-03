@@ -13,6 +13,8 @@ import { useUser } from "../../contexts/UserContext";
 import Dropdown from "../../components/Dropdown/Dropdown";
 import Input from "../../components/Input/Input";
 import { updateUserProfile } from "../../api/profiles";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
+import { PlusIcon } from "lucide-react";
 
 const HomePage = () => {
     const [orgs, setOrgs] = useState<Organisation[]>([]);
@@ -79,6 +81,7 @@ const HomePage = () => {
             <span className="mt-3 flex gap-2">
                 <Button variant="primary" onClick={createOrg}>
                     Create test org
+                    <PlusIcon size={20} />
                 </Button>
                 <Button variant="secondary" onClick={fetchOrgs}>
                     Fetch orgs
@@ -167,6 +170,12 @@ const HomePage = () => {
             />
             <Input defaultValue="example" label="Example" />
             <Input disabled defaultValue="example" label="Example" />
+            <LoadingSpinner variant="bg" />
+            <LoadingSpinner variant="surface" />
+            <Button variant="primary" disabled>
+                Loading
+                <LoadingSpinner variant="btn-disabled" />
+            </Button>
             <div className="bg-surface mt-2 size-20 rounded"></div>
             <div className="bg-surface-muted mt-2 size-20 rounded"></div>
         </main>
