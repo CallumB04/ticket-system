@@ -45,7 +45,7 @@ const Popup = ({
                         {!preventClose && (
                             <XIcon
                                 size={22}
-                                className="hover:text-text-primary text-text-secondary shrink-0 cursor-pointer transition-colors duration-150"
+                                className="hover:text-text-primary text-text-secondary shrink-0 cursor-pointer transition-colors"
                                 onClick={closePopup}
                             />
                         )}
