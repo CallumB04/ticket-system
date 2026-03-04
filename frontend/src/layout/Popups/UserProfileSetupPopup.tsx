@@ -79,7 +79,10 @@ const UserProfileSetupPopup = ({ closePopup }: UserProfileSetupPopupProps) => {
                     onClick={handleSave}
                 >
                     {isSaving ? (
-                        <LoadingSpinner variant="btn-disabled" />
+                        <>
+                            <LoadingSpinner variant="btn-disabled" />
+                            Saving
+                        </>
                     ) : (
                         "Save"
                     )}
