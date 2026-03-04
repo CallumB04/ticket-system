@@ -15,6 +15,8 @@ import Input from "../../components/Input/Input";
 import { updateUserProfile } from "../../api/profiles";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import { PlusIcon } from "lucide-react";
+import PageHeader from "../../components/Page/PageHeader";
+import Page from "../../components/Page/Page";
 
 const HomePage = () => {
     const [orgs, setOrgs] = useState<Organisation[]>([]);
@@ -55,130 +57,134 @@ const HomePage = () => {
     };
 
     return (
-        <main className="space-y-1">
-            <p className="text-text-primary">Home Page</p>
-            <span className="flex gap-2">
-                <Button
-                    variant="primary"
-                    onClick={() =>
-                        signUp("callumburgoyne04@gmail.com", "abc123abc")
-                    }
-                >
-                    Sign up
-                </Button>
-                <Button
-                    variant="secondary"
-                    onClick={() =>
-                        signIn("callumburgoyne04@gmail.com", "abc123abc")
-                    }
-                >
-                    Sign in
-                </Button>
-                <Button variant="secondary" onClick={() => signOut()}>
-                    Sign out
-                </Button>
-            </span>
-            <span className="mt-3 flex gap-2">
-                <Button variant="primary" onClick={createOrg}>
-                    Create test org
-                    <PlusIcon size={20} />
-                </Button>
-                <Button variant="secondary" onClick={fetchOrgs}>
-                    Fetch orgs
-                </Button>
-                <Button variant="secondary" onClick={fetchMembers}>
-                    Fetch members
-                </Button>
-            </span>
-            <span className="mt-3 flex gap-2">
-                <Button variant="primary" onClick={toggleTheme}>
-                    Enable {theme === "light" ? "dark" : "light"} theme
-                </Button>
-            </span>
-            <span className="mt-3 flex gap-2">
-                <Button
-                    variant="primary"
-                    onClick={async () => {
-                        const resp = await updateUserProfile({
-                            first_name: "Callum",
-                        });
-                        if (resp) {
-                            refetchUserProfile();
+        <Page
+            title="Home Page"
+            description="This is a testing environment during development"
+        >
+            <div className="space-y-2">
+                <span className="flex gap-2">
+                    <Button
+                        variant="primary"
+                        onClick={() =>
+                            signUp("callumburgoyne04@gmail.com", "abc123abc")
                         }
-                    }}
-                >
-                    Update First Name to Callum
-                </Button>
-                <Button
-                    variant="primary"
-                    onClick={async () => {
-                        const resp = await updateUserProfile({
-                            first_name: "Ballum",
-                        });
-                        if (resp) {
-                            refetchUserProfile();
+                    >
+                        Sign up
+                    </Button>
+                    <Button
+                        variant="secondary"
+                        onClick={() =>
+                            signIn("callumburgoyne04@gmail.com", "abc123abc")
                         }
-                    }}
-                >
-                    Update First Name to Ballum
+                    >
+                        Sign in
+                    </Button>
+                    <Button variant="secondary" onClick={() => signOut()}>
+                        Sign out
+                    </Button>
+                </span>
+                <span className="mt-3 flex gap-2">
+                    <Button variant="primary" onClick={createOrg}>
+                        Create test org
+                        <PlusIcon size={20} />
+                    </Button>
+                    <Button variant="secondary" onClick={fetchOrgs}>
+                        Fetch orgs
+                    </Button>
+                    <Button variant="secondary" onClick={fetchMembers}>
+                        Fetch members
+                    </Button>
+                </span>
+                <span className="mt-3 flex gap-2">
+                    <Button variant="primary" onClick={toggleTheme}>
+                        Enable {theme === "light" ? "dark" : "light"} theme
+                    </Button>
+                </span>
+                <span className="mt-3 flex gap-2">
+                    <Button
+                        variant="primary"
+                        onClick={async () => {
+                            const resp = await updateUserProfile({
+                                first_name: "Callum",
+                            });
+                            if (resp) {
+                                refetchUserProfile();
+                            }
+                        }}
+                    >
+                        Update First Name to Callum
+                    </Button>
+                    <Button
+                        variant="primary"
+                        onClick={async () => {
+                            const resp = await updateUserProfile({
+                                first_name: "Ballum",
+                            });
+                            if (resp) {
+                                refetchUserProfile();
+                            }
+                        }}
+                    >
+                        Update First Name to Ballum
+                    </Button>
+                </span>
+                <p>{orgs.length === 0 ? "No orgs" : orgs.map((o) => o.name)}</p>
+                <p>
+                    {members.length === 0
+                        ? "No members"
+                        : members.map((m) => (
+                              <span>
+                                  {m.user.first_name
+                                      ? m.user.first_name
+                                      : "unknown name"}
+                                  {": "}
+                                  {m.role}
+                                  {m.user.country}
+                              </span>
+                          ))}
+                </p>
+                <p>{sessionLoading ? "loading email..." : user?.email}</p>
+                {userProfileLoading ? (
+                    <p>Loading User Profile</p>
+                ) : (
+                    <>
+                        <p>
+                            {userProfile
+                                ? `First Name: ${userProfile.first_name}`
+                                : "Loading first name"}
+                        </p>
+                        <p>
+                            {userProfile
+                                ? `Last Name: ${userProfile.last_name}`
+                                : "Loading last name"}
+                        </p>
+                        <p>
+                            {userProfile?.country
+                                ? `Country: ${userProfile.country}`
+                                : "No country data"}
+                        </p>
+                    </>
+                )}
+                <Dropdown
+                    options={[
+                        { label: "All options", value: "" },
+                        { label: "Test 1", value: "test1" },
+                        { label: "Test 2", value: "test2" },
+                    ]}
+                    label="Option Picker"
+                />
+                <Input defaultValue="example" label="Example" />
+                <Input disabled defaultValue="example" label="Example" />
+                <LoadingSpinner variant="bg" />
+                <LoadingSpinner variant="surface" />
+                <Button variant="primary" disabled>
+                    Loading
+                    <LoadingSpinner variant="btn-disabled" />
                 </Button>
-            </span>
-            <p>{orgs.length === 0 ? "No orgs" : orgs.map((o) => o.name)}</p>
-            <p>
-                {members.length === 0
-                    ? "No members"
-                    : members.map((m) => (
-                          <span>
-                              {m.user.first_name
-                                  ? m.user.first_name
-                                  : "unknown name"}
-                              {": "}
-                              {m.role}
-                              {m.user.country}
-                          </span>
-                      ))}
-            </p>
-            <p>{sessionLoading ? "loading email..." : user?.email}</p>
-            {userProfileLoading ? (
-                <p>Loading User Profile</p>
-            ) : (
-                <>
-                    <p>
-                        {userProfile
-                            ? `First Name: ${userProfile.first_name}`
-                            : "Loading first name"}
-                    </p>
-                    <p>
-                        {userProfile
-                            ? `Last Name: ${userProfile.last_name}`
-                            : "Loading last name"}
-                    </p>
-                    <p>
-                        {userProfile?.country
-                            ? `Country: ${userProfile.country}`
-                            : "No country data"}
-                    </p>
-                </>
-            )}
-            <Dropdown
-                options={[
-                    { label: "All options", value: "" },
-                    { label: "Test 1", value: "test1" },
-                    { label: "Test 2", value: "test2" },
-                ]}
-                label="Option Picker"
-            />
-            <Input defaultValue="example" label="Example" />
-            <Input disabled defaultValue="example" label="Example" />
-            <LoadingSpinner variant="bg" />
-            <LoadingSpinner variant="surface" />
-            <Button variant="primary" disabled>
-                Loading
-                <LoadingSpinner variant="btn-disabled" />
-            </Button>
-            <div className="bg-surface mt-2 size-20 rounded"></div>
-            <div className="bg-surface-muted mt-2 size-20 rounded"></div>
-        </main>
+                <div className="bg-surface mt-2 size-20 rounded"></div>
+                <div className="bg-surface-muted mt-2 size-20 rounded"></div>
+            </div>
+        </Page>
     );
 };
 

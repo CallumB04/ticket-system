@@ -1,10 +1,15 @@
+import Page from "../../components/Page/Page";
 import Sidebar from "../../layout/Sidebar/Sidebar";
 
 const TeamsPage = () => {
     return (
         <>
             <Sidebar />
-            <main className="lg:ml-sidebar-width">TeamsPage</main>
+            <Page
+                title="Teams"
+                description="View and manage the teams within your organisations"
+                hasSidebar
+            ></Page>
         </>
     );
 };

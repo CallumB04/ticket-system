@@ -1,10 +1,15 @@
+import Page from "../../components/Page/Page";
 import Sidebar from "../../layout/Sidebar/Sidebar";
 
 const OrganisationsPage = () => {
     return (
         <>
             <Sidebar />
-            <main className="lg:ml-sidebar-width">OrganisationsPage</main>
+            <Page
+                title="Organisations"
+                description="View and manage your organisations"
+                hasSidebar
+            ></Page>
         </>
     );
 };

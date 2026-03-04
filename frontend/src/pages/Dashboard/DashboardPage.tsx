@@ -1,10 +1,15 @@
+import Page from "../../components/Page/Page";
 import Sidebar from "../../layout/Sidebar/Sidebar";
 
 const DashboardPage = () => {
     return (
         <>
             <Sidebar />
-            <main className="lg:ml-sidebar-width">DashboardPage</main>
+            <Page
+                title="Dashboard"
+                description="Welcome to the home of Ticket System"
+                hasSidebar
+            ></Page>
         </>
     );
 };
