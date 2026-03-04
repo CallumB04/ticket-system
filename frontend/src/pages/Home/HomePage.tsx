@@ -15,7 +15,6 @@ import Input from "../../components/Input/Input";
 import { updateUserProfile } from "../../api/profiles";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import { PlusIcon } from "lucide-react";
-import PageHeader from "../../components/Page/PageHeader";
 import Page from "../../components/Page/Page";
 
 const HomePage = () => {
