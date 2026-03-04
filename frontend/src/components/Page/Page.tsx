@@ -22,11 +22,10 @@ const Page = ({
         <main
             className={twMerge(
                 "mt-navbar-height flex min-h-[calc(100vh-var(--navbar-height))] justify-center p-4 sm:p-8",
-                hasSidebar && "lg:ml-sidebar-width",
-                className
+                hasSidebar && "lg:ml-sidebar-width"
             )}
         >
-            <div className={twMerge("w-full max-w-7xl space-y-8")}>
+            <div className={twMerge("w-full max-w-7xl space-y-8", className)}>
                 <div className="space-y-2">
                     {title && <PageHeader>{title}</PageHeader>}
                     {description && (
