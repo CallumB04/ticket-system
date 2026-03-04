@@ -11,7 +11,7 @@ const LoadingSpinner = ({ className, variant }: LoadingSpinnerProps) => {
             className={twMerge(
                 "to-highlight animate-spin rounded-full bg-conic from-transparent",
                 variant === "btn-disabled"
-                    ? "to-btn-primary-disabled-text size-5 p-px"
+                    ? "to-btn-primary-disabled-text size-4 p-px"
                     : "to-highlight size-8 p-0.5",
                 className
             )}
