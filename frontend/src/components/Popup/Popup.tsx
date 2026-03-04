@@ -23,7 +23,7 @@ const Popup = ({
 }: PopupProps) => {
     return (
         <dialog
-            className="fixed top-0 left-0 z-99 flex h-screen w-screen items-center justify-center bg-[#00000066] p-4 sm:p-8"
+            className="fixed top-0 left-0 z-99 flex h-screen w-screen items-center justify-center bg-[#000000cc] p-4 sm:p-8"
             onMouseDown={() => {
                 if (closePopup && !preventClose) closePopup();
             }}
