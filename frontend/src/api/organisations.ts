@@ -12,9 +12,11 @@ export type Organisation = {
     created_at: string; // ISO string
 };
 
+export type OrganisationRole = "owner" | "admin" | "member";
+
 export type OrganisationMember = {
     user: UserProfile;
-    role: string; // owner / admin / member
+    role: OrganisationRole; // owner / admin / member
     joined_at: string; // ISO string
 };
 

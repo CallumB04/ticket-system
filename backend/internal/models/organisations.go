@@ -13,12 +13,20 @@ type Organisation struct {
 	CreatedAt time.Time `json:"created_at"`
 }
 
+type OrganisationRole string
+
+const (
+	RoleOwner  OrganisationRole = "owner"
+	RoleAdmin  OrganisationRole = "admin"
+	RoleMember OrganisationRole = "member"
+)
+
 type OrganisationMember struct {
-	OrganisationID string    `json:"organisation_id"`
-	UserID         string    `json:"user_id"`
-	Role           string    `json:"role"`       // owner / admin / member
-	InvitedBy      string    `json:"invited_by"` // user id
-	CreatedAt      time.Time `json:"created_at"`
+	OrganisationID string           `json:"organisation_id"`
+	UserID         string           `json:"user_id"`
+	Role           OrganisationRole `json:"role"`       // owner / admin / member
+	InvitedBy      string           `json:"invited_by"` // user id
+	CreatedAt      time.Time        `json:"created_at"`
 }
 
 // Data Transfer Objects (for sending data to frontend)
