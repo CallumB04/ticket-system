@@ -20,7 +20,6 @@ export type OrganisationMember = {
 
 export type CreateOrganisationRequest = {
     name: string;
-    slug: string;
     logo_url?: string;
 };
 

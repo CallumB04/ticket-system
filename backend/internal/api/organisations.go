@@ -17,7 +17,6 @@ import (
 
 type createOrganisationRequest struct {
 	Name    string `json:"name"`
-	Slug    string `json:"slug"`
 	LogoURL string `json:"logo_url"`
 }
 
@@ -165,6 +164,14 @@ func handleCreateOrganisation(db *pgxpool.Pool) http.HandlerFunc {
 			return
 		}
 
+		// Create slug
+		// TODO: Ensure slug is truly unique
+		slug, slugErr := util.CreateSlug(body.Name)
+		if slugErr != nil {
+			util.ErrorResponse(w, http.StatusInternalServerError, "error creating organisation")
+			return
+		}
+
 		// Insert new organisation into db and return the inserted row.
 		// $1 - Organisation name
 		// $2 - Organisation Slug
@@ -175,7 +182,7 @@ func handleCreateOrganisation(db *pgxpool.Pool) http.HandlerFunc {
 			insert into public.organisations (name, slug, logo_url, created_by)
 			values ($1, $2, $3, $4)
 			returning id, name, slug, logo_url, created_by, created_at
-		`, body.Name, body.Slug, body.LogoURL, userID).Scan(
+		`, body.Name, slug, body.LogoURL, userID).Scan(
 			&org.ID, &org.Name, &org.Slug, &org.LogoURL, &org.CreatedBy, &org.CreatedAt,
 		)
 		if err != nil {

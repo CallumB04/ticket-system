@@ -34,8 +34,7 @@ const HomePage = () => {
 
     const createOrg = async () => {
         await createOrganisation({
-            name: "AnotherOrg",
-            slug: "another-org",
+            name: "10X Managers",
             logo_url: "example.com",
         });
     };
