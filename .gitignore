@@ -46,3 +46,4 @@ dist-ssr
 *.sln
 *.sw?
 
+tmp
