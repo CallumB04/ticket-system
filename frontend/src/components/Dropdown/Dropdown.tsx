@@ -24,7 +24,7 @@ const Dropdown = ({
     options,
     label,
     placeholder,
-    defaultValue,
+    defaultValue = "",
     disabled,
     onChange,
 }: DropdownProps) => {
@@ -53,7 +53,7 @@ const Dropdown = ({
                     className
                 )}
             >
-                <option value="" disabled selected hidden className="">
+                <option value="" disabled hidden className="">
                     {placeholder ?? "Choose an option"}
                 </option>
                 {options.map((o) => (
