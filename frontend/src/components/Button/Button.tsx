@@ -33,7 +33,7 @@ const Button = ({
                     (disabled
                         ? "bg-btn-danger-disabled text-btn-danger-disabled-text"
                         : "bg-btn-danger text-btn-danger-text hover:bg-btn-danger-hover"),
-                !disabled && "cursor-pointer",
+                disabled ? "cursor-not-allowed" : "cursor-pointer",
                 className
             )}
             disabled={disabled}
