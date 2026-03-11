@@ -29,6 +29,8 @@
     --surface-muted-color: #f1f5f9;
 
     --layout-border-color: #e2e8f0;
+    --surface-border-color: #cbd5e1;
+    --surface-border-hover-color: #94a3b8;
     --input-border-color: #cbd5e1;
     --input-border-hover-color: #94a3b8;
 
@@ -61,6 +63,8 @@
     --surface-muted-color: #1a2233;
 
     --layout-border-color: #1e293b;
+    --surface-border-color: #334155;
+    --surface-border-hover-color: #475569;
     --input-border-color: #334155;
     --input-border-hover-color: #475569;
 
@@ -105,6 +109,8 @@ body {
 
     /* Borders */
     --color-layout-border: var(--layout-border-color);
+    --color-surface-border: var(--surface-border-color);
+    --color-surface-border-hover: var(--surface-border-hover-color);
     --color-input-border: var(--input-border-color);
     --color-input-border-hover: var(--input-border-hover-color);
 
@@ -141,7 +147,7 @@ body {
     --color-danger: var(--danger-color);
 
     /* -- Fonts -- */
-    --font-sans: "Manrope", system-ui, sans-serif;
+    --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
     /* -- Sizes -- */
