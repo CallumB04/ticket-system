@@ -16,6 +16,7 @@ import { updateUserProfile } from "../../api/profiles";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import { PlusIcon } from "lucide-react";
 import Page from "../../components/Page/Page";
+import Card from "../../components/Card/Card";
 
 const HomePage = () => {
     const [orgs, setOrgs] = useState<Organisation[]>([]);
@@ -179,8 +180,56 @@ const HomePage = () => {
                     <LoadingSpinner variant="btn-disabled" />
                     Loading
                 </Button>
-                <div className="bg-surface mt-2 size-20 rounded"></div>
-                <div className="bg-surface-muted mt-2 size-20 rounded"></div>
+                <div className="flex gap-2">
+                    <div className="space-y-2">
+                        <Card
+                            title="Example Card"
+                            description="This is an example of a card"
+                            variant="default"
+                        />
+                        <Card
+                            title="Example Card"
+                            description="This is an example of a card"
+                            variant="muted"
+                        />
+                        <Card
+                            title="Example Card"
+                            description="This is an example of a card"
+                            variant="border"
+                        />
+                        <Card
+                            title="Example Card"
+                            description="This is an example of a card"
+                            variant="hero"
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <Card
+                            title="Clickable Card"
+                            description="This is an example of a card"
+                            variant="default"
+                            onClick={() => alert("clicked")}
+                        />
+                        <Card
+                            title="Clickable Card"
+                            description="This is an example of a card"
+                            variant="muted"
+                            onClick={() => alert("clicked")}
+                        />
+                        <Card
+                            title="Clickable Card"
+                            description="This is an example of a card"
+                            variant="border"
+                            onClick={() => alert("clicked")}
+                        />
+                        <Card
+                            title="Clickable Card"
+                            description="This is an example of a card"
+                            variant="hero"
+                            onClick={() => alert("clicked")}
+                        />
+                    </div>
+                </div>
             </div>
         </Page>
     );
