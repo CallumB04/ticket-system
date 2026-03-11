@@ -22,19 +22,21 @@ type createOrganisationRequest struct {
 
 // Handlers
 
-// Returns a list of organisations that are created by the authenticated user.
+// Returns a list of organisations that the authenticated user is a member within.
 func handleFetchOrganisations(db *pgxpool.Pool) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Get user ID of authenticated user, provided by middleware.
 		userID := r.Context().Value(auth.UserIDKey).(string)
 
-		// Query database for organisations owned by this user.
+		// Query database for organisations this user is a member within.
 		// $1 - Authenticated User's ID
 		rows, err := db.Query(r.Context(), `
-			select id, name, slug, logo_url, created_by, created_at
-			from public.organisations
-			where created_by = $1
-			order by created_at desc
+			select o.id, o.name, o.slug, o.logo_url, o.created_by, o.created_at
+			from public.organisations o
+			join public.organisation_members om
+    			on om.organisation_id = o.id
+			where om.user_id = $1
+			order by o.created_at desc;
 		`, userID)
 		if err != nil {
 			log.Printf("FETCH ORGS db error: %v", err)
