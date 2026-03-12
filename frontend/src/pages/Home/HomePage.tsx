@@ -17,6 +17,7 @@ import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import { PlusIcon } from "lucide-react";
 import Page from "../../components/Page/Page";
 import Card from "../../components/Card/Card";
+import ProgressBar from "../../components/ProgressBar/ProgressBar";
 
 const HomePage = () => {
     const [orgs, setOrgs] = useState<Organisation[]>([]);
@@ -230,6 +231,7 @@ const HomePage = () => {
                         />
                     </div>
                 </div>
+                <ProgressBar target={5} value={3} />
             </div>
         </Page>
     );
