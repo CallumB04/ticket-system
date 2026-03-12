@@ -37,7 +37,7 @@ const Card = ({
     return (
         <div
             className={twMerge(
-                "border-surface-border w-max space-y-4 rounded border shadow transition-colors",
+                "border-surface-border flex w-max flex-col gap-4 rounded border shadow transition-colors",
                 getPaddingFromSize(size),
                 variant === "default" && "bg-surface",
                 variant === "muted" && "bg-surface-muted",
