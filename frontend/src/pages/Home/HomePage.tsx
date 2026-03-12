@@ -14,10 +14,11 @@ import Dropdown from "../../components/Dropdown/Dropdown";
 import Input from "../../components/Input/Input";
 import { updateUserProfile } from "../../api/profiles";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
-import { PlusIcon, TrashIcon } from "lucide-react";
+import { Divide, PlusIcon, TrashIcon } from "lucide-react";
 import Page from "../../components/Page/Page";
 import Card from "../../components/Card/Card";
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
+import Divider from "../../components/Divider/Divider";
 
 const HomePage = () => {
     const [orgs, setOrgs] = useState<Organisation[]>([]);
@@ -210,7 +211,10 @@ const HomePage = () => {
                             description="This is an example of a card"
                             variant="default"
                             onClick={() => alert("clicked")}
-                        />
+                        >
+                            <Divider />
+                            Example text
+                        </Card>
                         <Card
                             title="Clickable Card"
                             description="This is an example of a card"
