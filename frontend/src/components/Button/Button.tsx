@@ -3,7 +3,12 @@ import { twMerge } from "tailwind-merge";
 
 interface ButtonProps {
     className?: string;
-    variant: "primary" | "secondary" | "danger";
+    variant:
+        | "primary"
+        | "secondary"
+        | "danger"
+        | "secondary-transparent"
+        | "danger-transparent";
     children: ReactNode;
     disabled?: boolean;
     onClick?: () => void;
@@ -34,6 +39,10 @@ const Button = ({
                         ? "bg-btn-danger-disabled text-btn-danger-disabled-text"
                         : "bg-btn-danger text-btn-danger-text hover:bg-btn-danger-hover"),
                 disabled ? "cursor-not-allowed" : "cursor-pointer",
+                variant === "secondary-transparent" &&
+                    "text-text-secondary hover:text-text-primary hover:bg-btn-secondary-hover-bg",
+                variant === "danger-transparent" &&
+                    "text-danger/70 hover:text-danger hover:bg-btn-danger-hover/15",
                 className
             )}
             disabled={disabled}

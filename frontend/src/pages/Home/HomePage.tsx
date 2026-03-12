@@ -14,7 +14,7 @@ import Dropdown from "../../components/Dropdown/Dropdown";
 import Input from "../../components/Input/Input";
 import { updateUserProfile } from "../../api/profiles";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
-import { PlusIcon } from "lucide-react";
+import { PlusIcon, TrashIcon } from "lucide-react";
 import Page from "../../components/Page/Page";
 import Card from "../../components/Card/Card";
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
@@ -86,7 +86,7 @@ const HomePage = () => {
                 <span className="mt-3 flex gap-2">
                     <Button variant="primary" onClick={createOrg}>
                         Create test org
-                        <PlusIcon size={20} />
+                        <PlusIcon size={18} />
                     </Button>
                     <Button variant="secondary" onClick={fetchOrgs}>
                         Fetch orgs
@@ -232,6 +232,11 @@ const HomePage = () => {
                     </div>
                 </div>
                 <ProgressBar target={5} value={3} />
+                <Button variant="secondary-transparent">Cancel</Button>
+                <Button variant="danger-transparent">
+                    <TrashIcon size={18} />
+                    Delete
+                </Button>
             </div>
         </Page>
     );
