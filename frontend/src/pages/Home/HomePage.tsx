@@ -201,7 +201,7 @@ const HomePage = () => {
                         <Card
                             title="Example Card"
                             description="This is an example of a card"
-                            variant="hero"
+                            variant="highlight"
                         />
                     </div>
                     <div className="space-y-2">
@@ -226,7 +226,7 @@ const HomePage = () => {
                         <Card
                             title="Clickable Card"
                             description="This is an example of a card"
-                            variant="hero"
+                            variant="highlight"
                             onClick={() => alert("clicked")}
                         />
                     </div>
