@@ -14,11 +14,12 @@ import Dropdown from "../../components/Dropdown/Dropdown";
 import Input from "../../components/Input/Input";
 import { updateUserProfile } from "../../api/profiles";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
-import { Divide, PlusIcon, TrashIcon } from "lucide-react";
+import { PlusIcon, TrashIcon } from "lucide-react";
 import Page from "../../components/Page/Page";
 import Card from "../../components/Card/Card";
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import Divider from "../../components/Divider/Divider";
+import Navigator from "../../components/Navigator/Navigator";
 
 const HomePage = () => {
     const [orgs, setOrgs] = useState<Organisation[]>([]);
@@ -241,6 +242,14 @@ const HomePage = () => {
                     <TrashIcon size={18} />
                     Delete
                 </Button>
+                <Navigator
+                    options={[
+                        { label: "Design" },
+                        { label: "Analysis" },
+                        { label: "Notes", onClick: () => alert("notes") },
+                    ]}
+                    defaultOptionLabel="Analysis"
+                />
             </div>
         </Page>
     );
