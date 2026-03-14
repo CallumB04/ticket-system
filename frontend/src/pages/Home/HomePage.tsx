@@ -22,6 +22,7 @@ import Divider from "../../components/Divider/Divider";
 import Navigator from "../../components/Navigator/Navigator";
 import ClickableGroup from "../../components/ClickableGroup/ClickableGroup";
 import Popout from "../../components/Popout/Popout";
+import useWindowBounds from "../../hooks/useWindowBounds";
 
 const HomePage = () => {
     const [orgs, setOrgs] = useState<Organisation[]>([]);
@@ -30,6 +31,8 @@ const HomePage = () => {
     const [popoutVisible, setPopoutVisible] = useState<boolean>(false);
 
     const { theme, toggleTheme } = useTheme();
+
+    const bounds = useWindowBounds();
 
     const {
         sessionLoading,
@@ -288,6 +291,8 @@ const HomePage = () => {
                     defaultOptionLabel="Analysis"
                 />
             </div>
+            {bounds.width}
+            {bounds.height}
         </Page>
     );
 };
