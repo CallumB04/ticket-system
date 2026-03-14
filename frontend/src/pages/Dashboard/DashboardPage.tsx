@@ -10,7 +10,7 @@ const DashboardPage = () => {
             <Sidebar />
             <Page
                 title="Dashboard"
-                description="Welcome to the home of Ticket System"
+                description="Welcome to the home of Booth"
                 hasSidebar
             ></Page>
         </>
