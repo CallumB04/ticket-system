@@ -89,8 +89,8 @@ const SignupLoginPopup = ({
             title={state === "signup" ? "Create an Account" : "Welcome Back"}
             description={
                 state === "signup"
-                    ? "Sign up to Ticket System for free today"
-                    : "Log in to your Ticket System account"
+                    ? "Sign up to Booth for free today"
+                    : "Log in to your Booth account"
             }
             closePopup={closePopup}
         >

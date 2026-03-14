@@ -2,7 +2,7 @@ import Page from "../../components/Page/Page";
 import usePageTitle from "../../hooks/usePageTitle";
 
 const NotFoundPage = () => {
-    usePageTitle("Page not found / Ticket System");
+    usePageTitle("Page not found / Booth");
 
     return <Page title="404" description="Page not found" hasSidebar></Page>;
 };

@@ -3,7 +3,7 @@ import usePageTitle from "../../hooks/usePageTitle";
 import Sidebar from "../../layout/Sidebar/Sidebar";
 
 const OrganisationsPage = () => {
-    usePageTitle("Organisations / Ticket System");
+    usePageTitle("Organisations / Booth");
 
     return (
         <>

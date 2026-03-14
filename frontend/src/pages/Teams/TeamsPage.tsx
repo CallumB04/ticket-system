@@ -3,7 +3,7 @@ import usePageTitle from "../../hooks/usePageTitle";
 import Sidebar from "../../layout/Sidebar/Sidebar";
 
 const TeamsPage = () => {
-    usePageTitle("Teams / Ticket System");
+    usePageTitle("Teams / Booth");
 
     return (
         <>
