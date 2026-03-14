@@ -52,7 +52,7 @@ const Navigator = ({
     return (
         <div
             className={twMerge(
-                "border-input-border flex h-12 w-max rounded border",
+                "border-input-border bg-surface flex h-12 w-max rounded border",
                 className
             )}
         >
