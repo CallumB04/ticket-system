@@ -14,17 +14,20 @@ import Dropdown from "../../components/Dropdown/Dropdown";
 import Input from "../../components/Input/Input";
 import { updateUserProfile } from "../../api/profiles";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
-import { PlusIcon, TrashIcon } from "lucide-react";
+import { EllipsisVerticalIcon, PlusIcon, TrashIcon } from "lucide-react";
 import Page from "../../components/Page/Page";
 import Card from "../../components/Card/Card";
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import Divider from "../../components/Divider/Divider";
 import Navigator from "../../components/Navigator/Navigator";
 import ClickableGroup from "../../components/ClickableGroup/ClickableGroup";
+import Popout from "../../components/Popout/Popout";
 
 const HomePage = () => {
     const [orgs, setOrgs] = useState<Organisation[]>([]);
     const [members, setMembers] = useState<OrganisationMember[]>([]);
+
+    const [popoutVisible, setPopoutVisible] = useState<boolean>(false);
 
     const { theme, toggleTheme } = useTheme();
 
@@ -191,16 +194,44 @@ const HomePage = () => {
                             description="This is an example of a card"
                             variant="default"
                         >
-                            <ClickableGroup>
+                            <ClickableGroup className="group relative">
                                 <PlusIcon size={20} />{" "}
                                 <p className="text-sm">Add item</p>
+                            </ClickableGroup>
+                            <ClickableGroup className="relative">
+                                <EllipsisVerticalIcon
+                                    size={20}
+                                    onClick={() =>
+                                        setPopoutVisible((prev) => !prev)
+                                    }
+                                />
+                                {popoutVisible && (
+                                    <Popout
+                                        xPos="right"
+                                        yPos="bottom"
+                                        className=""
+                                    >
+                                        <Button
+                                            variant="secondary-transparent"
+                                            className="h-10 w-20 text-xs"
+                                        >
+                                            Add
+                                        </Button>
+                                        <Button
+                                            variant="danger-transparent"
+                                            className="h-10 w-20 text-xs"
+                                        >
+                                            Remove
+                                        </Button>
+                                    </Popout>
+                                )}
                             </ClickableGroup>
                         </Card>
                         <Card
                             title="Example Card"
                             description="This is an example of a card"
                             variant="muted"
-                        />
+                        ></Card>
                         <Card
                             title="Example Card"
                             description="This is an example of a card"
