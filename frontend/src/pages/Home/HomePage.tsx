@@ -20,6 +20,7 @@ import Card from "../../components/Card/Card";
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import Divider from "../../components/Divider/Divider";
 import Navigator from "../../components/Navigator/Navigator";
+import ClickableGroup from "../../components/ClickableGroup/ClickableGroup";
 
 const HomePage = () => {
     const [orgs, setOrgs] = useState<Organisation[]>([]);
@@ -189,7 +190,12 @@ const HomePage = () => {
                             title="Example Card"
                             description="This is an example of a card"
                             variant="default"
-                        />
+                        >
+                            <ClickableGroup>
+                                <PlusIcon size={20} />{" "}
+                                <p className="text-sm">Add item</p>
+                            </ClickableGroup>
+                        </Card>
                         <Card
                             title="Example Card"
                             description="This is an example of a card"
