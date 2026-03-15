@@ -74,7 +74,8 @@ const Navbar = ({ className }: NavbarProps) => {
                 </Link>
                 {/* Hamburger Icon - Only visible on mobile - Opens Sidebar */}
                 <ClickableGroup
-                    className="rounded-full lg:hidden"
+                    className="lg:hidden"
+                    isIcon
                     onClick={toggleMobileSidebar}
                 >
                     {isMobileSidebarOpen ? (
@@ -98,10 +99,7 @@ const Navbar = ({ className }: NavbarProps) => {
                     ) : (
                         <span className="flex gap-3">
                             {/* Light/Dark mode Icon */}
-                            <ClickableGroup
-                                className="rounded-full"
-                                onClick={toggleTheme}
-                            >
+                            <ClickableGroup isIcon onClick={toggleTheme}>
                                 {theme === "light" ? (
                                     <SunIcon
                                         size={20}
@@ -117,7 +115,7 @@ const Navbar = ({ className }: NavbarProps) => {
                             {/* Notifications Icon - With Popout menu */}
                             <div className="relative">
                                 <ClickableGroup
-                                    className="rounded-full"
+                                    isIcon
                                     onClick={() =>
                                         setNotificationsPopoutOpen(true)
                                     }
