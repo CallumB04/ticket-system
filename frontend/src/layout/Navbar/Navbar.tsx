@@ -24,6 +24,7 @@ import Divider from "../../components/Divider/Divider";
 import { useTheme } from "../../contexts/ThemeContext";
 import useClickOutside from "../../hooks/useClickOutside";
 import { useSidebar } from "../../contexts/SidebarContext";
+import AppLogo from "../../components/AppLogo/AppLogo";
 
 interface NavbarProps {
     className?: string;
@@ -73,7 +74,7 @@ const Navbar = ({ className }: NavbarProps) => {
                         location.pathname !== "/" && "hidden lg:block"
                     )}
                 >
-                    Ticket System
+                    <AppLogo />
                 </Link>
                 {/* Hamburger Icon - Only visible on mobile - Opens Sidebar */}
                 {location.pathname !== "/" && (
