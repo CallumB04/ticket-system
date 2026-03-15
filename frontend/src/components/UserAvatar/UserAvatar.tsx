@@ -34,7 +34,7 @@ const Avatar = ({ className, profile, onClick }: UserAvatarProps) => {
     return (
         <div
             className={twMerge(
-                "border-highlight/30 bg-highlight/15 flex size-9 items-center justify-center rounded-full border text-center",
+                "border-highlight/30 bg-highlight/15 flex size-9 items-center justify-center rounded-full border text-center transition-colors",
                 onClick && "hover:border-highlight/50 cursor-pointer",
                 className
             )}
