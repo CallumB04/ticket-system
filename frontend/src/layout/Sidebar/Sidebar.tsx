@@ -1,6 +1,6 @@
 import { twMerge } from "tailwind-merge";
 import SidebarLink from "./components/SidebarLink";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import {
     Building2Icon,
     GaugeCircleIcon,
