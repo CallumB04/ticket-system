@@ -106,7 +106,7 @@ const Navbar = ({ className }: NavbarProps) => {
                                     <Popout
                                         xPos="left"
                                         yPos="bottom"
-                                        className="flex flex-col gap-2"
+                                        className="flex max-w-60 flex-col gap-2"
                                         ref={profilePopoutRef}
                                     >
                                         {/* User Details */}
@@ -125,13 +125,13 @@ const Navbar = ({ className }: NavbarProps) => {
                                                             userProfile.last_name
                                                           : "")}
                                             </p>
-                                            <p className="text-text-secondary text-xs">
+                                            <p className="text-text-secondary text-xs break-all">
                                                 {user.email ?? "Loading..."}
                                             </p>
                                         </Card>
                                         <Divider />
                                         {/* Primary Actions */}
-                                        <div className="flex w-52 flex-col gap-1">
+                                        <div className="flex min-w-52 flex-col gap-1">
                                             {/* My Account */}
                                             <LinkButton
                                                 variant="secondary-transparent"
