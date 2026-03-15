@@ -1,18 +1,41 @@
 import { twMerge } from "tailwind-merge";
 import Button from "../../components/Button/Button";
 import LinkButton from "../../components/Button/LinkButton";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useUser } from "../../contexts/UserContext";
 import { usePopup } from "../../contexts/PopupContext";
 import SignupLoginPopup from "../Popups/SignupLoginPopup";
+import { BellIcon, LogOutIcon, SettingsIcon, UserIcon } from "lucide-react";
+import ClickableGroup from "../../components/ClickableGroup/ClickableGroup";
+import UserAvatar from "../../components/UserAvatar/UserAvatar";
+import { useRef, useState } from "react";
+import Popout from "../../components/Popout/Popout";
+import Card from "../../components/Card/Card";
+import Divider from "../../components/Divider/Divider";
+import { useClickOutside } from "../../hooks/useClickOutside";
 
 interface NavbarProps {
     className?: string;
 }
 
 const Navbar = ({ className }: NavbarProps) => {
-    const { sessionLoading, user } = useUser();
+    const { sessionLoading, user, userProfile, userProfileLoading, signOut } =
+        useUser();
     const { pushPopup, popPopup } = usePopup();
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const [profilePopoutOpen, setProfilePopoutOpen] = useState<boolean>(false);
+    const profilePopoutRef = useRef<HTMLDivElement>(null);
+
+    // close profile popout if user clicks outside of the popout
+    useClickOutside(profilePopoutRef, () => setProfilePopoutOpen(false));
+
+    const handleSignOut = () => {
+        signOut();
+        setProfilePopoutOpen(false);
+        navigate("/");
+    };
 
     return (
         <nav
@@ -42,7 +65,88 @@ const Navbar = ({ className }: NavbarProps) => {
                             Go to Dashboard
                         </LinkButton>
                     ) : (
-                        <p>Youre in the app</p>
+                        <span className="flex gap-2">
+                            {/* Notifications Icon */}
+                            <ClickableGroup className="rounded-full">
+                                <BellIcon size={20} />
+                            </ClickableGroup>
+                            {/* User Profile Icon - With Popout menu */}
+                            <div className="relative">
+                                <UserAvatar
+                                    profile={userProfile}
+                                    onClick={() => setProfilePopoutOpen(true)}
+                                />
+                                {profilePopoutOpen && (
+                                    <Popout
+                                        xPos="left"
+                                        yPos="bottom"
+                                        className="flex flex-col gap-2"
+                                        ref={profilePopoutRef}
+                                    >
+                                        {/* User Details */}
+                                        <Card
+                                            variant="highlight-muted"
+                                            size="medium"
+                                            className="w-full gap-0.5 rounded-lg"
+                                        >
+                                            <p className="text-text-primary text-sm font-semibold">
+                                                {userProfileLoading ||
+                                                !userProfile?.first_name
+                                                    ? "Loading..."
+                                                    : userProfile.first_name +
+                                                      (userProfile?.last_name
+                                                          ? " " +
+                                                            userProfile.last_name
+                                                          : "")}
+                                            </p>
+                                            <p className="text-text-secondary text-xs">
+                                                {user.email ?? "Loading..."}
+                                            </p>
+                                        </Card>
+                                        <Divider />
+                                        {/* Primary Actions */}
+                                        <div className="flex w-52 flex-col gap-1">
+                                            {/* My Account */}
+                                            <LinkButton
+                                                variant="secondary-transparent"
+                                                to="/account"
+                                                onClick={() =>
+                                                    setProfilePopoutOpen(false)
+                                                }
+                                                linkClassName="w-full"
+                                                buttonClassName="h-10 w-full justify-start gap-3"
+                                            >
+                                                <UserIcon size={18} />
+                                                My Account
+                                            </LinkButton>
+                                            {/* Settings */}
+                                            <LinkButton
+                                                variant="secondary-transparent"
+                                                to="/settings"
+                                                onClick={() =>
+                                                    setProfilePopoutOpen(false)
+                                                }
+                                                className="w-full"
+                                                buttonClassName="h-10 justify-start gap-3"
+                                            >
+                                                <SettingsIcon size={18} />
+                                                Settings
+                                            </LinkButton>
+                                        </div>
+                                        <Divider />
+                                        {/* Sign Out */}
+                                        <Button
+                                            variant="danger-transparent"
+                                            className="h-10 w-full justify-start gap-3"
+                                            onClick={handleSignOut}
+                                        >
+                                            <LogOutIcon size={18} />
+                                            Sign out
+                                        </Button>
+                                    </Popout>
+                                )}
+                            </div>
+                        </span>
                     )
                 ) : (
                     <span className="flex gap-2">
