@@ -10,9 +10,17 @@ interface PopoutProps {
     xPos: PopoutXPosition;
     yPos: PopoutYPosition;
     ref?: Ref<HTMLDivElement>;
+    title?: string;
 }
 
-const Popout = ({ className, children, xPos, yPos, ref }: PopoutProps) => {
+const Popout = ({
+    className,
+    children,
+    xPos,
+    yPos,
+    ref,
+    title,
+}: PopoutProps) => {
     return (
         <div
             className={twMerge(
@@ -21,11 +29,17 @@ const Popout = ({ className, children, xPos, yPos, ref }: PopoutProps) => {
                 xPos === "right" && "left-0",
                 yPos === "top" && "bottom-full mb-1.5",
                 yPos === "bottom" && "top-full mt-1.5",
+                title && "p-0",
                 className
             )}
             ref={ref}
         >
-            {children}
+            {title && (
+                <h2 className="border-b-layout-border text-text-primary w-full border-b px-4 py-3 text-sm font-medium">
+                    {title}
+                </h2>
+            )}
+            {title ? <div className="p-1.5">{children}</div> : children}
         </div>
     );
 };
