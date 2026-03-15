@@ -65,25 +65,30 @@ const Navbar = ({ className }: NavbarProps) => {
             )}
         >
             <span className="mx-auto flex w-full max-w-5xl items-center justify-between gap-4">
-                {/* Logo / Brand text - Not visible on mobile */}
+                {/* Logo / Brand text - Not visible on mobile unless on landing page */}
                 <Link
                     to="/"
-                    className="text-text-primary hidden font-medium tracking-wide lg:block"
+                    className={twMerge(
+                        "text-text-primary font-medium tracking-wide",
+                        location.pathname !== "/" && "hidden lg:block"
+                    )}
                 >
                     Ticket System
                 </Link>
                 {/* Hamburger Icon - Only visible on mobile - Opens Sidebar */}
-                <ClickableGroup
-                    className="lg:hidden"
-                    isIcon
-                    onClick={toggleMobileSidebar}
-                >
-                    {isMobileSidebarOpen ? (
-                        <XIcon size={20} />
-                    ) : (
-                        <TextAlignJustifyIcon size={20} />
-                    )}
-                </ClickableGroup>
+                {location.pathname !== "/" && (
+                    <ClickableGroup
+                        className="lg:hidden"
+                        isIcon
+                        onClick={toggleMobileSidebar}
+                    >
+                        {isMobileSidebarOpen ? (
+                            <XIcon size={20} />
+                        ) : (
+                            <TextAlignJustifyIcon size={20} />
+                        )}
+                    </ClickableGroup>
+                )}
                 {/* Navbar options */}
                 {sessionLoading ? (
                     <></>
