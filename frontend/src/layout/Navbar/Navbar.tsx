@@ -11,6 +11,7 @@ import {
     MoonIcon,
     SettingsIcon,
     SunIcon,
+    TextAlignJustifyIcon,
     UserIcon,
 } from "lucide-react";
 import ClickableGroup from "../../components/ClickableGroup/ClickableGroup";
@@ -19,8 +20,9 @@ import { useRef, useState } from "react";
 import Popout from "../../components/Popout/Popout";
 import Card from "../../components/Card/Card";
 import Divider from "../../components/Divider/Divider";
-import { useClickOutside } from "../../hooks/useClickOutside";
 import { useTheme } from "../../contexts/ThemeContext";
+import useClickOutside from "../../hooks/useClickOutside";
+import { useSidebar } from "../../contexts/SidebarContext";
 
 interface NavbarProps {
     className?: string;
@@ -33,6 +35,7 @@ const Navbar = ({ className }: NavbarProps) => {
     const location = useLocation();
     const navigate = useNavigate();
     const { theme, toggleTheme } = useTheme();
+    const { isMobileSidebarOpen, toggleMobileSidebar } = useSidebar();
 
     // User Profile Popout
     const [profilePopoutOpen, setProfilePopoutOpen] = useState<boolean>(false);
@@ -61,13 +64,20 @@ const Navbar = ({ className }: NavbarProps) => {
             )}
         >
             <span className="mx-auto flex w-full max-w-5xl items-center justify-between gap-4">
-                {/* Logo / Brand text */}
+                {/* Logo / Brand text - Not visible on mobile */}
                 <Link
                     to="/"
-                    className="text-text-primary font-medium tracking-wide"
+                    className="text-text-primary hidden font-medium tracking-wide lg:block"
                 >
                     Ticket System
                 </Link>
+                {/* Hamburger Icon - Only visible on mobile - Opens Sidebar */}
+                <ClickableGroup
+                    className="rounded-full lg:hidden"
+                    onClick={toggleMobileSidebar}
+                >
+                    <TextAlignJustifyIcon size={20} />
+                </ClickableGroup>
                 {/* Navbar options */}
                 {sessionLoading ? (
                     <></>
