@@ -5,7 +5,14 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useUser } from "../../contexts/UserContext";
 import { usePopup } from "../../contexts/PopupContext";
 import SignupLoginPopup from "../Popups/SignupLoginPopup";
-import { BellIcon, LogOutIcon, SettingsIcon, UserIcon } from "lucide-react";
+import {
+    BellIcon,
+    LogOutIcon,
+    MoonIcon,
+    SettingsIcon,
+    SunIcon,
+    UserIcon,
+} from "lucide-react";
 import ClickableGroup from "../../components/ClickableGroup/ClickableGroup";
 import UserAvatar from "../../components/UserAvatar/UserAvatar";
 import { useRef, useState } from "react";
@@ -13,6 +20,7 @@ import Popout from "../../components/Popout/Popout";
 import Card from "../../components/Card/Card";
 import Divider from "../../components/Divider/Divider";
 import { useClickOutside } from "../../hooks/useClickOutside";
+import { useTheme } from "../../contexts/ThemeContext";
 
 interface NavbarProps {
     className?: string;
@@ -24,6 +32,7 @@ const Navbar = ({ className }: NavbarProps) => {
     const { pushPopup, popPopup } = usePopup();
     const location = useLocation();
     const navigate = useNavigate();
+    const { theme, toggleTheme } = useTheme();
 
     const [profilePopoutOpen, setProfilePopoutOpen] = useState<boolean>(false);
     const profilePopoutRef = useRef<HTMLDivElement>(null);
@@ -65,13 +74,30 @@ const Navbar = ({ className }: NavbarProps) => {
                             Go to Dashboard
                         </LinkButton>
                     ) : (
-                        <span className="flex gap-2">
+                        <span className="flex gap-3">
+                            {/* Light/Dark mode Icon */}
+                            <ClickableGroup
+                                className="rounded-full"
+                                onClick={toggleTheme}
+                            >
+                                {theme === "light" ? (
+                                    <SunIcon
+                                        size={20}
+                                        className="text-yellow-400"
+                                    />
+                                ) : (
+                                    <MoonIcon
+                                        size={20}
+                                        className="text-highlight"
+                                    />
+                                )}
+                            </ClickableGroup>
                             {/* Notifications Icon */}
                             <ClickableGroup className="rounded-full">
                                 <BellIcon size={20} />
                             </ClickableGroup>
                             {/* User Profile Icon - With Popout menu */}
-                            <div className="relative">
+                            <div className="relative ml-1">
                                 <UserAvatar
                                     profile={userProfile}
                                     onClick={() => setProfilePopoutOpen(true)}
