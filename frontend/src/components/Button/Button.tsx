@@ -1,14 +1,16 @@
 import type { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
+export type ButtonVariant =
+    | "primary"
+    | "secondary"
+    | "danger"
+    | "secondary-transparent"
+    | "danger-transparent";
+
 interface ButtonProps {
     className?: string;
-    variant:
-        | "primary"
-        | "secondary"
-        | "danger"
-        | "secondary-transparent"
-        | "danger-transparent";
+    variant: ButtonVariant;
     children: ReactNode;
     disabled?: boolean;
     onClick?: () => void;
