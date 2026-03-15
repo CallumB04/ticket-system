@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 
-export function useClickOutside<T extends HTMLElement>(
+const useClickOutside = <T extends HTMLElement>(
     ref: React.RefObject<T | null>,
     onClickOutside: () => void
-) {
+) => {
     useEffect(() => {
         function handleClick(event: MouseEvent) {
             if (!ref.current) return;
@@ -19,4 +19,6 @@ export function useClickOutside<T extends HTMLElement>(
             window.removeEventListener("mousedown", handleClick);
         };
     }, [ref, onClickOutside]);
-}
+};
+
+export default useClickOutside;
