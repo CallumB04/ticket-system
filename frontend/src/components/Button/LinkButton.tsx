@@ -1,11 +1,13 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
-import Button from "./Button";
+import Button, { type ButtonVariant } from "./Button";
 
 interface LinkButtonProps {
     className?: string;
-    variant: "primary" | "secondary" | "danger";
+    linkClassName?: string;
+    buttonClassName?: string;
+    variant: ButtonVariant;
     to: string;
     children: ReactNode;
     disabled?: boolean;
@@ -14,6 +16,8 @@ interface LinkButtonProps {
 
 const LinkButton = ({
     className,
+    linkClassName,
+    buttonClassName,
     variant,
     to,
     children,
@@ -21,9 +25,16 @@ const LinkButton = ({
     onClick,
 }: LinkButtonProps) => {
     return (
-        <Link to={to} className={twMerge("w-max cursor-pointer", className)}>
+        <Link
+            to={to}
+            className={twMerge(
+                "w-max cursor-pointer",
+                className,
+                linkClassName
+            )}
+        >
             <Button
-                className={className}
+                className={twMerge(className, buttonClassName)}
                 variant={variant}
                 disabled={disabled}
                 onClick={onClick}

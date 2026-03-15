@@ -3,8 +3,13 @@ import CardTitle from "./CardTitle";
 import CardDescription from "./CardDescription";
 import type { ReactNode } from "react";
 
-type CardVariant = "default" | "muted" | "border" | "highlight";
-type CardSize = "default" | "small";
+type CardVariant =
+    | "default"
+    | "muted"
+    | "border"
+    | "highlight"
+    | "highlight-muted";
+type CardSize = "default" | "medium" | "small";
 
 interface CardProps {
     className?: string;
@@ -20,6 +25,8 @@ const getPaddingFromSize = (size: CardSize) => {
     switch (size) {
         case "default":
             return "p-4";
+        case "medium":
+            return "p-3";
         case "small":
             return "p-2";
     }
@@ -44,6 +51,8 @@ const Card = ({
                 variant === "border" && "bg-transparent shadow-none",
                 variant === "highlight" &&
                     "bg-highlight/15 border-highlight/50",
+                variant === "highlight-muted" &&
+                    "bg-highlight/5 border-highlight/20 shadow-none",
                 onClick && "hover:border-surface-border-hover cursor-default",
                 onClick &&
                     variant === "highlight" &&

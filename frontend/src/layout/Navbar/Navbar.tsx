@@ -1,18 +1,62 @@
 import { twMerge } from "tailwind-merge";
 import Button from "../../components/Button/Button";
 import LinkButton from "../../components/Button/LinkButton";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useUser } from "../../contexts/UserContext";
 import { usePopup } from "../../contexts/PopupContext";
 import SignupLoginPopup from "../Popups/SignupLoginPopup";
+import {
+    BellIcon,
+    LogOutIcon,
+    MoonIcon,
+    SettingsIcon,
+    SunIcon,
+    TextAlignJustifyIcon,
+    UserIcon,
+    XIcon,
+} from "lucide-react";
+import ClickableGroup from "../../components/ClickableGroup/ClickableGroup";
+import UserAvatar from "../../components/UserAvatar/UserAvatar";
+import { useRef, useState } from "react";
+import Popout from "../../components/Popout/Popout";
+import Card from "../../components/Card/Card";
+import Divider from "../../components/Divider/Divider";
+import { useTheme } from "../../contexts/ThemeContext";
+import useClickOutside from "../../hooks/useClickOutside";
+import { useSidebar } from "../../contexts/SidebarContext";
+import AppLogo from "../../components/AppLogo/AppLogo";
 
 interface NavbarProps {
     className?: string;
 }
 
 const Navbar = ({ className }: NavbarProps) => {
-    const { sessionLoading, user } = useUser();
+    const { sessionLoading, user, userProfile, userProfileLoading, signOut } =
+        useUser();
     const { pushPopup, popPopup } = usePopup();
+    const location = useLocation();
+    const navigate = useNavigate();
+    const { theme, toggleTheme } = useTheme();
+    const { isMobileSidebarOpen, toggleMobileSidebar } = useSidebar();
+
+    // User Profile Popout
+    const [profilePopoutOpen, setProfilePopoutOpen] = useState<boolean>(false);
+    const profilePopoutRef = useRef<HTMLDivElement>(null);
+    useClickOutside(profilePopoutRef, () => setProfilePopoutOpen(false)); // close when click outside
+
+    // Notifications Popout
+    const [notificationsPopoutOpen, setNotificationsPopoutOpen] =
+        useState<boolean>(false);
+    const notificationsPopoutRef = useRef<HTMLDivElement>(null);
+    useClickOutside(notificationsPopoutRef, () =>
+        setNotificationsPopoutOpen(false)
+    ); // close when click outside
+
+    const handleSignOut = () => {
+        signOut();
+        setProfilePopoutOpen(false);
+        navigate("/");
+    };
 
     return (
         <nav
@@ -22,26 +66,164 @@ const Navbar = ({ className }: NavbarProps) => {
             )}
         >
             <span className="mx-auto flex w-full max-w-5xl items-center justify-between gap-4">
-                {/* Logo / Brand text */}
+                {/* Logo / Brand text - Not visible on mobile unless on landing page */}
                 <Link
                     to="/"
-                    className="text-text-primary font-medium tracking-wide"
+                    className={twMerge(
+                        "text-text-primary font-medium tracking-wide",
+                        location.pathname !== "/" && "hidden lg:block"
+                    )}
                 >
-                    Ticket System
+                    <AppLogo />
                 </Link>
-                {/* Buttons */}
-                {/* When signed out -> Signup / Login */}
-                {/* When signed in -> Go to Dashboard */}
+                {/* Hamburger Icon - Only visible on mobile - Opens Sidebar */}
+                {location.pathname !== "/" && (
+                    <ClickableGroup
+                        className="lg:hidden"
+                        isIcon
+                        onClick={toggleMobileSidebar}
+                    >
+                        {isMobileSidebarOpen ? (
+                            <XIcon size={20} />
+                        ) : (
+                            <TextAlignJustifyIcon size={20} />
+                        )}
+                    </ClickableGroup>
+                )}
+                {/* Navbar options */}
                 {sessionLoading ? (
                     <></>
                 ) : user ? (
-                    <LinkButton
-                        to="/dashboard"
-                        variant="primary"
-                        className="h-11"
-                    >
-                        Go to Dashboard
-                    </LinkButton>
+                    location.pathname === "/" ? (
+                        <LinkButton
+                            to="/dashboard"
+                            variant="primary"
+                            className="h-11"
+                        >
+                            Go to Dashboard
+                        </LinkButton>
+                    ) : (
+                        <span className="flex gap-3">
+                            {/* Light/Dark mode Icon */}
+                            <ClickableGroup isIcon onClick={toggleTheme}>
+                                {theme === "light" ? (
+                                    <SunIcon
+                                        size={20}
+                                        className="text-yellow-400"
+                                    />
+                                ) : (
+                                    <MoonIcon
+                                        size={20}
+                                        className="text-highlight"
+                                    />
+                                )}
+                            </ClickableGroup>
+                            {/* Notifications Icon - With Popout menu */}
+                            <div className="relative">
+                                <ClickableGroup
+                                    isIcon
+                                    onClick={() =>
+                                        setNotificationsPopoutOpen(true)
+                                    }
+                                >
+                                    <BellIcon size={20} />
+                                </ClickableGroup>
+                                {notificationsPopoutOpen && (
+                                    <Popout
+                                        xPos="left"
+                                        yPos="bottom"
+                                        className="flex h-76 w-72 flex-col p-0"
+                                        ref={notificationsPopoutRef}
+                                        title="Notifications"
+                                    >
+                                        {/* No Notifications */}
+                                        <div className="text-text-placeholder mt-12 flex w-full flex-col items-center gap-2">
+                                            <BellIcon size={32} />
+                                            <p className="text-sm">
+                                                There are no notifications
+                                            </p>
+                                        </div>
+                                    </Popout>
+                                )}
+                            </div>
+                            {/* User Profile Icon - With Popout menu */}
+                            <div className="relative ml-1">
+                                <UserAvatar
+                                    profile={userProfile}
+                                    onClick={() => setProfilePopoutOpen(true)}
+                                />
+                                {profilePopoutOpen && (
+                                    <Popout
+                                        xPos="left"
+                                        yPos="bottom"
+                                        className="flex max-w-60 flex-col gap-2"
+                                        ref={profilePopoutRef}
+                                    >
+                                        {/* User Details */}
+                                        <Card
+                                            variant="highlight-muted"
+                                            size="medium"
+                                            className="w-full gap-0.5 rounded-lg"
+                                        >
+                                            <p className="text-text-primary text-sm font-semibold">
+                                                {userProfileLoading ||
+                                                !userProfile?.first_name
+                                                    ? "Loading..."
+                                                    : userProfile.first_name +
+                                                      (userProfile?.last_name
+                                                          ? " " +
+                                                            userProfile.last_name
+                                                          : "")}
+                                            </p>
+                                            <p className="text-text-secondary text-xs break-all">
+                                                {user.email ?? "Loading..."}
+                                            </p>
+                                        </Card>
+                                        <Divider />
+                                        {/* Primary Actions */}
+                                        <div className="flex min-w-52 flex-col gap-1">
+                                            {/* My Account */}
+                                            <LinkButton
+                                                variant="secondary-transparent"
+                                                to="/account"
+                                                onClick={() =>
+                                                    setProfilePopoutOpen(false)
+                                                }
+                                                linkClassName="w-full"
+                                                buttonClassName="h-10 w-full justify-start gap-3"
+                                            >
+                                                <UserIcon size={18} />
+                                                My Account
+                                            </LinkButton>
+                                            {/* Settings */}
+                                            <LinkButton
+                                                variant="secondary-transparent"
+                                                to="/settings"
+                                                onClick={() =>
+                                                    setProfilePopoutOpen(false)
+                                                }
+                                                className="w-full"
+                                                buttonClassName="h-10 justify-start gap-3"
+                                            >
+                                                <SettingsIcon size={18} />
+                                                Settings
+                                            </LinkButton>
+                                        </div>
+                                        <Divider />
+                                        {/* Sign Out */}
+                                        <Button
+                                            variant="danger-transparent"
+                                            className="h-10 w-full justify-start gap-3"
+                                            onClick={handleSignOut}
+                                        >
+                                            <LogOutIcon size={18} />
+                                            Sign out
+                                        </Button>
+                                    </Popout>
+                                )}
+                            </div>
+                        </span>
+                    )
                 ) : (
                     <span className="flex gap-2">
                         <Button

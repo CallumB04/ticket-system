@@ -1,14 +1,16 @@
 import type { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
+export type ButtonVariant =
+    | "primary"
+    | "secondary"
+    | "danger"
+    | "secondary-transparent"
+    | "danger-transparent";
+
 interface ButtonProps {
     className?: string;
-    variant:
-        | "primary"
-        | "secondary"
-        | "danger"
-        | "secondary-transparent"
-        | "danger-transparent";
+    variant: ButtonVariant;
     children: ReactNode;
     disabled?: boolean;
     onClick?: () => void;
@@ -42,7 +44,7 @@ const Button = ({
                 variant === "secondary-transparent" &&
                     "text-text-secondary hover:text-text-primary hover:bg-btn-secondary-hover-bg",
                 variant === "danger-transparent" &&
-                    "text-danger/70 hover:text-danger hover:bg-btn-danger-hover/15",
+                    "text-danger/70 hover:bg-btn-danger-hover/10",
                 className
             )}
             disabled={disabled}
