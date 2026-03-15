@@ -5,6 +5,8 @@ import Button, { type ButtonVariant } from "./Button";
 
 interface LinkButtonProps {
     className?: string;
+    linkClassName?: string;
+    buttonClassName?: string;
     variant: ButtonVariant;
     to: string;
     children: ReactNode;
@@ -14,6 +16,8 @@ interface LinkButtonProps {
 
 const LinkButton = ({
     className,
+    linkClassName,
+    buttonClassName,
     variant,
     to,
     children,
@@ -21,9 +25,16 @@ const LinkButton = ({
     onClick,
 }: LinkButtonProps) => {
     return (
-        <Link to={to} className={twMerge("w-max cursor-pointer", className)}>
+        <Link
+            to={to}
+            className={twMerge(
+                "w-max cursor-pointer",
+                className,
+                linkClassName
+            )}
+        >
             <Button
-                className={className}
+                className={twMerge(className, buttonClassName)}
                 variant={variant}
                 disabled={disabled}
                 onClick={onClick}
