@@ -34,11 +34,18 @@ const Navbar = ({ className }: NavbarProps) => {
     const navigate = useNavigate();
     const { theme, toggleTheme } = useTheme();
 
+    // User Profile Popout
     const [profilePopoutOpen, setProfilePopoutOpen] = useState<boolean>(false);
     const profilePopoutRef = useRef<HTMLDivElement>(null);
+    useClickOutside(profilePopoutRef, () => setProfilePopoutOpen(false)); // close when click outside
 
-    // close profile popout if user clicks outside of the popout
-    useClickOutside(profilePopoutRef, () => setProfilePopoutOpen(false));
+    // Notifications Popout
+    const [notificationsPopoutOpen, setNotificationsPopoutOpen] =
+        useState<boolean>(false);
+    const notificationsPopoutRef = useRef<HTMLDivElement>(null);
+    useClickOutside(notificationsPopoutRef, () =>
+        setNotificationsPopoutOpen(false)
+    ); // close when click outside
 
     const handleSignOut = () => {
         signOut();
@@ -92,10 +99,27 @@ const Navbar = ({ className }: NavbarProps) => {
                                     />
                                 )}
                             </ClickableGroup>
-                            {/* Notifications Icon */}
-                            <ClickableGroup className="rounded-full">
-                                <BellIcon size={20} />
-                            </ClickableGroup>
+                            {/* Notifications Icon - With Popout menu */}
+                            <div className="relative">
+                                <ClickableGroup
+                                    className="rounded-full"
+                                    onClick={() =>
+                                        setNotificationsPopoutOpen(true)
+                                    }
+                                >
+                                    <BellIcon size={20} />
+                                </ClickableGroup>
+                                {notificationsPopoutOpen && (
+                                    <Popout
+                                        xPos="left"
+                                        yPos="bottom"
+                                        className="flex-c-ol flex max-w-80 min-w-80"
+                                        ref={notificationsPopoutRef}
+                                    >
+                                        Notifications
+                                    </Popout>
+                                )}
+                            </div>
                             {/* User Profile Icon - With Popout menu */}
                             <div className="relative ml-1">
                                 <UserAvatar
