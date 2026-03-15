@@ -1,8 +1,15 @@
 import { twMerge } from "tailwind-merge";
 import SidebarLink from "./components/SidebarLink";
-import { useLocation } from "react-router-dom";
-import { Building2Icon, GaugeCircleIcon, UsersIcon } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import {
+    Building2Icon,
+    GaugeCircleIcon,
+    HomeIcon,
+    UsersIcon,
+} from "lucide-react";
 import { useSidebar } from "../../contexts/SidebarContext";
+import Divider from "../../components/Divider/Divider";
+import { useEffect } from "react";
 
 interface SidebarProps {
     className?: string;
@@ -10,7 +17,12 @@ interface SidebarProps {
 
 const Sidebar = ({ className }: SidebarProps) => {
     const location = useLocation();
-    const { isMobileSidebarOpen } = useSidebar();
+    const { isMobileSidebarOpen, closeMobileSidebar } = useSidebar();
+
+    // close mobile sidebar if location changes
+    useEffect(() => {
+        closeMobileSidebar();
+    }, [location.pathname]);
 
     return (
         <aside
@@ -20,6 +32,15 @@ const Sidebar = ({ className }: SidebarProps) => {
                 className
             )}
         >
+            {/* Return to Home button - Only visible on mobile sidebar */}
+            <div className="flex flex-col gap-1.5 lg:hidden">
+                <SidebarLink
+                    text="Return to Home"
+                    icon={<HomeIcon size={20} />}
+                    to="/"
+                />
+                <Divider />
+            </div>
             <SidebarLink
                 text="Dashboard"
                 icon={<GaugeCircleIcon size={20} />}
