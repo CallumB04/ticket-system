@@ -3,7 +3,12 @@ import CardTitle from "./CardTitle";
 import CardDescription from "./CardDescription";
 import type { ReactNode } from "react";
 
-type CardVariant = "default" | "muted" | "border" | "highlight";
+type CardVariant =
+    | "default"
+    | "muted"
+    | "border"
+    | "highlight"
+    | "highlight-muted";
 type CardSize = "default" | "small";
 
 interface CardProps {
@@ -44,6 +49,8 @@ const Card = ({
                 variant === "border" && "bg-transparent shadow-none",
                 variant === "highlight" &&
                     "bg-highlight/15 border-highlight/50",
+                variant === "highlight-muted" &&
+                    "bg-highlight/5 border-highlight/25",
                 onClick && "hover:border-surface-border-hover cursor-default",
                 onClick &&
                     variant === "highlight" &&
