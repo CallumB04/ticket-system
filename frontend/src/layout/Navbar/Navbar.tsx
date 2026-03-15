@@ -113,10 +113,17 @@ const Navbar = ({ className }: NavbarProps) => {
                                     <Popout
                                         xPos="left"
                                         yPos="bottom"
-                                        className="flex-c-ol flex max-w-80 min-w-80"
+                                        className="flex h-76 w-72 flex-col p-0"
                                         ref={notificationsPopoutRef}
+                                        title="Notifications"
                                     >
-                                        Notifications
+                                        {/* No Notifications */}
+                                        <div className="text-text-placeholder mt-12 flex w-full flex-col items-center gap-2">
+                                            <BellIcon size={32} />
+                                            <p className="text-sm">
+                                                There are no notifications
+                                            </p>
+                                        </div>
                                     </Popout>
                                 )}
                             </div>
