@@ -9,7 +9,7 @@ type CardVariant =
     | "border"
     | "highlight"
     | "highlight-muted";
-type CardSize = "default" | "small";
+type CardSize = "default" | "medium" | "small";
 
 interface CardProps {
     className?: string;
@@ -25,6 +25,8 @@ const getPaddingFromSize = (size: CardSize) => {
     switch (size) {
         case "default":
             return "p-4";
+        case "medium":
+            return "p-3";
         case "small":
             return "p-2";
     }
@@ -50,7 +52,7 @@ const Card = ({
                 variant === "highlight" &&
                     "bg-highlight/15 border-highlight/50",
                 variant === "highlight-muted" &&
-                    "bg-highlight/5 border-highlight/25",
+                    "bg-highlight/5 border-highlight/20 shadow-none",
                 onClick && "hover:border-surface-border-hover cursor-default",
                 onClick &&
                     variant === "highlight" &&
