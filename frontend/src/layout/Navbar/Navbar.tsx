@@ -13,6 +13,7 @@ import {
     SunIcon,
     TextAlignJustifyIcon,
     UserIcon,
+    XIcon,
 } from "lucide-react";
 import ClickableGroup from "../../components/ClickableGroup/ClickableGroup";
 import UserAvatar from "../../components/UserAvatar/UserAvatar";
@@ -76,7 +77,11 @@ const Navbar = ({ className }: NavbarProps) => {
                     className="rounded-full lg:hidden"
                     onClick={toggleMobileSidebar}
                 >
-                    <TextAlignJustifyIcon size={20} />
+                    {isMobileSidebarOpen ? (
+                        <XIcon size={20} />
+                    ) : (
+                        <TextAlignJustifyIcon size={20} />
+                    )}
                 </ClickableGroup>
                 {/* Navbar options */}
                 {sessionLoading ? (
