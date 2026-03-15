@@ -29,19 +29,21 @@ const Navbar = ({ className }: NavbarProps) => {
                 >
                     Ticket System
                 </Link>
-                {/* Buttons */}
-                {/* When signed out -> Signup / Login */}
-                {/* When signed in -> Go to Dashboard */}
+                {/* Navbar options */}
                 {sessionLoading ? (
                     <></>
                 ) : user ? (
-                    <LinkButton
-                        to="/dashboard"
-                        variant="primary"
-                        className="h-11"
-                    >
-                        Go to Dashboard
-                    </LinkButton>
+                    location.pathname === "/" ? (
+                        <LinkButton
+                            to="/dashboard"
+                            variant="primary"
+                            className="h-11"
+                        >
+                            Go to Dashboard
+                        </LinkButton>
+                    ) : (
+                        <p>Youre in the app</p>
+                    )
                 ) : (
                     <span className="flex gap-2">
                         <Button
