@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import ClickableGroup from "../../components/ClickableGroup/ClickableGroup";
 import UserAvatar from "../../components/UserAvatar/UserAvatar";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Popout from "../../components/Popout/Popout";
 import Card from "../../components/Card/Card";
 import Divider from "../../components/Divider/Divider";
@@ -25,6 +25,7 @@ import { useTheme } from "../../contexts/ThemeContext";
 import useClickOutside from "../../hooks/useClickOutside";
 import { useSidebar } from "../../contexts/SidebarContext";
 import AppLogo from "../../components/AppLogo/AppLogo";
+import ClickableText from "../../components/Text/ClickableText";
 
 interface NavbarProps {
     className?: string;
@@ -51,6 +52,13 @@ const Navbar = ({ className }: NavbarProps) => {
     useClickOutside(notificationsPopoutRef, () =>
         setNotificationsPopoutOpen(false)
     ); // close when click outside
+    const [notificationsShowAll, setNotificationsShowAll] =
+        useState<boolean>(false);
+
+    // reset notifications show all state when popout is closed
+    useEffect(() => {
+        setNotificationsShowAll(false);
+    }, [notificationsPopoutOpen]);
 
     const handleSignOut = () => {
         signOut();
@@ -137,11 +145,27 @@ const Navbar = ({ className }: NavbarProps) => {
                                         title="Notifications"
                                     >
                                         {/* No Notifications */}
-                                        <div className="text-text-placeholder mt-12 flex w-full flex-col items-center gap-2">
+                                        <div className="text-text-placeholder mt-16 flex w-full flex-col items-center gap-2.5">
                                             <BellIcon size={32} />
                                             <p className="text-sm">
-                                                There are no notifications
+                                                No{" "}
+                                                {notificationsShowAll
+                                                    ? ""
+                                                    : "new"}{" "}
+                                                notifications
                                             </p>
+                                            {!notificationsShowAll && (
+                                                <ClickableText
+                                                    className="text-xs"
+                                                    onClick={() =>
+                                                        setNotificationsShowAll(
+                                                            true
+                                                        )
+                                                    }
+                                                >
+                                                    View all
+                                                </ClickableText>
+                                            )}
                                         </div>
                                     </Popout>
                                 )}
