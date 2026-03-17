@@ -1,42 +1,35 @@
 import { twMerge } from "tailwind-merge";
 import Button from "../../components/Button/Button";
 import LinkButton from "../../components/Button/LinkButton";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useUser } from "../../contexts/UserContext";
 import { usePopup } from "../../contexts/PopupContext";
 import SignupLoginPopup from "../Popups/SignupLoginPopup";
 import {
     BellIcon,
-    LogOutIcon,
     MoonIcon,
-    SettingsIcon,
     SunIcon,
     TextAlignJustifyIcon,
-    UserIcon,
     XIcon,
 } from "lucide-react";
 import ClickableGroup from "../../components/ClickableGroup/ClickableGroup";
 import UserAvatar from "../../components/UserAvatar/UserAvatar";
-import { useEffect, useRef, useState } from "react";
-import Popout from "../../components/Popout/Popout";
-import Card from "../../components/Card/Card";
-import Divider from "../../components/Divider/Divider";
+import { useRef, useState } from "react";
 import { useTheme } from "../../contexts/ThemeContext";
 import useClickOutside from "../../hooks/useClickOutside";
 import { useSidebar } from "../../contexts/SidebarContext";
 import AppLogo from "../../components/AppLogo/AppLogo";
-import ClickableText from "../../components/Text/ClickableText";
+import NotificationsPopout from "../Popouts/NotificationsPopout";
+import UserProfilePopout from "../Popouts/UserProfilePopout";
 
 interface NavbarProps {
     className?: string;
 }
 
 const Navbar = ({ className }: NavbarProps) => {
-    const { sessionLoading, user, userProfile, userProfileLoading, signOut } =
-        useUser();
+    const { sessionLoading, user, userProfile } = useUser();
     const { pushPopup, popPopup } = usePopup();
     const location = useLocation();
-    const navigate = useNavigate();
     const { theme, toggleTheme } = useTheme();
     const { isMobileSidebarOpen, toggleMobileSidebar } = useSidebar();
 
@@ -48,23 +41,6 @@ const Navbar = ({ className }: NavbarProps) => {
     // Notifications Popout
     const [notificationsPopoutOpen, setNotificationsPopoutOpen] =
         useState<boolean>(false);
-    const notificationsPopoutRef = useRef<HTMLDivElement>(null);
-    useClickOutside(notificationsPopoutRef, () =>
-        setNotificationsPopoutOpen(false)
-    ); // close when click outside
-    const [notificationsShowAll, setNotificationsShowAll] =
-        useState<boolean>(false);
-
-    // reset notifications show all state when popout is closed
-    useEffect(() => {
-        setNotificationsShowAll(false);
-    }, [notificationsPopoutOpen]);
-
-    const handleSignOut = () => {
-        signOut();
-        setProfilePopoutOpen(false);
-        navigate("/");
-    };
 
     return (
         <nav
@@ -137,37 +113,11 @@ const Navbar = ({ className }: NavbarProps) => {
                                     <BellIcon size={20} />
                                 </ClickableGroup>
                                 {notificationsPopoutOpen && (
-                                    <Popout
-                                        xPos="left"
-                                        yPos="bottom"
-                                        className="flex h-76 w-72 flex-col p-0"
-                                        ref={notificationsPopoutRef}
-                                        title="Notifications"
-                                    >
-                                        {/* No Notifications */}
-                                        <div className="text-text-placeholder mt-16 flex w-full flex-col items-center gap-2.5">
-                                            <BellIcon size={32} />
-                                            <p className="text-sm">
-                                                No{" "}
-                                                {notificationsShowAll
-                                                    ? ""
-                                                    : "new"}{" "}
-                                                notifications
-                                            </p>
-                                            {!notificationsShowAll && (
-                                                <ClickableText
-                                                    className="text-xs"
-                                                    onClick={() =>
-                                                        setNotificationsShowAll(
-                                                            true
-                                                        )
-                                                    }
-                                                >
-                                                    View all
-                                                </ClickableText>
-                                            )}
-                                        </div>
-                                    </Popout>
+                                    <NotificationsPopout
+                                        closePopout={() =>
+                                            setNotificationsPopoutOpen(false)
+                                        }
+                                    />
                                 )}
                             </div>
                             {/* User Profile Icon - With Popout menu */}
@@ -177,73 +127,11 @@ const Navbar = ({ className }: NavbarProps) => {
                                     onClick={() => setProfilePopoutOpen(true)}
                                 />
                                 {profilePopoutOpen && (
-                                    <Popout
-                                        xPos="left"
-                                        yPos="bottom"
-                                        className="flex max-w-60 flex-col gap-2"
-                                        ref={profilePopoutRef}
-                                    >
-                                        {/* User Details */}
-                                        <Card
-                                            variant="highlight-muted"
-                                            size="medium"
-                                            className="w-full gap-0.5 rounded-lg"
-                                        >
-                                            <p className="text-text-primary text-sm font-semibold">
-                                                {userProfileLoading ||
-                                                !userProfile?.first_name
-                                                    ? "Loading..."
-                                                    : userProfile.first_name +
-                                                      (userProfile?.last_name
-                                                          ? " " +
-                                                            userProfile.last_name
-                                                          : "")}
-                                            </p>
-                                            <p className="text-text-secondary text-xs break-all">
-                                                {user.email ?? "Loading..."}
-                                            </p>
-                                        </Card>
-                                        <Divider />
-                                        {/* Primary Actions */}
-                                        <div className="flex min-w-52 flex-col gap-1">
-                                            {/* My Account */}
-                                            <LinkButton
-                                                variant="secondary-transparent"
-                                                to="/account"
-                                                onClick={() =>
-                                                    setProfilePopoutOpen(false)
-                                                }
-                                                linkClassName="w-full"
-                                                buttonClassName="h-10 w-full justify-start gap-3"
-                                            >
-                                                <UserIcon size={18} />
-                                                My Account
-                                            </LinkButton>
-                                            {/* Settings */}
-                                            <LinkButton
-                                                variant="secondary-transparent"
-                                                to="/settings"
-                                                onClick={() =>
-                                                    setProfilePopoutOpen(false)
-                                                }
-                                                className="w-full"
-                                                buttonClassName="h-10 justify-start gap-3"
-                                            >
-                                                <SettingsIcon size={18} />
-                                                Settings
-                                            </LinkButton>
-                                        </div>
-                                        <Divider />
-                                        {/* Sign Out */}
-                                        <Button
-                                            variant="danger-transparent"
-                                            className="h-10 w-full justify-start gap-3"
-                                            onClick={handleSignOut}
-                                        >
-                                            <LogOutIcon size={18} />
-                                            Sign out
-                                        </Button>
-                                    </Popout>
+                                    <UserProfilePopout
+                                        closePopout={() =>
+                                            setProfilePopoutOpen(false)
+                                        }
+                                    />
                                 )}
                             </div>
                         </span>
