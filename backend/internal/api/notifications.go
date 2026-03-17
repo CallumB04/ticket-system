@@ -1,0 +1,65 @@
+package api
+
+import (
+	"net/http"
+	"time"
+
+	"github.com/CallumB04/ticket-system/backend/internal/auth"
+	"github.com/CallumB04/ticket-system/backend/internal/models"
+	"github.com/CallumB04/ticket-system/backend/internal/util"
+	"github.com/jackc/pgx/v5/pgxpool"
+)
+
+// Handlers
+
+func handleFetchNotifications(db *pgxpool.Pool) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		// Get user ID of authenticated user, provided by middleware.
+		userID := r.Context().Value(auth.UserIDKey).(string)
+
+		// Query database for notifications assigned to this user.
+		// Order notifications in descending order of creation date (newest first)
+		// $1 - Authenticated User's ID
+		rows, err := db.Query(r.Context(), `
+			select id, type, description, read, created_at
+			from public.notifications
+			where user_id = $1
+			order by created_at DESC
+		`, userID)
+		if err != nil {
+			util.ErrorResponse(w, http.StatusInternalServerError, "error fetching notifications")
+			return
+		}
+
+		// Close db rows after responding to client.
+		defer rows.Close()
+
+		// Append results from database query into array of notifications.
+		var notifications []models.Notification
+		for rows.Next() {
+			var (
+				id          string
+				notiType    string // cant use 'type' due to existing keyword
+				description string
+				read        bool
+				createdAt   time.Time
+			)
+
+			if err := rows.Scan(&id, &notiType, &description, &read, &createdAt); err != nil {
+				util.ErrorResponse(w, http.StatusInternalServerError, "error reading notifications")
+				return
+			}
+
+			notifications = append(notifications, models.Notification{
+				ID:          id,
+				Type:        notiType,
+				Description: description,
+				Read:        read,
+				CreatedAt:   createdAt,
+			})
+		}
+
+		// Send notifications to client
+		util.JSONResponse(w, http.StatusOK, notifications)
+	}
+}
