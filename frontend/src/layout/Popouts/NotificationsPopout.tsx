@@ -63,7 +63,7 @@ const NotificationsPopout = ({
             xPos="left"
             yPos="bottom"
             className={twMerge(
-                "flex h-72 w-80 flex-col overflow-y-scroll",
+                "flex h-72 w-88 flex-col overflow-y-scroll",
                 className
             )}
             ref={popoutRef}
@@ -74,9 +74,11 @@ const NotificationsPopout = ({
                 <LoadingSpinner variant="surface" className="mx-auto mt-12" />
             ) : notifications && notifications?.length >= 1 ? (
                 // Notifications
-                notifications.map((n) => (
-                    <NotificationPopoutItem notification={n} />
-                ))
+                <div className="flex w-full flex-col gap-1">
+                    {notifications.map((n) => (
+                        <NotificationPopoutItem notification={n} />
+                    ))}
+                </div>
             ) : (
                 // No notifications
                 <div className="text-text-placeholder mt-12 flex w-full flex-col items-center gap-2.5">
@@ -98,7 +100,17 @@ const NotificationPopoutItem = ({
         <ClickableGroup className="w-full items-start gap-3">
             {getIconFromNotificationType(notification.type)}
             <div className="flex-1 space-y-1">
-                <p className="text-text-primary text-sm">
+                {!notification.read && (
+                    <p className="bg-highlight/20 border-highlight/50 text-highlight w-max rounded-full border px-1.5 py-0.5 text-[11px]">
+                        New
+                    </p>
+                )}
+                <p
+                    className={twMerge(
+                        "text-text-primary text-sm",
+                        !notification.read && "font-medium"
+                    )}
+                >
                     {notification.description}
                 </p>
                 <p className="text-text-secondary text-xs">
