@@ -82,7 +82,7 @@ const Navbar = ({ className }: NavbarProps) => {
                         <LinkButton
                             to="/dashboard"
                             variant="primary"
-                            className="h-11"
+                            className="h-10 px-3"
                         >
                             Go to Dashboard
                         </LinkButton>
@@ -139,22 +139,8 @@ const Navbar = ({ className }: NavbarProps) => {
                 ) : (
                     <span className="flex gap-2">
                         <Button
-                            variant="primary"
-                            className="h-11 w-22"
-                            onClick={() =>
-                                pushPopup(
-                                    <SignupLoginPopup
-                                        closePopup={popPopup}
-                                        initialState="signup"
-                                    />
-                                )
-                            }
-                        >
-                            Sign up
-                        </Button>
-                        <Button
                             variant="secondary"
-                            className="h-11 w-22"
+                            className="h-10 w-20 px-3"
                             onClick={() =>
                                 pushPopup(
                                     <SignupLoginPopup
@@ -165,6 +151,20 @@ const Navbar = ({ className }: NavbarProps) => {
                             }
                         >
                             Log in
+                        </Button>
+                        <Button
+                            variant="primary"
+                            className="h-10 w-20 px-3"
+                            onClick={() =>
+                                pushPopup(
+                                    <SignupLoginPopup
+                                        closePopup={popPopup}
+                                        initialState="signup"
+                                    />
+                                )
+                            }
+                        >
+                            Sign up
                         </Button>
                     </span>
                 )}
