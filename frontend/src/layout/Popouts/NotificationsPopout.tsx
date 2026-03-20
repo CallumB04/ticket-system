@@ -62,11 +62,8 @@ const NotificationsPopout = ({
         <Popout
             xPos="left"
             yPos="bottom"
-            className={twMerge(
-                "flex h-72 w-88 flex-col overflow-y-scroll",
-                className
-            )}
-            contentClassName="p-0"
+            className={twMerge("flex h-72 w-88 flex-col", className)}
+            contentClassName="p-0 overflow-y-scroll"
             ref={popoutRef}
             title="Notifications"
         >
