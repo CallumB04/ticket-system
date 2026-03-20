@@ -3,10 +3,7 @@ import Popout from "../../components/Popout/Popout";
 import { BellIcon, Building2Icon, SproutIcon } from "lucide-react";
 import useClickOutside from "../../hooks/useClickOutside";
 import { twMerge } from "tailwind-merge";
-import { useQuery } from "@tanstack/react-query";
-import { useUser } from "../../contexts/UserContext";
 import {
-    fetchNotifications,
     type Notification,
     type NotificationType,
 } from "../../api/notifications";
@@ -16,6 +13,9 @@ import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 interface NotificationsPopoutProps {
     className?: string;
+    notifications: Notification[] | undefined;
+    notificationsLoading: boolean;
+    notificationsError: Error | null;
     closePopout: () => void;
 }
 
@@ -30,25 +30,13 @@ const getIconFromNotificationType = (type: NotificationType) => {
 
 const NotificationsPopout = ({
     className,
+    notifications,
+    notificationsLoading,
+    notificationsError,
     closePopout,
 }: NotificationsPopoutProps) => {
-    const { user } = useUser();
-
     const popoutRef = useRef<HTMLDivElement>(null);
     useClickOutside(popoutRef, closePopout); // close when click outside
-
-    // Load notifications on component mount
-    const {
-        data: notifications,
-        isLoading: notificationsLoading,
-        error: notificationsError,
-    } = useQuery({
-        queryKey: ["notifications", user?.id], // refetch when user changes
-        queryFn: async () => {
-            const notis = await fetchNotifications();
-            return notis ?? [];
-        },
-    });
 
     // Notify user when notifications fetch errors
     // TODO: Replace alert with Toast when Toaster is built

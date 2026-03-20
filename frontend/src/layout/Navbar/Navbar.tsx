@@ -21,6 +21,8 @@ import { useSidebar } from "../../contexts/SidebarContext";
 import AppLogo from "../../components/AppLogo/AppLogo";
 import NotificationsPopout from "../Popouts/NotificationsPopout";
 import UserProfilePopout from "../Popouts/UserProfilePopout";
+import { fetchNotifications } from "../../api/notifications";
+import { useQuery } from "@tanstack/react-query";
 
 interface NavbarProps {
     className?: string;
@@ -41,6 +43,19 @@ const Navbar = ({ className }: NavbarProps) => {
     // Notifications Popout
     const [notificationsPopoutOpen, setNotificationsPopoutOpen] =
         useState<boolean>(false);
+
+    // Load notifications on component mount
+    const {
+        data: notifications,
+        isLoading: notificationsLoading,
+        error: notificationsError,
+    } = useQuery({
+        queryKey: ["notifications", user?.id], // refetch when user changes
+        queryFn: async () => {
+            const notis = await fetchNotifications();
+            return notis ?? [];
+        },
+    });
 
     return (
         <nav
@@ -114,6 +129,11 @@ const Navbar = ({ className }: NavbarProps) => {
                                 </ClickableGroup>
                                 {notificationsPopoutOpen && (
                                     <NotificationsPopout
+                                        notifications={notifications}
+                                        notificationsLoading={
+                                            notificationsLoading
+                                        }
+                                        notificationsError={notificationsError}
                                         closePopout={() =>
                                             setNotificationsPopoutOpen(false)
                                         }
