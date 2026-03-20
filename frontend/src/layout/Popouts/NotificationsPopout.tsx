@@ -66,6 +66,7 @@ const NotificationsPopout = ({
                 "flex h-72 w-88 flex-col overflow-y-scroll",
                 className
             )}
+            contentClassName="p-0"
             ref={popoutRef}
             title="Notifications"
         >
@@ -74,7 +75,7 @@ const NotificationsPopout = ({
                 <LoadingSpinner variant="surface" className="mx-auto mt-12" />
             ) : notifications && notifications?.length >= 1 ? (
                 // Notifications
-                <div className="flex w-full flex-col gap-1">
+                <div className="flex w-full flex-col">
                     {notifications.map((n) => (
                         <NotificationPopoutItem notification={n} />
                     ))}
@@ -97,20 +98,20 @@ const NotificationPopoutItem = ({
     notification: Notification;
 }) => {
     return (
-        <ClickableGroup className="w-full items-start gap-3">
+        <ClickableGroup
+            className={twMerge(
+                "not-last-of-type:border-b-layout-border w-full items-start gap-3 rounded-none not-last-of-type:border-b",
+                !notification.read && "border-l-highlight/70 border-l-2"
+            )}
+        >
             {getIconFromNotificationType(notification.type)}
             <div className="flex-1 space-y-1">
                 {!notification.read && (
-                    <p className="bg-highlight/20 border-highlight/50 text-highlight w-max rounded-full border px-1.5 py-0.5 text-[11px]">
+                    <p className="bg-highlight/15 border-highlight/30 text-highlight w-max rounded border px-2 py-0.5 text-[11px] font-medium">
                         New
                     </p>
                 )}
-                <p
-                    className={twMerge(
-                        "text-text-primary text-sm",
-                        !notification.read && "font-medium"
-                    )}
-                >
+                <p className="text-text-primary text-sm">
                     {notification.description}
                 </p>
                 <p className="text-text-secondary text-xs">
