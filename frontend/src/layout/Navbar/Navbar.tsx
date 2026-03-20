@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import ClickableGroup from "../../components/ClickableGroup/ClickableGroup";
 import UserAvatar from "../../components/UserAvatar/UserAvatar";
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useTheme } from "../../contexts/ThemeContext";
 import useClickOutside from "../../hooks/useClickOutside";
 import { useSidebar } from "../../contexts/SidebarContext";
@@ -126,6 +126,12 @@ const Navbar = ({ className }: NavbarProps) => {
                                     }
                                 >
                                     <BellIcon size={20} />
+                                    {/* Unread icons blue circle */}
+                                    {notifications &&
+                                        notifications?.filter((n) => !n.read)
+                                            .length > 0 && (
+                                            <div className="bg-highlight absolute top-1 right-1 size-2 rounded-full" />
+                                        )}
                                 </ClickableGroup>
                                 {notificationsPopoutOpen && (
                                     <NotificationsPopout
