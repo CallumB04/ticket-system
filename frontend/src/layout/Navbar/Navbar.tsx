@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import ClickableGroup from "../../components/ClickableGroup/ClickableGroup";
 import UserAvatar from "../../components/UserAvatar/UserAvatar";
-import { useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useTheme } from "../../contexts/ThemeContext";
 import useClickOutside from "../../hooks/useClickOutside";
 import { useSidebar } from "../../contexts/SidebarContext";
