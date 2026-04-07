@@ -4,6 +4,7 @@ import { BellIcon, Building2Icon, SproutIcon } from "lucide-react";
 import useClickOutside from "../../hooks/useClickOutside";
 import { twMerge } from "tailwind-merge";
 import {
+    markNotificationAsRead,
     type Notification,
     type NotificationType,
 } from "../../api/notifications";
@@ -36,7 +37,13 @@ const NotificationsPopout = ({
     closePopout,
 }: NotificationsPopoutProps) => {
     const popoutRef = useRef<HTMLDivElement>(null);
-    useClickOutside(popoutRef, closePopout); // close when click outside
+
+    const handleClosePopout = () => {
+        closePopout();
+        handleMarkAllNotificationsAsRead();
+    };
+
+    useClickOutside(popoutRef, handleClosePopout); // close when click outside
 
     // Notify user when notifications fetch errors
     // TODO: Replace alert with Toast when Toaster is built
@@ -45,6 +52,16 @@ const NotificationsPopout = ({
             alert("Notifications error");
         }
     }, [notificationsError]);
+
+    const handleMarkAllNotificationsAsRead = () => {
+        notifications
+            ?.filter((n) => !n.read)
+            .forEach((n) =>
+                (async () => {
+                    await markNotificationAsRead(n.id);
+                })()
+            );
+    };
 
     return (
         <Popout
