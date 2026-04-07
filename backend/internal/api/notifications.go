@@ -87,9 +87,8 @@ func handleMarkNotificationRead(db *pgxpool.Pool) http.HandlerFunc {
 			UPDATE public.notifications
 			SET read = TRUE
 			WHERE id = $1 AND user_id = $2
-			LIMIT 1
 			RETURNING id, type, description, read, created_at
-		`, userID).Scan(&notification.ID, &notification.Type, &notification.Description, &notification.Read, &notification.CreatedAt)
+		`, notificationID, userID).Scan(&notification.ID, &notification.Type, &notification.Description, &notification.Read, &notification.CreatedAt)
 
 		if err != nil {
 			// Notification not found
