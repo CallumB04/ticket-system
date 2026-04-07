@@ -38,10 +38,10 @@ func handleFetchUserProfile(db *pgxpool.Pool) http.HandlerFunc {
 		// Query database for user profile owned by this user.
 		// $1 - Authenticated User's ID
 		err := db.QueryRow(r.Context(), `
-		select id, first_name, last_name, avatar_url, country, created_at
-		from public.user_profiles
-		where id = $1
-		limit 1`, userID).Scan(&profile.ID, &profile.FirstName, &profile.LastName, &profile.AvatarURL, &profile.Country, &profile.CreatedAt)
+		SELECT id, first_name, last_name, avatar_url, country, created_at
+		FROM public.user_profiles
+		WHERE id = $1
+		LIMIT 1`, userID).Scan(&profile.ID, &profile.FirstName, &profile.LastName, &profile.AvatarURL, &profile.Country, &profile.CreatedAt)
 
 		if err != nil {
 			// User profile not found error
