@@ -29,6 +29,7 @@ func RegisterHandlers(db *pgxpool.Pool) *http.ServeMux {
 
 	// Notifications
 	v1.Handle("GET /notifications", auth.AuthMiddleware(handleFetchNotifications(db)))
+	v1.Handle("PATCH /notifications/{notificationID}", auth.AuthMiddleware(handleMarkNotificationRead(db)))
 
 	// Mount v1 routes under /v1 prefix
 	mux.Handle("/v1/", http.StripPrefix("/v1", v1))

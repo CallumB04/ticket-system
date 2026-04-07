@@ -1,12 +1,14 @@
 package api
 
 import (
+	"errors"
 	"net/http"
 	"time"
 
 	"github.com/CallumB04/ticket-system/backend/internal/auth"
 	"github.com/CallumB04/ticket-system/backend/internal/models"
 	"github.com/CallumB04/ticket-system/backend/internal/util"
+	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -21,10 +23,10 @@ func handleFetchNotifications(db *pgxpool.Pool) http.HandlerFunc {
 		// Order notifications in descending order of creation date (newest first)
 		// $1 - Authenticated User's ID
 		rows, err := db.Query(r.Context(), `
-			select id, type, description, read, created_at
-			from public.notifications
-			where user_id = $1
-			order by created_at DESC
+			SELECT id, type, description, read, created_at
+			FROM public.notifications
+			WHERE user_id = $1
+			ORDER BY created_at DESC
 		`, userID)
 		if err != nil {
 			util.ErrorResponse(w, http.StatusInternalServerError, "error fetching notifications")
@@ -61,5 +63,47 @@ func handleFetchNotifications(db *pgxpool.Pool) http.HandlerFunc {
 
 		// Send notifications to client
 		util.JSONResponse(w, http.StatusOK, notifications)
+	}
+}
+
+func handleMarkNotificationRead(db *pgxpool.Pool) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		// Get user ID of authenticated user, provided by middleware.
+		userID := r.Context().Value(auth.UserIDKey).(string)
+
+		// Get notification id from request URL
+		notificationID := r.PathValue("notificationID")
+		if notificationID == "" {
+			util.ErrorResponse(w, http.StatusBadRequest, "notificationID is required")
+			return
+		}
+
+		var notification models.Notification
+
+		// Update notification in database
+		// $1 - Notification ID
+		// $2 - Authenticated User's ID
+		err := db.QueryRow(r.Context(), `
+			UPDATE public.notifications
+			SET read = TRUE
+			WHERE id = $1 AND user_id = $2
+			LIMIT 1
+			RETURNING id, type, description, read, created_at
+		`, userID).Scan(&notification.ID, &notification.Type, &notification.Description, &notification.Read, &notification.CreatedAt)
+
+		if err != nil {
+			// Notification not found
+			if errors.Is(err, pgx.ErrNoRows) {
+				util.ErrorResponse(w, http.StatusNotFound, "notification not found")
+				return
+			}
+
+			// Other error
+			util.ErrorResponse(w, http.StatusInternalServerError, "error marking notification as read")
+			return
+		}
+
+		// Send notification to client
+		util.JSONResponse(w, http.StatusOK, notification)
 	}
 }
