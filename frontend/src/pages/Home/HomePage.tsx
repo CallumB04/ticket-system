@@ -23,6 +23,7 @@ import Navigator from "../../components/Navigator/Navigator";
 import ClickableGroup from "../../components/ClickableGroup/ClickableGroup";
 import Popout from "../../components/Popout/Popout";
 import useWindowBounds from "../../hooks/useWindowBounds";
+import { markNotificationAsRead } from "../../api/notifications";
 
 const HomePage = () => {
     const [orgs, setOrgs] = useState<Organisation[]>([]);
@@ -135,6 +136,18 @@ const HomePage = () => {
                         }}
                     >
                         Update First Name to Ballum
+                    </Button>
+                </span>
+                <span className="mt-3 flex gap-2">
+                    <Button
+                        variant="primary"
+                        onClick={() =>
+                            markNotificationAsRead(
+                                "926bb60b-259e-4284-bf0b-9cb7770342e3"
+                            )
+                        }
+                    >
+                        Mark Notification as read
                     </Button>
                 </span>
                 <p>{orgs.length === 0 ? "No orgs" : orgs.map((o) => o.name)}</p>

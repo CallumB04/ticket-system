@@ -19,3 +19,9 @@ export const fetchNotifications = async () => {
     const res = await api.get<Notification[]>("/v1/notifications");
     return res.data;
 };
+
+// Marks notification as read
+export const markNotificationAsRead = async (id: string) => {
+    const res = await api.patch<Notification>("/v1/notifications/" + id);
+    return res.data;
+};
