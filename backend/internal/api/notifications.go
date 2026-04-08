@@ -108,3 +108,44 @@ func handleMarkNotificationRead(db *pgxpool.Pool) http.HandlerFunc {
 		util.JSONResponse(w, http.StatusOK, notification)
 	}
 }
+
+func handleArchiveNotification(db *pgxpool.Pool) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		// Get user ID of authenticated user, provided by middleware.
+		userID := r.Context().Value(auth.UserIDKey).(string)
+
+		// Get notification id from request URL
+		notificationID := r.PathValue("notificationID")
+		if notificationID == "" {
+			util.ErrorResponse(w, http.StatusBadRequest, "notificationID is required")
+			return
+		}
+
+		var notification models.Notification
+
+		// Update notification in database
+		// $1 - Notification ID
+		// $2 - Authenticated User's ID
+		err := db.QueryRow(r.Context(), `
+			UPDATE public.notifications
+			SET archived = TRUE
+			WHERE id = $1 AND user_id = $2
+			RETURNING id, type, description, read, archived, created_at
+		`, notificationID, userID).Scan(&notification.ID, &notification.Type, &notification.Description, &notification.Read, &notification.Archived, &notification.CreatedAt)
+
+		if err != nil {
+			// Notification not found
+			if errors.Is(err, pgx.ErrNoRows) {
+				util.ErrorResponse(w, http.StatusNotFound, "notification not found")
+				return
+			}
+
+			// Other error
+			util.ErrorResponse(w, http.StatusInternalServerError, "error archiving notification")
+			return
+		}
+
+		// Send notification to client
+		util.JSONResponse(w, http.StatusOK, notification)
+	}
+}

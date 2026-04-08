@@ -26,3 +26,9 @@ export const markNotificationAsRead = async (id: string) => {
     const res = await api.patch<Notification>("/v1/notifications/" + id);
     return res.data;
 };
+
+// Set notification as archived
+export const setNotificationAsArchived = async (id: string) => {
+    const res = await api.delete<Notification>("/v1/notifications/" + id);
+    return res.data;
+};
