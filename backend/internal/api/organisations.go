@@ -80,7 +80,7 @@ func handleFetchOrganisationMembers(db *pgxpool.Pool) http.HandlerFunc {
 		// Query database for members of this organisation.
 		// $1 - Organisation's ID
 		rows, err := db.Query(r.Context(), `
-			select
+			SELECT
 			om.user_id::text,
 			om.role,
 			om.created_at as joined_at,
@@ -88,10 +88,10 @@ func handleFetchOrganisationMembers(db *pgxpool.Pool) http.HandlerFunc {
 			up.last_name,
 			up.avatar_url,
 			up.country
-			from organisation_members om
-			join user_profiles up on up.id = om.user_id
-			where om.organisation_id = $1
-			order by lower(coalesce(up.last_name, '')), lower(coalesce(up.first_name, ''))
+			FROM organisation_members om
+			JOIN user_profiles up ON up.id = om.user_id
+			WHERE om.organisation_id = $1
+			ORDER BY lower(coalesce(up.last_name, '')), lower(coalesce(up.first_name, ''))
     	`, orgID)
 		if err != nil {
 			util.ErrorResponse(w, http.StatusInternalServerError, "error fetching organisation members")
@@ -181,9 +181,9 @@ func handleCreateOrganisation(db *pgxpool.Pool) http.HandlerFunc {
 		// $4 - Authenticated User's ID
 		var org models.Organisation
 		err := db.QueryRow(r.Context(), `
-			insert into public.organisations (name, slug, logo_url, created_by)
-			values ($1, $2, $3, $4)
-			returning id, name, slug, logo_url, created_by, created_at
+			INSERT INTO public.organisations (name, slug, logo_url, created_by)
+			VALUES ($1, $2, $3, $4)
+			RETURNING id, name, slug, logo_url, created_by, created_at
 		`, body.Name, slug, body.LogoURL, userID).Scan(
 			&org.ID, &org.Name, &org.Slug, &org.LogoURL, &org.CreatedBy, &org.CreatedAt,
 		)

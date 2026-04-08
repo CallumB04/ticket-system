@@ -27,6 +27,11 @@ func RegisterHandlers(db *pgxpool.Pool) *http.ServeMux {
 	// Organisation Members
 	v1.Handle("GET /organisations/{orgID}/members", auth.AuthMiddleware(handleFetchOrganisationMembers(db)))
 
+	// Notifications
+	v1.Handle("GET /notifications", auth.AuthMiddleware(handleFetchNotifications(db)))
+	v1.Handle("PATCH /notifications/{notificationID}", auth.AuthMiddleware(handleMarkNotificationRead(db)))
+	v1.Handle("DELETE /notifications/{notificationID}", auth.AuthMiddleware(handleArchiveNotification(db)))
+
 	// Mount v1 routes under /v1 prefix
 	mux.Handle("/v1/", http.StripPrefix("/v1", v1))
 

@@ -1,41 +1,37 @@
 import { twMerge } from "tailwind-merge";
 import Button from "../../components/Button/Button";
 import LinkButton from "../../components/Button/LinkButton";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useUser } from "../../contexts/UserContext";
 import { usePopup } from "../../contexts/PopupContext";
 import SignupLoginPopup from "../Popups/SignupLoginPopup";
 import {
     BellIcon,
-    LogOutIcon,
     MoonIcon,
-    SettingsIcon,
     SunIcon,
     TextAlignJustifyIcon,
-    UserIcon,
     XIcon,
 } from "lucide-react";
 import ClickableGroup from "../../components/ClickableGroup/ClickableGroup";
 import UserAvatar from "../../components/UserAvatar/UserAvatar";
 import { useRef, useState } from "react";
-import Popout from "../../components/Popout/Popout";
-import Card from "../../components/Card/Card";
-import Divider from "../../components/Divider/Divider";
 import { useTheme } from "../../contexts/ThemeContext";
 import useClickOutside from "../../hooks/useClickOutside";
 import { useSidebar } from "../../contexts/SidebarContext";
 import AppLogo from "../../components/AppLogo/AppLogo";
+import NotificationsPopout from "../Popouts/NotificationsPopout";
+import UserProfilePopout from "../Popouts/UserProfilePopout";
+import { fetchNotifications } from "../../api/notifications";
+import { useQuery } from "@tanstack/react-query";
 
 interface NavbarProps {
     className?: string;
 }
 
 const Navbar = ({ className }: NavbarProps) => {
-    const { sessionLoading, user, userProfile, userProfileLoading, signOut } =
-        useUser();
+    const { sessionLoading, user, userProfile } = useUser();
     const { pushPopup, popPopup } = usePopup();
     const location = useLocation();
-    const navigate = useNavigate();
     const { theme, toggleTheme } = useTheme();
     const { isMobileSidebarOpen, toggleMobileSidebar } = useSidebar();
 
@@ -47,16 +43,19 @@ const Navbar = ({ className }: NavbarProps) => {
     // Notifications Popout
     const [notificationsPopoutOpen, setNotificationsPopoutOpen] =
         useState<boolean>(false);
-    const notificationsPopoutRef = useRef<HTMLDivElement>(null);
-    useClickOutside(notificationsPopoutRef, () =>
-        setNotificationsPopoutOpen(false)
-    ); // close when click outside
 
-    const handleSignOut = () => {
-        signOut();
-        setProfilePopoutOpen(false);
-        navigate("/");
-    };
+    // Load notifications on component mount
+    const {
+        data: notifications,
+        isLoading: notificationsLoading,
+        error: notificationsError,
+    } = useQuery({
+        queryKey: ["notifications", user?.id], // refetch when user changes
+        queryFn: async () => {
+            const notis = await fetchNotifications();
+            return notis ?? [];
+        },
+    });
 
     return (
         <nav
@@ -80,7 +79,6 @@ const Navbar = ({ className }: NavbarProps) => {
                 {location.pathname !== "/" && (
                     <ClickableGroup
                         className="lg:hidden"
-                        isIcon
                         onClick={toggleMobileSidebar}
                     >
                         {isMobileSidebarOpen ? (
@@ -98,14 +96,14 @@ const Navbar = ({ className }: NavbarProps) => {
                         <LinkButton
                             to="/dashboard"
                             variant="primary"
-                            className="h-11"
+                            className="h-10 px-3"
                         >
                             Go to Dashboard
                         </LinkButton>
                     ) : (
                         <span className="flex gap-3">
                             {/* Light/Dark mode Icon */}
-                            <ClickableGroup isIcon onClick={toggleTheme}>
+                            <ClickableGroup onClick={toggleTheme}>
                                 {theme === "light" ? (
                                     <SunIcon
                                         size={20}
@@ -121,29 +119,29 @@ const Navbar = ({ className }: NavbarProps) => {
                             {/* Notifications Icon - With Popout menu */}
                             <div className="relative">
                                 <ClickableGroup
-                                    isIcon
                                     onClick={() =>
                                         setNotificationsPopoutOpen(true)
                                     }
                                 >
                                     <BellIcon size={20} />
+                                    {/* Unread icons blue circle */}
+                                    {notifications &&
+                                        notifications?.filter((n) => !n.read)
+                                            .length > 0 && (
+                                            <div className="bg-highlight absolute top-1 right-1 size-2 rounded-full" />
+                                        )}
                                 </ClickableGroup>
                                 {notificationsPopoutOpen && (
-                                    <Popout
-                                        xPos="left"
-                                        yPos="bottom"
-                                        className="flex h-76 w-72 flex-col p-0"
-                                        ref={notificationsPopoutRef}
-                                        title="Notifications"
-                                    >
-                                        {/* No Notifications */}
-                                        <div className="text-text-placeholder mt-12 flex w-full flex-col items-center gap-2">
-                                            <BellIcon size={32} />
-                                            <p className="text-sm">
-                                                There are no notifications
-                                            </p>
-                                        </div>
-                                    </Popout>
+                                    <NotificationsPopout
+                                        notifications={notifications}
+                                        notificationsLoading={
+                                            notificationsLoading
+                                        }
+                                        notificationsError={notificationsError}
+                                        closePopout={() =>
+                                            setNotificationsPopoutOpen(false)
+                                        }
+                                    />
                                 )}
                             </div>
                             {/* User Profile Icon - With Popout menu */}
@@ -153,73 +151,11 @@ const Navbar = ({ className }: NavbarProps) => {
                                     onClick={() => setProfilePopoutOpen(true)}
                                 />
                                 {profilePopoutOpen && (
-                                    <Popout
-                                        xPos="left"
-                                        yPos="bottom"
-                                        className="flex max-w-60 flex-col gap-2"
-                                        ref={profilePopoutRef}
-                                    >
-                                        {/* User Details */}
-                                        <Card
-                                            variant="highlight-muted"
-                                            size="medium"
-                                            className="w-full gap-0.5 rounded-lg"
-                                        >
-                                            <p className="text-text-primary text-sm font-semibold">
-                                                {userProfileLoading ||
-                                                !userProfile?.first_name
-                                                    ? "Loading..."
-                                                    : userProfile.first_name +
-                                                      (userProfile?.last_name
-                                                          ? " " +
-                                                            userProfile.last_name
-                                                          : "")}
-                                            </p>
-                                            <p className="text-text-secondary text-xs break-all">
-                                                {user.email ?? "Loading..."}
-                                            </p>
-                                        </Card>
-                                        <Divider />
-                                        {/* Primary Actions */}
-                                        <div className="flex min-w-52 flex-col gap-1">
-                                            {/* My Account */}
-                                            <LinkButton
-                                                variant="secondary-transparent"
-                                                to="/account"
-                                                onClick={() =>
-                                                    setProfilePopoutOpen(false)
-                                                }
-                                                linkClassName="w-full"
-                                                buttonClassName="h-10 w-full justify-start gap-3"
-                                            >
-                                                <UserIcon size={18} />
-                                                My Account
-                                            </LinkButton>
-                                            {/* Settings */}
-                                            <LinkButton
-                                                variant="secondary-transparent"
-                                                to="/settings"
-                                                onClick={() =>
-                                                    setProfilePopoutOpen(false)
-                                                }
-                                                className="w-full"
-                                                buttonClassName="h-10 justify-start gap-3"
-                                            >
-                                                <SettingsIcon size={18} />
-                                                Settings
-                                            </LinkButton>
-                                        </div>
-                                        <Divider />
-                                        {/* Sign Out */}
-                                        <Button
-                                            variant="danger-transparent"
-                                            className="h-10 w-full justify-start gap-3"
-                                            onClick={handleSignOut}
-                                        >
-                                            <LogOutIcon size={18} />
-                                            Sign out
-                                        </Button>
-                                    </Popout>
+                                    <UserProfilePopout
+                                        closePopout={() =>
+                                            setProfilePopoutOpen(false)
+                                        }
+                                    />
                                 )}
                             </div>
                         </span>
@@ -227,22 +163,8 @@ const Navbar = ({ className }: NavbarProps) => {
                 ) : (
                     <span className="flex gap-2">
                         <Button
-                            variant="primary"
-                            className="h-11 w-22"
-                            onClick={() =>
-                                pushPopup(
-                                    <SignupLoginPopup
-                                        closePopup={popPopup}
-                                        initialState="signup"
-                                    />
-                                )
-                            }
-                        >
-                            Sign up
-                        </Button>
-                        <Button
                             variant="secondary"
-                            className="h-11 w-22"
+                            className="h-10 w-20 px-3"
                             onClick={() =>
                                 pushPopup(
                                     <SignupLoginPopup
@@ -253,6 +175,20 @@ const Navbar = ({ className }: NavbarProps) => {
                             }
                         >
                             Log in
+                        </Button>
+                        <Button
+                            variant="primary"
+                            className="h-10 w-20 px-3"
+                            onClick={() =>
+                                pushPopup(
+                                    <SignupLoginPopup
+                                        closePopup={popPopup}
+                                        initialState="signup"
+                                    />
+                                )
+                            }
+                        >
+                            Sign up
                         </Button>
                     </span>
                 )}

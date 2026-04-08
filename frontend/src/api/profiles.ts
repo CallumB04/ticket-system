@@ -21,13 +21,13 @@ export type UpdateUserProfileRequest = {
 // API Calls
 
 // Fetches user profile of the signed in user
-export async function fetchUserProfile() {
+export const fetchUserProfile = async () => {
     const res = await api.get<UserProfile>("/v1/profile");
     return res.data;
-}
+};
 
 // Updates fields of the signed in user's profile, and receive new profile data
-export async function updateUserProfile(body: UpdateUserProfileRequest) {
+export const updateUserProfile = async (body: UpdateUserProfileRequest) => {
     const res = await api.patch<UserProfile>("/v1/profile", body);
     return res.data;
-}
+};

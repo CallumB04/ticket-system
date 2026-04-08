@@ -6,6 +6,7 @@ type PopoutYPosition = "top" | "bottom";
 
 interface PopoutProps {
     className?: string;
+    contentClassName?: string; // classes for content container when title is provided
     children: ReactNode;
     xPos: PopoutXPosition;
     yPos: PopoutYPosition;
@@ -15,6 +16,7 @@ interface PopoutProps {
 
 const Popout = ({
     className,
+    contentClassName,
     children,
     xPos,
     yPos,
@@ -39,7 +41,13 @@ const Popout = ({
                     {title}
                 </h2>
             )}
-            {title ? <div className="p-1.5">{children}</div> : children}
+            {title ? (
+                <div className={twMerge("p-1.5", contentClassName)}>
+                    {children}
+                </div>
+            ) : (
+                children
+            )}
         </div>
     );
 };

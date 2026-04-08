@@ -4,24 +4,24 @@ import { twMerge } from "tailwind-merge";
 interface ClickableGroupProps {
     className?: string;
     children: ReactNode;
-    isIcon?: boolean;
+    title?: string;
     onClick?: () => void;
 }
 
 const ClickableGroup = ({
     className,
     children,
-    isIcon,
+    title,
     onClick,
 }: ClickableGroupProps) => {
     return (
         <div
             className={twMerge(
-                "hover:bg-btn-secondary-hover-bg text-text-primary flex w-max cursor-pointer items-center gap-2 p-2 transition-colors",
-                isIcon ? "rounded-xl" : "rounded-md",
+                "hover:bg-btn-secondary-hover-bg text-text-primary flex w-max cursor-pointer items-center gap-2 rounded-md p-2 transition-colors",
                 className
             )}
             onClick={onClick}
+            title={title}
         >
             {children}
         </div>
