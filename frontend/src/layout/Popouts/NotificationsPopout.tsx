@@ -142,8 +142,11 @@ const NotificationPopoutItem = ({
     const queryClient = useQueryClient();
 
     const handleArchiveNotification = async () => {
+        // Mark notification as archived and read
         await setNotificationAsArchived(notification.id);
         await markNotificationAsRead(notification.id);
+
+        // Refetch notifications from Supabase
         queryClient.invalidateQueries({ queryKey: ["notifications"] });
     };
 
