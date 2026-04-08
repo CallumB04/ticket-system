@@ -115,7 +115,10 @@ const NotificationsPopout = ({
                 <div className="flex w-full flex-col">
                     <div className="flex h-58 w-full flex-col overflow-y-scroll">
                         {filteredNotifications.map((n) => (
-                            <NotificationPopoutItem notification={n} />
+                            <NotificationPopoutItem
+                                notification={n}
+                                key={n.id}
+                            />
                         ))}
                     </div>
                 </div>
