@@ -49,7 +49,6 @@ const Navbar = ({ className }: NavbarProps) => {
         data: notifications,
         isLoading: notificationsLoading,
         error: notificationsError,
-        refetch: refetchNotifications,
     } = useQuery({
         queryKey: ["notifications", user?.id], // refetch when user changes
         queryFn: async () => {
