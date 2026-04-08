@@ -102,7 +102,7 @@ const NotificationsPopout = ({
                     label="Archived"
                     active={view === "archived"}
                     onClick={() => setView("archived")}
-                    activeClassName="bg-danger/5 border-danger/10 text-danger/80"
+                    activeClassName="bg-danger/5 border-danger/20 text-danger/80"
                 />
             </span>
             {notificationsLoading ? (
@@ -148,7 +148,7 @@ const NotificationPopoutItem = ({
                         New
                     </p>
                 )}
-                <p className="text-text-primary text-sm">
+                <p className="text-text-primary text-[13px]">
                     {notification.description}
                 </p>
                 <p className="text-text-secondary text-xs">
@@ -176,7 +176,7 @@ const NotificationViewOptions = ({
                 "rounded border px-2 py-1 text-xs font-medium transition-colors",
                 active
                     ? twMerge(
-                          "bg-highlight/5 border-highlight/10 text-highlight/80 select-none",
+                          "bg-highlight/5 border-highlight/20 text-highlight/80 select-none",
                           activeClassName
                       )
                     : "hover:bg-surface-muted/50 border-layout-border text-text-disabled cursor-pointer"
