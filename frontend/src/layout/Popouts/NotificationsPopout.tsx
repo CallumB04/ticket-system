@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Popout from "../../components/Popout/Popout";
 import { BellIcon, Building2Icon, SproutIcon } from "lucide-react";
 import useClickOutside from "../../hooks/useClickOutside";
@@ -38,6 +38,8 @@ const NotificationsPopout = ({
 }: NotificationsPopoutProps) => {
     const popoutRef = useRef<HTMLDivElement>(null);
 
+    const [view, setView] = useState<string>("new");
+
     const handleClosePopout = () => {
         closePopout();
         handleMarkAllNotificationsAsRead();
@@ -63,30 +65,63 @@ const NotificationsPopout = ({
             );
     };
 
+    const filteredNotifications = useMemo(() => {
+        switch (view) {
+            case "new":
+                return notifications?.filter((n) => !n.read);
+            case "read":
+                return notifications?.filter((n) => n.read && !n.archived);
+            case "archived":
+                return notifications?.filter((n) => n.archived);
+            default:
+                return notifications;
+        }
+    }, [notifications, view]);
+
     return (
         <Popout
             xPos="left"
             yPos="bottom"
-            className={twMerge("flex h-72 w-88 flex-col", className)}
-            contentClassName="p-0 overflow-y-scroll"
+            className={twMerge("flex h-80 w-88 flex-col", className)}
+            contentClassName="p-0"
             ref={popoutRef}
             title="Notifications"
         >
+            <span className="border-b-layout-border flex items-center gap-1.5 border-b p-2">
+                <NotificationViewOptions
+                    label="New"
+                    active={view === "new"}
+                    onClick={() => setView("new")}
+                />
+                <NotificationViewOptions
+                    label="Read"
+                    active={view === "read"}
+                    onClick={() => setView("read")}
+                />
+                <NotificationViewOptions
+                    label="Archived"
+                    active={view === "archived"}
+                    onClick={() => setView("archived")}
+                    activeClassName="bg-danger/5 border-danger/10 text-danger/80"
+                />
+            </span>
             {notificationsLoading ? (
                 // Loading Notifications
-                <LoadingSpinner variant="surface" className="mx-auto mt-12" />
-            ) : notifications && notifications?.length >= 1 ? (
+                <LoadingSpinner variant="surface" className="mx-auto mt-16" />
+            ) : filteredNotifications && filteredNotifications?.length >= 1 ? (
                 // Notifications
                 <div className="flex w-full flex-col">
-                    {notifications.map((n) => (
-                        <NotificationPopoutItem notification={n} />
-                    ))}
+                    <div className="flex h-58 w-full flex-col overflow-y-scroll">
+                        {filteredNotifications.map((n) => (
+                            <NotificationPopoutItem notification={n} />
+                        ))}
+                    </div>
                 </div>
             ) : (
                 // No notifications
-                <div className="text-text-placeholder mt-12 flex w-full flex-col items-center gap-2.5">
+                <div className="text-text-placeholder mt-16 flex w-full flex-col items-center gap-2.5">
                     <BellIcon size={32} />
-                    <p className="text-sm">No notifications</p>
+                    <p className="text-sm">No {view} notifications</p>
                 </div>
             )}
         </Popout>
@@ -121,6 +156,35 @@ const NotificationPopoutItem = ({
                 </p>
             </div>
         </ClickableGroup>
+    );
+};
+
+const NotificationViewOptions = ({
+    activeClassName,
+    label,
+    active,
+    onClick,
+}: {
+    activeClassName?: string;
+    label: string;
+    active: boolean;
+    onClick: () => void;
+}) => {
+    return (
+        <p
+            className={twMerge(
+                "rounded border px-2 py-1 text-xs font-medium transition-colors",
+                active
+                    ? twMerge(
+                          "bg-highlight/5 border-highlight/10 text-highlight/80 select-none",
+                          activeClassName
+                      )
+                    : "hover:bg-surface-muted/50 border-layout-border text-text-disabled cursor-pointer"
+            )}
+            onClick={onClick}
+        >
+            {label}
+        </p>
     );
 };
 
