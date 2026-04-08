@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import Popout from "../../components/Popout/Popout";
-import { BellIcon, Building2Icon, SproutIcon } from "lucide-react";
+import { ArchiveIcon, BellIcon, Building2Icon, SproutIcon } from "lucide-react";
 import useClickOutside from "../../hooks/useClickOutside";
 import { twMerge } from "tailwind-merge";
 import {
     markNotificationAsRead,
+    setNotificationAsArchived,
     type Notification,
     type NotificationType,
 } from "../../api/notifications";
@@ -134,10 +136,18 @@ const NotificationPopoutItem = ({
 }: {
     notification: Notification;
 }) => {
+    const queryClient = useQueryClient();
+
+    const handleArchiveNotification = async () => {
+        await setNotificationAsArchived(notification.id);
+        await markNotificationAsRead(notification.id);
+        queryClient.invalidateQueries({ queryKey: ["notifications"] });
+    };
+
     return (
-        <ClickableGroup
+        <div
             className={twMerge(
-                "not-last-of-type:border-b-layout-border w-full items-start gap-3 rounded-none not-last-of-type:border-b",
+                "border-b-layout-border flex w-full items-start gap-3 rounded-none border-b p-2",
                 !notification.read && "border-l-highlight/70 border-l-2"
             )}
         >
@@ -155,7 +165,16 @@ const NotificationPopoutItem = ({
                     {getDaysAgoFromISO(notification.created_at)}
                 </p>
             </div>
-        </ClickableGroup>
+            {!notification.archived && (
+                <ClickableGroup
+                    className="p-1.5"
+                    title="Archive"
+                    onClick={handleArchiveNotification}
+                >
+                    <ArchiveIcon size={14} className="text-text-secondary" />
+                </ClickableGroup>
+            )}
+        </div>
     );
 };
 

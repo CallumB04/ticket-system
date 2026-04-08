@@ -49,6 +49,7 @@ const Navbar = ({ className }: NavbarProps) => {
         data: notifications,
         isLoading: notificationsLoading,
         error: notificationsError,
+        refetch: refetchNotifications,
     } = useQuery({
         queryKey: ["notifications", user?.id], // refetch when user changes
         queryFn: async () => {
@@ -79,7 +80,6 @@ const Navbar = ({ className }: NavbarProps) => {
                 {location.pathname !== "/" && (
                     <ClickableGroup
                         className="lg:hidden"
-                        isIcon
                         onClick={toggleMobileSidebar}
                     >
                         {isMobileSidebarOpen ? (
@@ -104,7 +104,7 @@ const Navbar = ({ className }: NavbarProps) => {
                     ) : (
                         <span className="flex gap-3">
                             {/* Light/Dark mode Icon */}
-                            <ClickableGroup isIcon onClick={toggleTheme}>
+                            <ClickableGroup onClick={toggleTheme}>
                                 {theme === "light" ? (
                                     <SunIcon
                                         size={20}
@@ -120,7 +120,6 @@ const Navbar = ({ className }: NavbarProps) => {
                             {/* Notifications Icon - With Popout menu */}
                             <div className="relative">
                                 <ClickableGroup
-                                    isIcon
                                     onClick={() =>
                                         setNotificationsPopoutOpen(true)
                                     }
