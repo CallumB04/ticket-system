@@ -23,7 +23,7 @@ func handleFetchNotifications(db *pgxpool.Pool) http.HandlerFunc {
 		// Order notifications in descending order of creation date (newest first)
 		// $1 - Authenticated User's ID
 		rows, err := db.Query(r.Context(), `
-			SELECT id, type, description, read, created_at
+			SELECT id, type, description, read, archived, created_at
 			FROM public.notifications
 			WHERE user_id = $1
 			ORDER BY created_at DESC
@@ -44,6 +44,7 @@ func handleFetchNotifications(db *pgxpool.Pool) http.HandlerFunc {
 				notiType    string // cant use 'type' due to existing keyword
 				description string
 				read        bool
+				archived    bool
 				createdAt   time.Time
 			)
 
@@ -57,6 +58,7 @@ func handleFetchNotifications(db *pgxpool.Pool) http.HandlerFunc {
 				Type:        notiType,
 				Description: description,
 				Read:        read,
+				Archived:    archived,
 				CreatedAt:   createdAt,
 			})
 		}
@@ -87,8 +89,8 @@ func handleMarkNotificationRead(db *pgxpool.Pool) http.HandlerFunc {
 			UPDATE public.notifications
 			SET read = TRUE
 			WHERE id = $1 AND user_id = $2
-			RETURNING id, type, description, read, created_at
-		`, notificationID, userID).Scan(&notification.ID, &notification.Type, &notification.Description, &notification.Read, &notification.CreatedAt)
+			RETURNING id, type, description, read, archived, created_at
+		`, notificationID, userID).Scan(&notification.ID, &notification.Type, &notification.Description, &notification.Read, &notification.Archived, &notification.CreatedAt)
 
 		if err != nil {
 			// Notification not found

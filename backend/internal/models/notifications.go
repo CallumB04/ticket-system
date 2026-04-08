@@ -7,5 +7,6 @@ type Notification struct {
 	Type        string    `json:"type"` // "welcome", "org-invite", etc
 	Description string    `json:"description"`
 	Read        bool      `json:"read"`
+	Archived    bool      `json:"archived"`
 	CreatedAt   time.Time `json:"created_at"`
 }
