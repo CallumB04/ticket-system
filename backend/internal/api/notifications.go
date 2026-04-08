@@ -48,7 +48,7 @@ func handleFetchNotifications(db *pgxpool.Pool) http.HandlerFunc {
 				createdAt   time.Time
 			)
 
-			if err := rows.Scan(&id, &notiType, &description, &read, &createdAt); err != nil {
+			if err := rows.Scan(&id, &notiType, &description, &read, &archived, &createdAt); err != nil {
 				util.ErrorResponse(w, http.StatusInternalServerError, "error reading notifications")
 				return
 			}
