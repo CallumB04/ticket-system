@@ -161,6 +161,11 @@ const NotificationPopoutItem = ({
                         New
                     </p>
                 )}
+                {notification.archived && (
+                    <p className="bg-danger/15 border-danger/30 text-danger w-max rounded border px-2 py-0.5 text-[11px] font-medium">
+                        Archived
+                    </p>
+                )}
                 <p className="text-text-primary text-[13px]">
                     {notification.description}
                 </p>
