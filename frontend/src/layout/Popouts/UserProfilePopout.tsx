@@ -6,7 +6,6 @@ import { twMerge } from "tailwind-merge";
 import LinkButton from "../../components/Button/LinkButton";
 import Divider from "../../components/Divider/Divider";
 import Button from "../../components/Button/Button";
-import Card from "../../components/Card/Card";
 import { useUser } from "../../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 
@@ -19,7 +18,7 @@ const UserProfilePopout = ({
     className,
     closePopout,
 }: UserProfilePopoutProps) => {
-    const { user, userProfile, userProfileLoading, signOut } = useUser();
+    const { signOut } = useUser();
     const navigate = useNavigate();
 
     const popoutRef = useRef<HTMLDivElement>(null);
