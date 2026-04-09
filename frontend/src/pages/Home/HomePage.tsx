@@ -203,8 +203,8 @@ const HomePage = () => {
                     <LoadingSpinner variant="btn-disabled" />
                     Loading
                 </Button>
-                <div className="flex gap-2">
-                    <div className="space-y-2">
+                <div className="flex gap-6">
+                    <div className="space-y-6">
                         <Card
                             title="Example Card"
                             description="This is an example of a card"
@@ -253,13 +253,8 @@ const HomePage = () => {
                             description="This is an example of a card"
                             variant="border"
                         />
-                        <Card
-                            title="Example Card"
-                            description="This is an example of a card"
-                            variant="highlight"
-                        />
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-6">
                         <Card
                             title="Clickable Card"
                             description="This is an example of a card"
@@ -281,15 +276,26 @@ const HomePage = () => {
                             variant="border"
                             onClick={() => alert("clicked")}
                         />
-                        <Card
-                            title="Clickable Card"
-                            description="This is an example of a card"
-                            variant="highlight"
-                            onClick={() => alert("clicked")}
-                        />
                     </div>
                 </div>
-                <ProgressBar target={5} value={3} />
+                <ProgressBar
+                    targetValue={100}
+                    currentValue={15}
+                    targetLabel={"$100"}
+                    currentLabel={"$15"}
+                />
+                <ProgressBar
+                    targetValue={100}
+                    currentValue={100}
+                    targetLabel={"$100"}
+                    currentLabel={"$100"}
+                />
+                <ProgressBar
+                    targetValue={100}
+                    currentValue={0}
+                    targetLabel={"$100"}
+                    currentLabel={"$0"}
+                />
                 <Button variant="secondary-transparent">Cancel</Button>
                 <Button variant="danger-transparent">
                     <TrashIcon size={18} />

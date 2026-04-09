@@ -35,40 +35,22 @@ const UserProfilePopout = ({
         <Popout
             xPos="left"
             yPos="bottom"
-            className={twMerge("flex max-w-60 flex-col gap-2", className)}
+            contentClassName={twMerge("flex flex-col gap-2", className)}
             ref={popoutRef}
+            title={"Account"}
         >
-            {/* User Details */}
-            <Card
-                variant="highlight-muted"
-                size="medium"
-                className="w-full gap-0.5 rounded-lg"
-            >
-                <p className="text-text-primary text-sm font-semibold">
-                    {userProfileLoading || !userProfile?.first_name
-                        ? "Loading..."
-                        : userProfile.first_name +
-                          (userProfile?.last_name
-                              ? " " + userProfile.last_name
-                              : "")}
-                </p>
-                <p className="text-text-secondary text-xs break-all">
-                    {user?.email ?? "Loading..."}
-                </p>
-            </Card>
-            <Divider />
             {/* Primary Actions */}
             <div className="flex min-w-52 flex-col gap-1">
-                {/* My Account */}
+                {/* My Profile */}
                 <LinkButton
                     variant="secondary-transparent"
-                    to="/account"
+                    to="/profile"
                     onClick={closePopout}
                     linkClassName="w-full"
                     buttonClassName="h-10 w-full justify-start gap-3"
                 >
                     <UserIcon size={18} />
-                    My Account
+                    My Profile
                 </LinkButton>
                 {/* Settings */}
                 <LinkButton

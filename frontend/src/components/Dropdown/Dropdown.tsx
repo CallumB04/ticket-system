@@ -54,7 +54,7 @@ const Dropdown = ({
                 )}
             >
                 <option value="" disabled hidden className="">
-                    {placeholder ?? "Choose an option"}
+                    {placeholder ?? "Choose an option..."}
                 </option>
                 {options.map((o) => (
                     <option

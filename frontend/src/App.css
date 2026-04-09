@@ -4,77 +4,81 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-    /* -- Global Styles--  */
-
     box-sizing: border-box;
     scroll-behavior: smooth;
 
-    /* -- Variables--  */
-
-    /* Sizes */
     --navbar-height: 64px;
     --sidebar-width: 240px;
 
-    /* Colors */
-    --highlight-color: #2563eb;
-    --highlight-color-hover: #1d4ed8;
-    --highlight-color-soft: #93c5fd;
+    /* Accent (only color in system) */
+    --highlight-color: #22c55e;
+    --highlight-color-hover: #16a34a;
+    --highlight-color-soft: #bbf7d0;
 
-    --primary-text-color: #0f172a;
-    --secondary-text-color: #475569;
-    --disabled-text-color: #94a3b8;
+    /* Text (true neutral, no blue tint) */
+    --primary-text-color: #0a0a0a;
+    --secondary-text-color: #525252;
+    --disabled-text-color: #a3a3a3;
 
-    --background-color: #f8fafc;
-    --surface-color: #fff;
-    --surface-muted-color: #f1f5f9;
+    /* Backgrounds (pure neutral) */
+    --background-color: #fafafa;
+    --surface-color: #ffffff;
+    --surface-muted-color: #f5f5f5;
 
-    --layout-border-color: #e2e8f0;
-    --surface-border-color: #cbd5e1;
-    --surface-border-hover-color: #94a3b8;
-    --input-border-color: #cbd5e1;
-    --input-border-hover-color: #94a3b8;
+    /* Borders (neutral grey scale) */
+    --layout-border-color: #e5e5e5;
+    --surface-border-color: #262626;
+    --surface-border-hover-color: #0e0e0e;
+    --input-border-color: #262626;
+    --input-border-hover-color: #0e0e0e;
 
-    --btn-primary-disabled-color: #e5e7eb;
-    --btn-primary-disabled-text-color: #9ca3af;
+    /* Buttons */
+    --btn-primary-disabled-color: #e5e5e5;
+    --btn-primary-disabled-text-color: #a3a3a3;
 
-    --btn-secondary-border-color: #cbd5e1;
-    --btn-secondary-hover-bg-color: #f1f5f9;
-    --btn-secondary-disabled-bg-color: #fff;
-    --btn-secondary-disabled-border-color: #e2e8f0;
+    --btn-secondary-border-color: #d4d4d4;
+    --btn-secondary-hover-bg-color: #f5f5f5;
+    --btn-secondary-disabled-bg-color: #ffffff;
+    --btn-secondary-disabled-border-color: #e5e5e5;
 
+    /* States */
     --danger-color: #dc2626;
     --danger-disabled-color: #e5bcbc;
-    --danger-disabled-text-color: #9ca3af;
+    --danger-disabled-text-color: #a3a3a3;
     --success-color: #16a34a;
 }
 
-/* -- Dark mode color overrides --  */
 .dark {
-    --highlight-color: #3b82f6;
-    --highlight-color-hover: #60a5fa;
-    --highlight-color-soft: #1e3a8a;
+    /* Accent pops more in dark */
+    --highlight-color: #22c55e;
+    --highlight-color-hover: #4ade80;
+    --highlight-color-soft: #052e16;
 
-    --primary-text-color: #e5e7eb;
-    --secondary-text-color: #94a3b8;
-    --disabled-text-color: #64748b;
+    /* Text */
+    --primary-text-color: #fafafa;
+    --secondary-text-color: #a3a3a3;
+    --disabled-text-color: #737373;
 
-    --background-color: #0b0f14;
-    --surface-color: #121824;
-    --surface-muted-color: #1a2233;
+    /* Backgrounds (slightly warm like Blacksmith, not blue) */
+    --background-color: #0a0a0a;
+    --surface-color: #111111;
+    --surface-muted-color: #171717;
 
-    --layout-border-color: #1e293b;
-    --surface-border-color: #334155;
-    --surface-border-hover-color: #475569;
-    --input-border-color: #334155;
-    --input-border-hover-color: #475569;
+    /* Borders */
+    --layout-border-color: #1f1f1f;
+    --surface-border-color: #333;
+    --surface-border-hover-color: #4a4a4a;
+    --input-border-color: #333;
+    --input-border-hover-color: #4a4a4a;
 
-    --btn-primary-disabled-color: #1e3a8a;
-    --btn-primary-disabled-text-color: #94a3b8;
+    /* Buttons */
+    --btn-primary-disabled-color: #052e16;
+    --btn-primary-disabled-text-color: #737373;
 
-    --btn-secondary-border-color: #334155;
-    --btn-secondary-hover-bg-color: #1e293b;
-    --btn-secondary-disabled-bg-color: #020617;
-    --btn-secondary-disabled-border-color: #1e293b;
+    --btn-secondary-border-color: #262626;
+    --btn-secondary-hover-bg-color: #1f1f1f;
+    --btn-secondary-disabled-bg-color: #0a0a0a;
+    --btn-secondary-disabled-border-color: #1f1f1f;
 
     --danger-disabled-color: #7f1d1d;
 }
@@ -84,7 +88,7 @@ body {
 }
 
 .input-default {
-    @apply placeholder:text-text-placeholder text-text-primary border-input-border hover:border-input-border-hover bg-surface focus:outline-highlight disabled:text-text-disabled disabled:hover:border-input-border h-11 rounded border px-3 text-sm transition-colors focus:outline-1 disabled:cursor-not-allowed;
+    @apply placeholder:text-text-placeholder text-text-primary border-input-border hover:border-input-border-hover bg-surface focus:outline-highlight disabled:text-text-disabled disabled:hover:border-input-border h-11 border px-3 font-mono text-sm shadow-[4px_4px_0px_var(--input-border-color)] transition-all focus:shadow-[3px_3px_0px_var(--highlight-color)] focus:outline-1 disabled:cursor-not-allowed;
 }
 
 @theme {
@@ -161,5 +165,5 @@ body {
     --margin-sidebar-width: var(--sidebar-width);
 
     /* Label and Input */
-    --space-input-label: 6px;
+    --space-input-label: 8px;
 }

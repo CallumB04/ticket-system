@@ -90,17 +90,17 @@ const NotificationsPopout = ({
             title="Notifications"
         >
             <span className="border-b-layout-border flex items-center gap-1.5 border-b p-2">
-                <NotificationViewOptions
+                <NotificationViewOption
                     label="New"
                     active={view === "new"}
                     onClick={() => setView("new")}
                 />
-                <NotificationViewOptions
+                <NotificationViewOption
                     label="Read"
                     active={view === "read"}
                     onClick={() => setView("read")}
                 />
-                <NotificationViewOptions
+                <NotificationViewOption
                     label="Archived"
                     active={view === "archived"}
                     onClick={() => setView("archived")}
@@ -189,7 +189,7 @@ const NotificationPopoutItem = ({
     );
 };
 
-const NotificationViewOptions = ({
+const NotificationViewOption = ({
     activeClassName,
     label,
     active,
@@ -203,7 +203,7 @@ const NotificationViewOptions = ({
     return (
         <p
             className={twMerge(
-                "rounded border px-2 py-1 text-xs font-medium transition-colors",
+                "rounded-sm border px-2 py-1 font-mono text-xs font-medium tracking-wide transition-colors",
                 active
                     ? twMerge(
                           "bg-highlight/5 border-highlight/20 text-highlight/80 select-none",
