@@ -23,14 +23,14 @@ const Popup = ({
 }: PopupProps) => {
     return (
         <dialog
-            className="fixed top-0 left-0 z-99 flex h-screen w-screen items-center justify-center bg-[#000000cc] p-4 sm:p-8"
+            className="fixed top-0 left-0 z-99 flex h-screen w-screen items-center justify-center bg-[#00000066] p-4 sm:p-8"
             onMouseDown={() => {
                 if (closePopup && !preventClose) closePopup();
             }}
         >
             <div
                 className={twMerge(
-                    "bg-surface flex max-w-full flex-col gap-4 rounded-md p-4 shadow",
+                    "bg-surface border-surface-border flex max-w-full flex-col gap-4 rounded-xs border p-6",
                     className
                 )}
                 // prevent popup close if mouse is dragged and unclicks outside popup

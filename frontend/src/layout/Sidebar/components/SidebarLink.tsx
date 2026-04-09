@@ -25,7 +25,7 @@ const SidebarLink = ({ className, text, icon, to, open }: SidebarLinkProps) => {
             </span>
             <p
                 className={twMerge(
-                    "text-sm font-medium",
+                    "text-sm font-medium tracking-wide",
                     open
                         ? "text-highlight/80"
                         : "text-text-secondary group-hover:text-text-primary transition-colors"

@@ -26,7 +26,7 @@ const Button = ({
     return (
         <button
             className={twMerge(
-                "flex h-12 items-center justify-center gap-2 rounded px-4 text-sm font-medium transition-colors",
+                "flex h-12 items-center justify-center gap-2 rounded-sm px-4 text-sm font-medium tracking-wide transition-colors",
                 variant === "primary" &&
                     (disabled
                         ? "bg-btn-primary-disabled text-btn-primary-disabled-text"

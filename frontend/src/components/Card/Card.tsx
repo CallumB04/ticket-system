@@ -3,12 +3,7 @@ import CardTitle from "./CardTitle";
 import CardDescription from "./CardDescription";
 import type { ReactNode } from "react";
 
-type CardVariant =
-    | "default"
-    | "muted"
-    | "border"
-    | "highlight"
-    | "highlight-muted";
+type CardVariant = "default" | "muted" | "border";
 type CardSize = "default" | "medium" | "small";
 
 interface CardProps {
@@ -44,19 +39,17 @@ const Card = ({
     return (
         <div
             className={twMerge(
-                "border-surface-border flex w-max flex-col gap-4 rounded border shadow transition-colors",
+                "border-surface-border flex w-max flex-col gap-4 border transition-all",
                 getPaddingFromSize(size),
                 variant === "default" && "bg-surface",
                 variant === "muted" && "bg-surface-muted",
-                variant === "border" && "bg-transparent shadow-none",
-                variant === "highlight" &&
-                    "bg-highlight/15 border-highlight/50",
-                variant === "highlight-muted" &&
-                    "bg-highlight/5 border-highlight/20 shadow-none",
+                variant === "border" && "bg-transparent",
+                variant !== "border" &&
+                    "shadow-[8px_8px_0px_var(--surface-border-color)]",
                 onClick && "hover:border-surface-border-hover cursor-default",
-                onClick &&
-                    variant === "highlight" &&
-                    "hover:border-highlight/90",
+                variant !== "border" &&
+                    onClick &&
+                    "hover:shadow-[6px_6px_0px_var(--highlight-color)]",
                 className
             )}
             onClick={onClick}
