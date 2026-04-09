@@ -2,11 +2,19 @@ import { twMerge } from "tailwind-merge";
 
 interface ProgressBarProps {
     className?: string;
-    target: number;
-    value: number;
+    targetValue: number;
+    targetLabel: string;
+    currentValue: number;
+    currentLabel: string;
 }
 
-const ProgressBar = ({ className, target, value }: ProgressBarProps) => {
+const ProgressBar = ({
+    className,
+    targetValue,
+    targetLabel,
+    currentValue,
+    currentLabel,
+}: ProgressBarProps) => {
     return (
         <div
             className={twMerge(
@@ -17,27 +25,27 @@ const ProgressBar = ({ className, target, value }: ProgressBarProps) => {
             <div
                 className={twMerge(
                     "from-highlight/80 to-highlight/20 absolute top-0 left-0 flex h-10.5 items-center rounded-l-xs bg-linear-90",
-                    value === target && "rounded-r-xs",
-                    value !== target &&
-                        value > 0 &&
+                    currentValue === targetValue && "rounded-r-xs",
+                    currentValue !== targetValue &&
+                        currentValue > 0 &&
                         "border-r-input-border border-r",
-                    value > 0 ? "justify-end" : "justify-start"
+                    currentValue > 0 ? "justify-end" : "justify-start"
                 )}
-                style={{ width: `${(value / target) * 100}%` }}
+                style={{ width: `${(currentValue / targetValue) * 100}%` }}
             >
-                {value !== target && (
+                {currentValue !== targetValue && (
                     <p
                         className={twMerge(
-                            "font-mono",
-                            value > 0 ? "mr-3" : "ml-3"
+                            "text-text-primary font-mono text-sm",
+                            currentValue > 0 ? "mr-3" : "ml-3"
                         )}
                     >
-                        {value}
+                        {currentLabel}
                     </p>
                 )}
             </div>
-            <p className="absolute top-1/2 right-3 -translate-y-1/2 transform font-mono">
-                {target}
+            <p className="text-text-primary absolute top-1/2 right-3 -translate-y-1/2 transform font-mono text-sm">
+                {targetLabel}
             </p>
         </div>
     );

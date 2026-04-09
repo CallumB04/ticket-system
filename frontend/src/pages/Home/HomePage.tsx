@@ -278,9 +278,24 @@ const HomePage = () => {
                         />
                     </div>
                 </div>
-                <ProgressBar target={5} value={3} />
-                <ProgressBar target={5} value={0} />
-                <ProgressBar target={5} value={5} />
+                <ProgressBar
+                    targetValue={100}
+                    currentValue={15}
+                    targetLabel={"$100"}
+                    currentLabel={"$15"}
+                />
+                <ProgressBar
+                    targetValue={100}
+                    currentValue={100}
+                    targetLabel={"$100"}
+                    currentLabel={"$100"}
+                />
+                <ProgressBar
+                    targetValue={100}
+                    currentValue={0}
+                    targetLabel={"$100"}
+                    currentLabel={"$0"}
+                />
                 <Button variant="secondary-transparent">Cancel</Button>
                 <Button variant="danger-transparent">
                     <TrashIcon size={18} />
