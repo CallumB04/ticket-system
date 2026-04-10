@@ -3,7 +3,11 @@ interface InputLabelProps {
 }
 
 const InputLabel = ({ text }: InputLabelProps) => {
-    return <p className="text-text-secondary text-sm font-medium">{text}</p>;
+    return (
+        <p className="text-text-secondary font-mono text-xs font-medium">
+            {text}
+        </p>
+    );
 };
 
 export default InputLabel;

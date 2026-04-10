@@ -165,5 +165,5 @@ body {
     --margin-sidebar-width: var(--sidebar-width);
 
     /* Label and Input */
-    --space-input-label: 8px;
+    --space-input-label: 6px;
 }
