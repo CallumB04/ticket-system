@@ -13,6 +13,7 @@ interface DropdownProps {
     options: DropdownOption[];
     label?: string;
     placeholder?: string;
+    value?: string;
     defaultValue?: string;
     disabled?: boolean;
     onChange?: (value: string) => void;
@@ -24,15 +25,18 @@ const Dropdown = ({
     options,
     label,
     placeholder,
-    defaultValue = "",
+    value,
+    defaultValue,
     disabled,
     onChange,
 }: DropdownProps) => {
-    const [value, setValue] = useState<string>(defaultValue ?? "");
+    const [currentValue, setCurrentValue] = useState<string>(
+        defaultValue ?? value ?? ""
+    );
 
     const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
         // update state
-        setValue(event.target.value);
+        setCurrentValue(event.target.value);
 
         // send new value to parent component
         if (onChange) {
@@ -44,12 +48,13 @@ const Dropdown = ({
         <div className={twMerge("space-y-input-label", containerClassName)}>
             {label && <InputLabel text={label} />}
             <select
+                value={value}
                 defaultValue={defaultValue}
                 disabled={disabled}
                 onChange={handleChange}
                 className={twMerge(
                     "input-default",
-                    value === "" && "text-text-disabled!",
+                    currentValue === "" && !value && "text-text-disabled!",
                     className
                 )}
             >

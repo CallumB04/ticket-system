@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import ClickableGroup from "../../components/ClickableGroup/ClickableGroup";
 import UserAvatar from "../../components/UserAvatar/UserAvatar";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTheme } from "../../contexts/ThemeContext";
 import useClickOutside from "../../hooks/useClickOutside";
 import { useSidebar } from "../../contexts/SidebarContext";
@@ -23,6 +23,9 @@ import NotificationsPopout from "../Popouts/NotificationsPopout";
 import UserProfilePopout from "../Popouts/UserProfilePopout";
 import { fetchNotifications } from "../../api/notifications";
 import { useQuery } from "@tanstack/react-query";
+import { fetchOrganisations } from "../../api";
+import Dropdown from "../../components/Dropdown/Dropdown";
+import { useOrganisation } from "../../contexts/OrganisationContext";
 
 interface NavbarProps {
     className?: string;
@@ -56,6 +59,31 @@ const Navbar = ({ className }: NavbarProps) => {
             return notis ?? [];
         },
     });
+
+    const { activeOrganisation, setActiveOrganisation } = useOrganisation();
+
+    // Load organisations on component mount
+    const { data: organisations } = useQuery({
+        queryKey: ["organisations", user?.id], // refetch when user changes
+        queryFn: async () => {
+            const orgs = await fetchOrganisations();
+            return orgs ?? [];
+        },
+    });
+
+    // Update activeOrganisation when organisations changes
+    useEffect(() => {
+        if (
+            !activeOrganisation ||
+            !organisations?.includes(activeOrganisation)
+        ) {
+            if (organisations && organisations.length > 0) {
+                setActiveOrganisation(organisations[0]);
+            } else {
+                setActiveOrganisation(undefined);
+            }
+        }
+    }, [organisations]);
 
     return (
         <nav
@@ -102,6 +130,23 @@ const Navbar = ({ className }: NavbarProps) => {
                         </LinkButton>
                     ) : (
                         <span className="flex gap-3">
+                            {/* Organisations Dropdown */}
+                            {organisations && organisations?.length >= 2 && (
+                                <Dropdown
+                                    options={organisations?.map((o) => {
+                                        return { value: o.id, label: o.name };
+                                    })}
+                                    className="mr-2 h-8! w-40"
+                                    value={activeOrganisation?.id}
+                                    onChange={(val) =>
+                                        setActiveOrganisation(
+                                            organisations.find(
+                                                (o) => o.id === val
+                                            )
+                                        )
+                                    }
+                                />
+                            )}
                             {/* Light/Dark mode Icon */}
                             <ClickableGroup onClick={toggleTheme}>
                                 {theme === "light" ? (
