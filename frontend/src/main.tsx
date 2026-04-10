@@ -6,6 +6,7 @@ import { ThemeProvider } from "./contexts/ThemeContext.tsx";
 import { UserProvider } from "./contexts/UserContext.tsx";
 import { PopupProvider } from "./contexts/PopupContext.tsx";
 import SidebarProvider from "./contexts/SidebarContext.tsx";
+import { OrganisationProvider } from "./contexts/OrganisationContext.tsx";
 
 const queryClient = new QueryClient();
 
@@ -14,11 +15,13 @@ createRoot(document.getElementById("root")!).render(
         <QueryClientProvider client={queryClient}>
             <PopupProvider>
                 <UserProvider>
-                    <ThemeProvider>
-                        <SidebarProvider>
-                            <App />
-                        </SidebarProvider>
-                    </ThemeProvider>
+                    <OrganisationProvider>
+                        <ThemeProvider>
+                            <SidebarProvider>
+                                <App />
+                            </SidebarProvider>
+                        </ThemeProvider>
+                    </OrganisationProvider>
                 </UserProvider>
             </PopupProvider>
         </QueryClientProvider>
