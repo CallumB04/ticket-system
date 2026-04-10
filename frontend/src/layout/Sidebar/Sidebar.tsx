@@ -1,12 +1,7 @@
 import { twMerge } from "tailwind-merge";
 import SidebarLink from "./components/SidebarLink";
 import { useLocation } from "react-router-dom";
-import {
-    Building2Icon,
-    GaugeCircleIcon,
-    HomeIcon,
-    UsersIcon,
-} from "lucide-react";
+import { GaugeCircleIcon, HomeIcon, UsersIcon } from "lucide-react";
 import { useSidebar } from "../../contexts/SidebarContext";
 import Divider from "../../components/Divider/Divider";
 import { useEffect } from "react";
@@ -46,12 +41,6 @@ const Sidebar = ({ className }: SidebarProps) => {
                 icon={<GaugeCircleIcon size={20} />}
                 to="/dashboard"
                 open={location.pathname.includes("dashboard")}
-            />
-            <SidebarLink
-                text="Organisations"
-                icon={<Building2Icon size={20} />}
-                to="/organisations"
-                open={location.pathname.includes("organisations")}
             />
             <SidebarLink
                 text="Teams"

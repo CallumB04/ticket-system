@@ -4,7 +4,6 @@ import HomePage from "./pages/Home/HomePage";
 import NotFoundPage from "./pages/NotFound/NotFoundPage";
 import Navbar from "./layout/Navbar/Navbar";
 import DashboardPage from "./pages/Dashboard/DashboardPage";
-import OrganisationsPage from "./pages/Organisations/OrganisationsPage";
 import TeamsPage from "./pages/Teams/TeamsPage";
 import PopupRenderer from "./layout/PopupRenderer/PopupRenderer";
 import { RequireUser } from "./contexts/UserContext";
@@ -21,10 +20,6 @@ function App() {
                 {/* Application Pages - Protected Routes, must been logged in */}
                 <Route element={<RequireUser />}>
                     <Route path="/dashboard" element={<DashboardPage />} />
-                    <Route
-                        path="/organisations"
-                        element={<OrganisationsPage />}
-                    />
                     <Route path="/teams" element={<TeamsPage />} />
                 </Route>
                 {/* Not found page - all un-routed paths */}
