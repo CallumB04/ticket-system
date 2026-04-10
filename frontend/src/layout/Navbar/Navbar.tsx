@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import ClickableGroup from "../../components/ClickableGroup/ClickableGroup";
 import UserAvatar from "../../components/UserAvatar/UserAvatar";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useTheme } from "../../contexts/ThemeContext";
 import useClickOutside from "../../hooks/useClickOutside";
 import { useSidebar } from "../../contexts/SidebarContext";
@@ -23,9 +23,6 @@ import NotificationsPopout from "../Popouts/NotificationsPopout";
 import UserProfilePopout from "../Popouts/UserProfilePopout";
 import { fetchNotifications } from "../../api/notifications";
 import { useQuery } from "@tanstack/react-query";
-import { fetchOrganisations } from "../../api";
-import Dropdown from "../../components/Dropdown/Dropdown";
-import { useOrganisation } from "../../contexts/OrganisationContext";
 
 interface NavbarProps {
     className?: string;

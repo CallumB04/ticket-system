@@ -6,14 +6,12 @@ import {
     ChartBarIcon,
     ChartLineIcon,
     GaugeCircleIcon,
-    HomeIcon,
     InboxIcon,
     ScrollTextIcon,
     TicketIcon,
     UsersIcon,
 } from "lucide-react";
 import { useSidebar } from "../../contexts/SidebarContext";
-import Divider from "../../components/Divider/Divider";
 import { useEffect } from "react";
 import SidebarGroup from "./components/SidebarGroup";
 import { fetchOrganisations } from "../../api";
