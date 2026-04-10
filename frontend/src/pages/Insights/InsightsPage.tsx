@@ -2,19 +2,19 @@ import Page from "../../components/Page/Page";
 import usePageTitle from "../../hooks/usePageTitle";
 import Sidebar from "../../layout/Sidebar/Sidebar";
 
-const TeamsPage = () => {
-    usePageTitle("Teams / Booth");
+const InsightsPage = () => {
+    usePageTitle("Insights / Booth");
 
     return (
         <>
             <Sidebar />
             <Page
-                title="Teams"
-                description="View and manage the teams and members within your organisation"
+                title="Insights"
+                description="View AI insights of teams and tickets within your organisation"
                 hasSidebar
             ></Page>
         </>
     );
 };
 
-export default TeamsPage;
+export default InsightsPage;
