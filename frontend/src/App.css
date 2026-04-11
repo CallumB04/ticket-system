@@ -156,6 +156,9 @@ body {
     --color-ticket-unassigned: #f59e0b;
     --color-ticket-paused: #8b5cf6;
     --color-ticket-cancelled: #6b7280;
+    --color-ticket-priority-low: #6b7280;
+    --color-ticket-priority-medium: #f59e0b;
+    --color-ticket-priority-high: #ef4444;
 
     /* -- Fonts -- */
     --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
