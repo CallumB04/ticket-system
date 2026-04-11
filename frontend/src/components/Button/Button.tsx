@@ -32,7 +32,7 @@ const Button = ({
                         ? "bg-btn-primary-disabled text-btn-primary-disabled-text"
                         : "bg-btn-primary text-btn-primary-text hover:bg-btn-primary-hover"),
                 variant === "secondary" &&
-                    "border-2 " +
+                    "border " +
                         (disabled
                             ? "bg-btn-secondary-disabled-bg text-btn-secondary-disabled-text border-btn-secondary-disabled-border"
                             : "bg-btn-secondary-bg text-btn-secondary-text hover:bg-btn-secondary-hover-bg border-btn-secondary-border hover:border-btn-secondary-hover-border"),
