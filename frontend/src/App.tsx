@@ -9,10 +9,9 @@ import PopupRenderer from "./layout/PopupRenderer/PopupRenderer";
 import { RequireUser } from "./contexts/UserContext";
 import TicketsPage from "./pages/Tickets/TicketsPage";
 import InboxPage from "./pages/Inbox/InboxPage";
-import AssistantPage from "./pages/Assistant/AssistantPage";
 import InsightsPage from "./pages/Insights/InsightsPage";
-import LogsPage from "./pages/Logs/LogsPage";
 import ActivityPage from "./pages/Activity/ActivityPage";
+import RequestPage from "./pages/Request/RequestPage";
 
 function App() {
     return (
@@ -30,9 +29,8 @@ function App() {
                     <Route path="/tickets" element={<TicketsPage />} />
                     <Route path="/inbox" element={<InboxPage />} />
                     {/* AI */}
-                    <Route path="/assistant" element={<AssistantPage />} />
+                    <Route path="/request" element={<RequestPage />} />
                     <Route path="/insights" element={<InsightsPage />} />
-                    <Route path="/logs" element={<LogsPage />} />
                     {/* Organisation */}
                     <Route path="/teams" element={<TeamsPage />} />
                     <Route path="/activity" element={<ActivityPage />} />

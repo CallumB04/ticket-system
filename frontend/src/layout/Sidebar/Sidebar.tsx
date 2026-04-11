@@ -3,11 +3,10 @@ import SidebarLink from "./components/SidebarLink";
 import { useLocation } from "react-router-dom";
 import {
     BotIcon,
-    ChartBarIcon,
+    ChartColumnIcon,
     ChartLineIcon,
     GaugeCircleIcon,
     InboxIcon,
-    ScrollTextIcon,
     TicketIcon,
     UsersIcon,
 } from "lucide-react";
@@ -84,7 +83,7 @@ const Sidebar = ({ className }: SidebarProps) => {
                     />
                 </SidebarGroup>
             )}
-            <SidebarGroup title="Personal">
+            <SidebarGroup title="Tickets">
                 <SidebarLink
                     text="Dashboard"
                     icon={<GaugeCircleIcon size={20} />}
@@ -92,41 +91,35 @@ const Sidebar = ({ className }: SidebarProps) => {
                     open={location.pathname.includes("dashboard")}
                 />
                 <SidebarLink
-                    text="My Tickets"
-                    icon={<TicketIcon size={20} />}
-                    to="/tickets"
-                    open={location.pathname.includes("tickets")}
-                />
-                <SidebarLink
                     text="Inbox"
                     icon={<InboxIcon size={20} />}
                     to="/inbox"
                     open={location.pathname.includes("inbox")}
                 />
+                <SidebarLink
+                    text="My Tickets"
+                    icon={<TicketIcon size={20} />}
+                    to="/tickets"
+                    open={location.pathname.includes("tickets")}
+                />
             </SidebarGroup>
 
             <SidebarGroup title="AI">
                 <SidebarLink
-                    text="Assistant"
+                    text="New Request"
                     icon={<BotIcon size={20} />}
-                    to="/assistant"
-                    open={location.pathname.includes("assistant")}
+                    to="/request"
+                    open={location.pathname.includes("request")}
                 />
                 <SidebarLink
                     text="Insights"
-                    icon={<ChartBarIcon size={20} />}
+                    icon={<ChartColumnIcon size={20} />}
                     to="/insights"
                     open={location.pathname.includes("insights")}
                 />
-                <SidebarLink
-                    text="Logs"
-                    icon={<ScrollTextIcon size={20} />}
-                    to="/logs"
-                    open={location.pathname.includes("logs")}
-                />
             </SidebarGroup>
 
-            <SidebarGroup title="Organisation">
+            <SidebarGroup title="My Organisation">
                 <SidebarLink
                     text="Teams"
                     icon={<UsersIcon size={20} />}

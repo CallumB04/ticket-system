@@ -2,19 +2,19 @@ import Page from "../../components/Page/Page";
 import usePageTitle from "../../hooks/usePageTitle";
 import Sidebar from "../../layout/Sidebar/Sidebar";
 
-const LogsPage = () => {
-    usePageTitle("Logs / Booth");
+const RequestPage = () => {
+    usePageTitle("Request / Booth");
 
     return (
         <>
             <Sidebar />
             <Page
-                title="Logs"
-                description="View logs of AI usage within your organisation"
+                title="New Request"
+                description="Make a request - AI will automatically turn it into structured tickets"
                 hasSidebar
             ></Page>
         </>
     );
 };
 
-export default LogsPage;
+export default RequestPage;

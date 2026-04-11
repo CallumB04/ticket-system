@@ -14,7 +14,7 @@ const TicketsPage = () => {
             <Sidebar />
             <Page
                 title="My Tickets"
-                description="View all of your active tickets"
+                description="View all of your active and past tickets"
                 hasSidebar
             >
                 {/* Search bar and key buttons */}
@@ -28,7 +28,6 @@ const TicketsPage = () => {
                             options={[
                                 { value: "all", label: "All Statuses" },
                                 { value: "in-progress", label: "In Progress" },
-                                { value: "unassigned", label: "Unassigned" },
                                 { value: "resolved", label: "Resolved" },
                                 { value: "paused", label: "Paused" },
                                 { value: "cancelled", label: "Cancelled" },
@@ -51,7 +50,6 @@ const TicketsPage = () => {
                             New Ticket
                         </Button>
                     </span>
-                    {/*  */}
                 </div>
             </Page>
         </>
