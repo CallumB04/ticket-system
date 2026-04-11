@@ -150,6 +150,13 @@ body {
     --color-success: var(--success-color);
     --color-danger: var(--danger-color);
 
+    /* Ticket Statuses */
+    --color-ticket-resolved: #10b981;
+    --color-ticket-inprogress: #3b82f6;
+    --color-ticket-unassigned: #f59e0b;
+    --color-ticket-paused: #8b5cf6;
+    --color-ticket-cancelled: #6b7280;
+
     /* -- Fonts -- */
     --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", ui-monospace, monospace;
