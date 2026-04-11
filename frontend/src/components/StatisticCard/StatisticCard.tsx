@@ -5,9 +5,21 @@ interface StatisticCardProps {
     className?: string;
     label: string;
     value: number;
+    highlight?:
+        | "default"
+        | "resolved"
+        | "in-progress"
+        | "unassigned"
+        | "paused"
+        | "cancelled";
 }
 
-const StatisticCard = ({ className, label, value }: StatisticCardProps) => {
+const StatisticCard = ({
+    className,
+    label,
+    value,
+    highlight,
+}: StatisticCardProps) => {
     return (
         <Card className={twMerge("", className)}>
             <p className="text-text-primary">{label}</p>
@@ -15,7 +27,19 @@ const StatisticCard = ({ className, label, value }: StatisticCardProps) => {
                 {value === Math.floor(value) && value < 10 && "0"}
                 {value}
             </p>
-            <span className="bg-highlight h-1 w-full rounded-full" />
+            {highlight && (
+                <span
+                    className={twMerge(
+                        "h-1 w-full rounded-full",
+                        highlight === "default" && "bg-highlight",
+                        highlight === "resolved" && "bg-ticket-resolved",
+                        highlight === "in-progress" && "bg-ticket-inprogress",
+                        highlight === "unassigned" && "bg-ticket-unassigned",
+                        highlight === "paused" && "bg-ticket-paused",
+                        highlight === "cancelled" && "bg-ticket-cancelled"
+                    )}
+                />
+            )}
         </Card>
     );
 };

@@ -20,21 +20,25 @@ const DashboardPage = () => {
                         label="Active Tickets"
                         value={14}
                         className="w-full"
+                        highlight="in-progress"
                     />
                     <StatisticCard
                         label="My Tickets"
                         value={5}
                         className="w-full"
+                        highlight="default"
                     />
                     <StatisticCard
                         label="Unassigned Tickets"
                         value={3}
                         className="w-full"
+                        highlight="unassigned"
                     />
                     <StatisticCard
                         label="Resolved Tickets"
                         value={23}
                         className="w-full"
+                        highlight="resolved"
                     />
                 </div>
             </Page>
