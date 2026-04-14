@@ -61,7 +61,7 @@ const Sidebar = ({ className }: SidebarProps) => {
     return (
         <aside
             className={twMerge(
-                "bg-surface border-r-layout-border mt-navbar-height w-sidebar-width fixed top-0 left-0 h-[calc(100vh-var(--navbar-height))] flex-col gap-8 border-r px-3 py-4 lg:flex",
+                "bg-surface border-r-layout-border mt-navbar-height w-sidebar-width fixed top-0 left-0 z-99 h-[calc(100vh-var(--navbar-height))] flex-col gap-8 border-r px-3 py-4 lg:flex",
                 isMobileSidebarOpen ? "flex" : "hidden",
                 className
             )}
