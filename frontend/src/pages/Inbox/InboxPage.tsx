@@ -1,13 +1,17 @@
 import { PlusIcon } from "lucide-react";
 import Button from "../../components/Button/Button";
-import Dropdown from "../../components/Dropdown/Dropdown";
 import Page from "../../components/Page/Page";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import usePageTitle from "../../hooks/usePageTitle";
 import Sidebar from "../../layout/Sidebar/Sidebar";
+import Navigator from "../../components/Navigator/Navigator";
+import { useState } from "react";
 
 const InboxPage = () => {
     usePageTitle("Inbox / Booth");
+
+    const [statusView, setStatusView] = useState<string>("all");
+    const [priorityView, setPriorityView] = useState<string>("all");
 
     return (
         <>
@@ -18,39 +22,71 @@ const InboxPage = () => {
                 hasSidebar
             >
                 {/* Search bar and key buttons */}
-                <div className="flex w-full justify-between gap-8">
+                <div className="flex w-full justify-between gap-4">
                     <SearchBar
                         placeholder="Search for ticket..."
-                        className="w-96"
+                        containerClassName="w-full"
+                        className="w-full"
                     />
-                    <span className="flex gap-4">
-                        <Dropdown
-                            options={[
-                                { value: "all", label: "All Statuses" },
-                                { value: "in-progress", label: "In Progress" },
-                                { value: "unassigned", label: "Unassigned" },
-                                { value: "resolved", label: "Resolved" },
-                                { value: "paused", label: "Paused" },
-                                { value: "cancelled", label: "Cancelled" },
-                            ]}
-                            placeholder="Select status..."
-                            defaultValue=""
-                        />
-                        <Dropdown
-                            options={[
-                                { value: "all", label: "All Priorities" },
-                                { value: "low", label: "Low" },
-                                { value: "medium", label: "Medium" },
-                                { value: "high", label: "High" },
-                            ]}
-                            placeholder="Select priority..."
-                            defaultValue=""
-                        />
-                        <Button variant="primary">
-                            <PlusIcon size={20} />
-                            New Ticket
-                        </Button>
-                    </span>
+                    <Button variant="primary" className="min-w-max">
+                        <PlusIcon size={20} />
+                        New Ticket
+                    </Button>
+                </div>
+                {/* Navigators */}
+                <div className="flex gap-4">
+                    {/* Ticket Status Navigator */}
+                    <Navigator
+                        options={[
+                            {
+                                label: "All",
+                                onClick: () => setStatusView("all"),
+                            },
+                            {
+                                label: "In Progress",
+                                onClick: () => setStatusView("in-progress"),
+                            },
+                            {
+                                label: "Unassigned",
+                                onClick: () => setStatusView("unassigned"),
+                            },
+                            {
+                                label: "Paused",
+                                onClick: () => setStatusView("paused"),
+                            },
+                            {
+                                label: "Resolved",
+                                onClick: () => setStatusView("resolved"),
+                            },
+                            {
+                                label: "Cancelled",
+                                onClick: () => setStatusView("cancelled"),
+                            },
+                        ]}
+                        defaultOptionLabel="All"
+                    />
+                    {/* Ticket Priority Navigator */}
+                    <Navigator
+                        options={[
+                            {
+                                label: "All",
+                                onClick: () => setPriorityView("all"),
+                            },
+                            {
+                                label: "Low",
+                                onClick: () => setPriorityView("low"),
+                            },
+                            {
+                                label: "Medium",
+                                onClick: () => setPriorityView("medium"),
+                            },
+                            {
+                                label: "High",
+                                onClick: () => setPriorityView("high"),
+                            },
+                        ]}
+                        defaultOptionLabel="All"
+                    />
                 </div>
             </Page>
         </>
