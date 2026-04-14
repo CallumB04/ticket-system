@@ -61,7 +61,7 @@ const Sidebar = ({ className }: SidebarProps) => {
     return (
         <aside
             className={twMerge(
-                "bg-surface border-r-layout-border mt-navbar-height w-sidebar-width fixed top-0 left-0 h-[calc(100vh-var(--navbar-height))] flex-col gap-6 border-r px-3 py-4 lg:flex",
+                "bg-surface border-r-layout-border mt-navbar-height w-sidebar-width fixed top-0 left-0 h-[calc(100vh-var(--navbar-height))] flex-col gap-8 border-r px-3 py-4 lg:flex",
                 isMobileSidebarOpen ? "flex" : "hidden",
                 className
             )}
@@ -73,7 +73,7 @@ const Sidebar = ({ className }: SidebarProps) => {
                         options={organisations?.map((o) => {
                             return { value: o.id, label: o.name };
                         })}
-                        className="h-9! w-full shadow-none! focus:shadow-none!"
+                        className="h-10! w-full"
                         value={activeOrganisation?.id}
                         onChange={(val) =>
                             setActiveOrganisation(

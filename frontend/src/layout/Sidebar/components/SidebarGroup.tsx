@@ -11,8 +11,8 @@ const SidebarGroup = ({ className, title, children }: SidebarGroupProps) => {
     return (
         <div className={twMerge("flex w-full flex-col gap-2", className)}>
             {title && (
-                <p className="text-text-secondary font-mono text-xs">
-                    -- {title} --
+                <p className="text-text-disabled font-mono text-[11px] font-medium tracking-wide uppercase">
+                    {title}
                 </p>
             )}
             <div className={twMerge("flex w-full flex-col gap-1", className)}>
