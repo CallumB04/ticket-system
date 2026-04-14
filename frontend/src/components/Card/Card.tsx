@@ -45,11 +45,11 @@ const Card = ({
                 variant === "muted" && "bg-surface-muted",
                 variant === "border" && "bg-transparent",
                 variant !== "border" &&
-                    "shadow-[8px_8px_0px_var(--surface-border-color)]",
+                    "shadow-[6px_6px_0px_var(--surface-border-color)]",
                 onClick && "hover:border-surface-border-hover cursor-default",
                 variant !== "border" &&
                     onClick &&
-                    "hover:shadow-[6px_6px_0px_var(--highlight-color)]",
+                    "hover:shadow-[4px_4px_0px_var(--highlight-color)]",
                 className
             )}
             onClick={onClick}
