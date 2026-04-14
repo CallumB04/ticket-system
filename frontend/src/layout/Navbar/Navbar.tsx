@@ -60,7 +60,7 @@ const Navbar = ({ className }: NavbarProps) => {
     return (
         <nav
             className={twMerge(
-                "bg-surface border-b-layout-border h-navbar-height fixed top-0 left-0 flex w-screen items-center border-b px-4 sm:px-6",
+                "bg-surface border-b-layout-border h-navbar-height fixed top-0 left-0 z-99 flex w-screen items-center border-b px-4 sm:px-6",
                 className
             )}
         >
