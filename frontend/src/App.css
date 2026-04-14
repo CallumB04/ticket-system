@@ -88,7 +88,7 @@ body {
 }
 
 .input-default {
-    @apply placeholder:text-text-placeholder text-text-primary border-input-border hover:border-input-border-hover bg-surface focus:outline-highlight disabled:text-text-disabled disabled:hover:border-input-border h-11 border px-3 font-mono text-sm shadow-[4px_4px_0px_var(--input-border-color)] transition-all focus:shadow-[3px_3px_0px_var(--highlight-color)] focus:outline-1 disabled:cursor-not-allowed;
+    @apply placeholder:text-text-placeholder text-text-primary border-input-border hover:border-input-border-hover bg-surface focus:outline-highlight disabled:text-text-disabled disabled:hover:border-input-border h-12 border px-3 font-mono text-sm transition-all focus:outline-1 disabled:cursor-not-allowed;
 }
 
 @theme {

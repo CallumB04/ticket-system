@@ -26,7 +26,7 @@ const Popout = ({
     return (
         <div
             className={twMerge(
-                "bg-surface border-surface-border absolute w-max border p-1.5 shadow-[4px_4px_0px_var(--surface-border-color)]",
+                "bg-surface border-surface-border absolute z-90 w-max border p-1.5 shadow-md",
                 xPos === "left" && "right-0",
                 xPos === "right" && "left-0",
                 yPos === "top" && "bottom-full mb-1.5",
