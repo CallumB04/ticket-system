@@ -12,7 +12,7 @@ const NavigatorItem = ({ option, active, onClick }: NavigatorItemProps) => {
         <div
             onClick={onClick}
             className={twMerge(
-                "text-text-secondary hover:text-text-primary flex h-full cursor-default items-center rounded-xs px-4 font-mono text-sm transition-colors",
+                "text-text-secondary hover:text-text-primary flex h-full cursor-default items-center rounded-xs px-4 font-mono text-sm transition-colors select-none",
                 active &&
                     "text-surface hover:text-surface from-highlight to-highlight/60 bg-linear-45"
             )}
