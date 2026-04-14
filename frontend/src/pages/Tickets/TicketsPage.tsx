@@ -10,8 +10,8 @@ import { useState } from "react";
 const TicketsPage = () => {
     usePageTitle("Tickets / Booth");
 
-    const [statusView, setStatusView] = useState<string>("all");
-    const [priorityView, setPriorityView] = useState<string>("all");
+    const [statusView, setStatusView] = useState<string>("");
+    const [priorityView, setPriorityView] = useState<string>("");
 
     return (
         <>
@@ -40,7 +40,7 @@ const TicketsPage = () => {
                         options={[
                             {
                                 label: "All",
-                                onClick: () => setStatusView("all"),
+                                onClick: () => setStatusView(""),
                             },
                             {
                                 label: "In Progress",
@@ -66,7 +66,7 @@ const TicketsPage = () => {
                         options={[
                             {
                                 label: "All",
-                                onClick: () => setPriorityView("all"),
+                                onClick: () => setPriorityView(""),
                             },
                             {
                                 label: "Low",

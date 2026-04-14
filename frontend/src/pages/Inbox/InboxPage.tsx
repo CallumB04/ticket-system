@@ -10,8 +10,8 @@ import { useState } from "react";
 const InboxPage = () => {
     usePageTitle("Inbox / Booth");
 
-    const [statusView, setStatusView] = useState<string>("all");
-    const [priorityView, setPriorityView] = useState<string>("all");
+    const [statusView, setStatusView] = useState<string>("");
+    const [priorityView, setPriorityView] = useState<string>("");
 
     return (
         <>
@@ -40,7 +40,7 @@ const InboxPage = () => {
                         options={[
                             {
                                 label: "All",
-                                onClick: () => setStatusView("all"),
+                                onClick: () => setStatusView(""),
                             },
                             {
                                 label: "In Progress",
@@ -70,7 +70,7 @@ const InboxPage = () => {
                         options={[
                             {
                                 label: "All",
-                                onClick: () => setPriorityView("all"),
+                                onClick: () => setPriorityView(""),
                             },
                             {
                                 label: "Low",
