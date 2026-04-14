@@ -25,7 +25,7 @@ const Page = ({
                 hasSidebar && "lg:ml-sidebar-width"
             )}
         >
-            <div className={twMerge("w-full max-w-7xl space-y-8", className)}>
+            <div className={twMerge("w-full max-w-6xl space-y-8", className)}>
                 {(title || description) && (
                     <div className="space-y-2">
                         {title && <PageHeader>{title}</PageHeader>}
