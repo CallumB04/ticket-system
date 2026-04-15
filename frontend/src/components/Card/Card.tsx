@@ -44,7 +44,8 @@ const Card = ({
                 variant === "default" && "bg-surface",
                 variant === "muted" && "bg-surface-muted",
                 variant === "border" && "bg-transparent",
-                onClick && "hover:border-surface-border-hover cursor-pointer",
+                onClick &&
+                    "hover:border-surface-border-hover transform cursor-pointer hover:-translate-y-1",
                 className
             )}
             onClick={onClick}
