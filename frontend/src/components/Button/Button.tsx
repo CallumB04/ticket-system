@@ -26,11 +26,11 @@ const Button = ({
     return (
         <button
             className={twMerge(
-                "flex h-12 items-center justify-center gap-2 rounded-xs px-4 text-sm font-medium tracking-wide transition-colors",
+                "flex h-12 items-center justify-center gap-2 rounded-xs px-4 text-sm font-medium tracking-wide shadow-sm transition-all hover:shadow-md",
                 variant === "primary" &&
                     (disabled
                         ? "bg-btn-primary-disabled text-btn-primary-disabled-text"
-                        : "bg-btn-primary text-btn-primary-text hover:bg-btn-primary-hover"),
+                        : "bg-btn-primary text-btn-primary-text hover:bg-btn-primary-hover border-text-primary/10 border"),
                 variant === "secondary" &&
                     "border " +
                         (disabled
@@ -42,9 +42,9 @@ const Button = ({
                         : "bg-btn-danger text-btn-danger-text hover:bg-btn-danger-hover"),
                 disabled ? "cursor-not-allowed" : "cursor-pointer",
                 variant === "secondary-transparent" &&
-                    "text-text-secondary hover:text-text-primary hover:bg-btn-secondary-hover-bg",
+                    "text-text-secondary hover:text-text-primary hover:bg-btn-secondary-hover-bg shadow-none hover:shadow-none",
                 variant === "danger-transparent" &&
-                    "text-danger/70 hover:bg-btn-danger-hover/10",
+                    "text-danger/70 hover:bg-btn-danger-hover/10 shadow-none hover:shadow-none",
                 className
             )}
             disabled={disabled}
