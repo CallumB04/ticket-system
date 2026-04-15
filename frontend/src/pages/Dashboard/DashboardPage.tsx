@@ -15,7 +15,7 @@ const DashboardPage = () => {
                 hasSidebar
             >
                 {/* Hero Analytics */}
-                <div className="flex w-full gap-8">
+                <div className="flex w-full gap-4">
                     <StatisticCard
                         label="Active Tickets"
                         value={14}
