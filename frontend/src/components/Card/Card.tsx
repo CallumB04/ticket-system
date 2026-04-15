@@ -39,12 +39,12 @@ const Card = ({
     return (
         <div
             className={twMerge(
-                "border-surface-border flex w-max flex-col gap-4 border shadow-md transition-all",
+                "border-surface-border flex w-max flex-col gap-4 border transition-all",
                 getPaddingFromSize(size),
                 variant === "default" && "bg-surface",
                 variant === "muted" && "bg-surface-muted",
                 variant === "border" && "bg-transparent",
-                onClick && "hover:border-surface-border-hover cursor-default",
+                onClick && "hover:border-surface-border-hover cursor-pointer",
                 className
             )}
             onClick={onClick}

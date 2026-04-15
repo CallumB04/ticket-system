@@ -27,7 +27,7 @@
 
     /* Borders (neutral grey scale) */
     --layout-border-color: #e5e5e5;
-    --surface-border-color: #262626;
+    --surface-border-color: #aaa;
     --surface-border-hover-color: #0e0e0e;
     --input-border-color: #262626;
     --input-border-hover-color: #0e0e0e;
