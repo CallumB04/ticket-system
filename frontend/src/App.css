@@ -31,6 +31,7 @@
     --surface-border-hover-color: #0e0e0e;
     --input-border-color: #262626;
     --input-border-hover-color: #0e0e0e;
+    --popup-border-color: #262626;
 
     /* Buttons */
     --btn-primary-disabled-color: #e5e5e5;
@@ -117,6 +118,7 @@ body {
     --color-surface-border-hover: var(--surface-border-hover-color);
     --color-input-border: var(--input-border-color);
     --color-input-border-hover: var(--input-border-hover-color);
+    --color-popup-border: var(--popup-border-color);
 
     /* Primary Button */
     --color-btn-primary: var(--highlight-color);

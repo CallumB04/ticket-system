@@ -30,7 +30,7 @@ const Popup = ({
         >
             <div
                 className={twMerge(
-                    "bg-surface border-surface-border flex max-w-full flex-col gap-4 border p-6 shadow-md",
+                    "bg-surface border-popup-border flex max-w-full flex-col gap-4 border-2 p-6 shadow-md",
                     className
                 )}
                 // prevent popup close if mouse is dragged and unclicks outside popup
