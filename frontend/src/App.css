@@ -37,7 +37,7 @@
     --btn-primary-disabled-color: #e5e5e5;
     --btn-primary-disabled-text-color: #a3a3a3;
 
-    --btn-secondary-border-color: #d4d4d4;
+    --btn-secondary-border-color: #d4d4d8;
     --btn-secondary-hover-bg-color: #f5f5f5;
     --btn-secondary-disabled-bg-color: #ffffff;
     --btn-secondary-disabled-border-color: #e5e5e5;
@@ -52,34 +52,35 @@
 .dark {
     /* Accent pops more in dark */
     --highlight-color: #22c55e;
-    --highlight-color-hover: #4ade80;
+    --highlight-color-hover: #86efac;
     --highlight-color-soft: #052e16;
 
     /* Text */
-    --primary-text-color: #fafafa;
-    --secondary-text-color: #a3a3a3;
-    --disabled-text-color: #737373;
+    --primary-text-color: #f5f5f5;
+    --secondary-text-color: #a8a8a8;
+    --disabled-text-color: #6e6e6e;
 
-    /* Backgrounds (slightly warm like Blacksmith, not blue) */
-    --background-color: #0a0a0a;
-    --surface-color: #111111;
-    --surface-muted-color: #171717;
+    /* Backgrounds (warm charcoal — matches landing page #202020 base) */
+    --background-color: #202020;
+    --surface-color: #2a2a2a;
+    --surface-muted-color: #333333;
 
     /* Borders */
-    --layout-border-color: #1f1f1f;
-    --surface-border-color: #333;
-    --surface-border-hover-color: #4a4a4a;
-    --input-border-color: #333;
-    --input-border-hover-color: #4a4a4a;
+    --layout-border-color: #333333;
+    --surface-border-color: #444444;
+    --surface-border-hover-color: #555555;
+    --input-border-color: #444444;
+    --input-border-hover-color: #555555;
+    --popup-border-color: #444444;
 
     /* Buttons */
     --btn-primary-disabled-color: #052e16;
-    --btn-primary-disabled-text-color: #737373;
+    --btn-primary-disabled-text-color: #6e6e6e;
 
-    --btn-secondary-border-color: #262626;
-    --btn-secondary-hover-bg-color: #1f1f1f;
-    --btn-secondary-disabled-bg-color: #0a0a0a;
-    --btn-secondary-disabled-border-color: #1f1f1f;
+    --btn-secondary-border-color: #444444;
+    --btn-secondary-hover-bg-color: #333333;
+    --btn-secondary-disabled-bg-color: #202020;
+    --btn-secondary-disabled-border-color: #333333;
 
     --danger-disabled-color: #7f1d1d;
 }
@@ -89,7 +90,7 @@ body {
 }
 
 .input-default {
-    @apply placeholder:text-text-placeholder text-text-primary border-input-border hover:border-input-border-hover bg-surface focus:outline-highlight disabled:text-text-disabled disabled:hover:border-input-border h-12 border px-3 font-mono text-sm transition-all focus:outline-1 disabled:cursor-not-allowed;
+    @apply placeholder:text-text-placeholder text-text-primary border-input-border hover:border-input-border-hover bg-surface focus:outline-highlight disabled:text-text-disabled disabled:hover:border-input-border h-11 border px-3 font-mono text-[13px] tracking-wide transition-all focus:outline-1 disabled:cursor-not-allowed;
 }
 
 @theme {
@@ -163,8 +164,8 @@ body {
     --color-ticket-priority-high: #ef4444;
 
     /* -- Fonts -- */
-    --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
-    --font-mono: "JetBrains Mono", ui-monospace, monospace;
+    --font-sans: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+    --font-mono: "IBM Plex Mono", Menlo, Consolas, monospace;
 
     /* -- Sizes -- */
 
