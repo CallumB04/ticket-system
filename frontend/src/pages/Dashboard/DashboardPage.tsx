@@ -4,7 +4,7 @@ import usePageTitle from "../../hooks/usePageTitle";
 import Sidebar from "../../layout/Sidebar/Sidebar";
 
 const DashboardPage = () => {
-    usePageTitle("Dashboard / Booth");
+    usePageTitle("dashboard / booth");
 
     return (
         <>

@@ -3,7 +3,7 @@ import usePageTitle from "../../hooks/usePageTitle";
 import Sidebar from "../../layout/Sidebar/Sidebar";
 
 const ActivityPage = () => {
-    usePageTitle("Activity / Booth");
+    usePageTitle("activity / booth");
 
     return (
         <>

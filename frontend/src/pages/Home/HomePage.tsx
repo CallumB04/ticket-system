@@ -24,8 +24,11 @@ import ClickableGroup from "../../components/ClickableGroup/ClickableGroup";
 import Popout from "../../components/Popout/Popout";
 import useWindowBounds from "../../hooks/useWindowBounds";
 import { markNotificationAsRead } from "../../api/notifications";
+import usePageTitle from "../../hooks/usePageTitle";
 
 const HomePage = () => {
+    usePageTitle("booth / AI ticket system");
+
     const [orgs, setOrgs] = useState<Organisation[]>([]);
     const [members, setMembers] = useState<OrganisationMember[]>([]);
 

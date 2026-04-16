@@ -3,7 +3,7 @@ import usePageTitle from "../../hooks/usePageTitle";
 import Sidebar from "../../layout/Sidebar/Sidebar";
 
 const InsightsPage = () => {
-    usePageTitle("Insights / Booth");
+    usePageTitle("insights / booth");
 
     return (
         <>

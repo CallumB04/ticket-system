@@ -8,7 +8,7 @@ import Navigator from "../../components/Navigator/Navigator";
 import { useState } from "react";
 
 const TicketsPage = () => {
-    usePageTitle("Tickets / Booth");
+    usePageTitle("tickets / booth");
 
     const [statusView, setStatusView] = useState<string>("");
     const [priorityView, setPriorityView] = useState<string>("");

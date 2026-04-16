@@ -8,7 +8,7 @@ import Navigator from "../../components/Navigator/Navigator";
 import { useState } from "react";
 
 const InboxPage = () => {
-    usePageTitle("Inbox / Booth");
+    usePageTitle("inbox / booth");
 
     const [statusView, setStatusView] = useState<string>("");
     const [priorityView, setPriorityView] = useState<string>("");

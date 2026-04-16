@@ -3,7 +3,7 @@ import usePageTitle from "../../hooks/usePageTitle";
 import Sidebar from "../../layout/Sidebar/Sidebar";
 
 const NotFoundPage = () => {
-    usePageTitle("Page not found / Booth");
+    usePageTitle("page not found / booth");
 
     return (
         <>
