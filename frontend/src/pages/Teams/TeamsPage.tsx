@@ -10,7 +10,7 @@ const TeamsPage = () => {
             <Sidebar />
             <Page
                 title="Teams"
-                description="View and manage the teams and members within your organisation"
+                description="View and manage the teams in your organisation and the people in them"
                 hasSidebar
             ></Page>
         </>

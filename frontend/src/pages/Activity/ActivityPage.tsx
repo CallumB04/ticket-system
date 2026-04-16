@@ -10,7 +10,7 @@ const ActivityPage = () => {
             <Sidebar />
             <Page
                 title="Activity"
-                description="View activity of members and teams within your organisation"
+                description="An overview of everything happening across your organisation"
                 hasSidebar
             ></Page>
         </>

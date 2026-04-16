@@ -2,19 +2,19 @@ import Page from "../../components/Page/Page";
 import usePageTitle from "../../hooks/usePageTitle";
 import Sidebar from "../../layout/Sidebar/Sidebar";
 
-const InsightsPage = () => {
-    usePageTitle("insights / booth");
+const KnowledgeBasePage = () => {
+    usePageTitle("knowledge base / booth");
 
     return (
         <>
             <Sidebar />
             <Page
-                title="Insights"
-                description="View AI insights of teams and tickets within your organisation"
+                title="Knowledge Base"
+                description="What booth knows about your organisation. Review it, correct it, add to it"
                 hasSidebar
             ></Page>
         </>
     );
 };
 
-export default InsightsPage;
+export default KnowledgeBasePage;

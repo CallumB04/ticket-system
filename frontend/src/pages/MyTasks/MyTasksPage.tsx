@@ -2,19 +2,19 @@ import Page from "../../components/Page/Page";
 import usePageTitle from "../../hooks/usePageTitle";
 import Sidebar from "../../layout/Sidebar/Sidebar";
 
-const InboxPage = () => {
-    usePageTitle("inbox / booth");
+const MyTasksPage = () => {
+    usePageTitle("my tasks / booth");
 
     return (
         <>
             <Sidebar />
             <Page
-                title="Inbox"
-                description="Your mentions, updates, and things that need a response"
+                title="My Tasks"
+                description="Everything assigned to you, across every team"
                 hasSidebar
             ></Page>
         </>
     );
 };
 
-export default InboxPage;
+export default MyTasksPage;

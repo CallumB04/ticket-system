@@ -17,8 +17,8 @@ const TicketsPage = () => {
         <>
             <Sidebar />
             <Page
-                title="My Tickets"
-                description="View all of your active and past tickets"
+                title="Tickets"
+                description="Search, filter, and browse every ticket in your organisation"
                 hasSidebar
             >
                 {/* Search bar and key buttons */}
@@ -45,6 +45,10 @@ const TicketsPage = () => {
                             {
                                 label: "In Progress",
                                 onClick: () => setStatusView("in-progress"),
+                            },
+                            {
+                                label: "Unassigned",
+                                onClick: () => setStatusView("unassigned"),
                             },
                             {
                                 label: "Paused",

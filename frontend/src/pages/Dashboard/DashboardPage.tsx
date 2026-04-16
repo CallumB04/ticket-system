@@ -11,7 +11,7 @@ const DashboardPage = () => {
             <Sidebar />
             <Page
                 title="Dashboard"
-                description="Welcome to the home of booth"
+                description="An overview of your work and your organisation"
                 hasSidebar
             >
                 {/* Hero Analytics */}

@@ -10,7 +10,7 @@ const RequestPage = () => {
             <Sidebar />
             <Page
                 title="New Request"
-                description="Make a request - AI will automatically turn it into structured tickets"
+                description="Make a request and booth will turn it into structured tickets for the right teams"
                 hasSidebar
             ></Page>
         </>

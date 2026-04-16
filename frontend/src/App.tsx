@@ -9,9 +9,10 @@ import PopupRenderer from "./layout/PopupRenderer/PopupRenderer";
 import { RequireUser } from "./contexts/UserContext";
 import TicketsPage from "./pages/Tickets/TicketsPage";
 import InboxPage from "./pages/Inbox/InboxPage";
-import InsightsPage from "./pages/Insights/InsightsPage";
 import ActivityPage from "./pages/Activity/ActivityPage";
 import RequestPage from "./pages/Request/RequestPage";
+import KnowledgeBasePage from "./pages/KnowledgeBase/KnowledgeBasePage";
+import MyTasksPage from "./pages/MyTasks/MyTasksPage";
 
 function App() {
     return (
@@ -24,13 +25,17 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 {/* Application Pages - Protected Routes, must been logged in */}
                 <Route element={<RequireUser />}>
-                    {/* Personal */}
+                    {/* Workspace */}
                     <Route path="/dashboard" element={<DashboardPage />} />
-                    <Route path="/tickets" element={<TicketsPage />} />
                     <Route path="/inbox" element={<InboxPage />} />
-                    {/* AI */}
+                    <Route path="/my-tasks" element={<MyTasksPage />} />
+                    <Route path="/tickets" element={<TicketsPage />} />
+                    {/* Create */}
                     <Route path="/request" element={<RequestPage />} />
-                    <Route path="/insights" element={<InsightsPage />} />
+                    <Route
+                        path="/knowledge-base"
+                        element={<KnowledgeBasePage />}
+                    />
                     {/* Organisation */}
                     <Route path="/teams" element={<TeamsPage />} />
                     <Route path="/activity" element={<ActivityPage />} />

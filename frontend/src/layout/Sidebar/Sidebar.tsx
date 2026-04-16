@@ -3,12 +3,15 @@ import SidebarLink from "./components/SidebarLink";
 import { useLocation } from "react-router-dom";
 import {
     BotIcon,
+    BrainIcon,
     ChartColumnIcon,
     ChartLineIcon,
     GaugeCircleIcon,
     InboxIcon,
+    ListTodoIcon,
     TicketIcon,
     UsersIcon,
+    WorkflowIcon,
 } from "lucide-react";
 import { useSidebar } from "../../contexts/SidebarContext";
 import { useEffect } from "react";
@@ -83,7 +86,7 @@ const Sidebar = ({ className }: SidebarProps) => {
                     />
                 </SidebarGroup>
             )}
-            <SidebarGroup title="Tickets">
+            <SidebarGroup title="Workspace">
                 <SidebarLink
                     text="Dashboard"
                     icon={<GaugeCircleIcon size={18} />}
@@ -97,14 +100,20 @@ const Sidebar = ({ className }: SidebarProps) => {
                     open={location.pathname.includes("inbox")}
                 />
                 <SidebarLink
-                    text="My Tickets"
+                    text="My Tasks"
+                    icon={<ListTodoIcon size={18} />}
+                    to="/my-tasks"
+                    open={location.pathname.includes("my-tasks")}
+                />
+                <SidebarLink
+                    text="All Tickets"
                     icon={<TicketIcon size={18} />}
                     to="/tickets"
                     open={location.pathname.includes("tickets")}
                 />
             </SidebarGroup>
 
-            <SidebarGroup title="AI">
+            <SidebarGroup title="Create">
                 <SidebarLink
                     text="New Request"
                     icon={<BotIcon size={18} />}
@@ -112,14 +121,14 @@ const Sidebar = ({ className }: SidebarProps) => {
                     open={location.pathname.includes("request")}
                 />
                 <SidebarLink
-                    text="Insights"
-                    icon={<ChartColumnIcon size={18} />}
-                    to="/insights"
-                    open={location.pathname.includes("insights")}
+                    text="Knowledge Base"
+                    icon={<BrainIcon size={18} />}
+                    to="/knowledge-base"
+                    open={location.pathname.includes("knowledge-base")}
                 />
             </SidebarGroup>
 
-            <SidebarGroup title="My Organisation">
+            <SidebarGroup title="Organisation">
                 <SidebarLink
                     text="Teams"
                     icon={<UsersIcon size={18} />}
