@@ -10,7 +10,6 @@ import {
     type Notification,
     type NotificationType,
 } from "../../api/notifications";
-import ClickableGroup from "../../components/ClickableGroup/ClickableGroup";
 import { getDaysAgoFromISO } from "../../util/date";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
@@ -25,9 +24,17 @@ interface NotificationsPopoutProps {
 const getIconFromNotificationType = (type: NotificationType) => {
     switch (type) {
         case "welcome":
-            return <SproutIcon size={18} className="text-highlight/50" />;
+            return (
+                <div className="bg-highlight/10 flex size-8 shrink-0 items-center justify-center rounded-full">
+                    <SproutIcon size={15} className="text-highlight" />
+                </div>
+            );
         case "org-invite":
-            return <Building2Icon size={18} className="text-red-300" />;
+            return (
+                <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-red-500/10">
+                    <Building2Icon size={15} className="text-red-400" />
+                </div>
+            );
     }
 };
 
@@ -84,12 +91,13 @@ const NotificationsPopout = ({
         <Popout
             xPos="left"
             yPos="bottom"
-            className={twMerge("flex h-80 w-88 flex-col", className)}
+            className={twMerge("flex h-96 w-92 flex-col", className)}
             contentClassName="p-0"
             ref={popoutRef}
             title="Notifications"
         >
-            <span className="border-b-layout-border flex items-center gap-1.5 border-b p-2">
+            {/* View tabs */}
+            <div className="border-b-layout-border flex items-center gap-1 border-b px-3 py-2">
                 <NotificationViewOption
                     label="New"
                     active={view === "new"}
@@ -104,28 +112,26 @@ const NotificationsPopout = ({
                     label="Archived"
                     active={view === "archived"}
                     onClick={() => setView("archived")}
-                    activeClassName="bg-danger/5 border-danger/20 text-danger/80"
+                    activeClassName="bg-danger/8 text-danger"
                 />
-            </span>
+            </div>
+            {/* Content */}
             {notificationsLoading ? (
-                // Loading Notifications
-                <LoadingSpinner variant="surface" className="mx-auto mt-16" />
+                <div className="flex flex-1 items-center justify-center">
+                    <LoadingSpinner variant="surface" />
+                </div>
             ) : filteredNotifications && filteredNotifications?.length >= 1 ? (
-                // Notifications
-                <div className="flex w-full flex-col">
-                    <div className="flex h-58 w-full flex-col overflow-y-scroll">
-                        {filteredNotifications.map((n) => (
-                            <NotificationPopoutItem
-                                notification={n}
-                                key={n.id}
-                            />
-                        ))}
-                    </div>
+                <div className="flex-1 overflow-y-auto">
+                    {filteredNotifications.map((n) => (
+                        <NotificationPopoutItem
+                            notification={n}
+                            key={n.id}
+                        />
+                    ))}
                 </div>
             ) : (
-                // No notifications
-                <div className="text-text-placeholder mt-16 flex w-full flex-col items-center gap-2.5">
-                    <BellIcon size={32} />
+                <div className="text-text-disabled flex flex-1 flex-col items-center justify-center gap-2 pb-10">
+                    <BellIcon size={28} strokeWidth={1.5} />
                     <p className="text-sm">No {view} notifications</p>
                 </div>
             )}
@@ -153,37 +159,37 @@ const NotificationPopoutItem = ({
     return (
         <div
             className={twMerge(
-                "border-b-layout-border flex w-full items-start gap-3 rounded-none border-b p-2",
-                !notification.read && "border-l-highlight/70 border-l-2"
+                "border-b-layout-border group flex w-full items-start gap-3 border-b px-3.5 py-3 transition-colors hover:bg-surface-muted/50",
+                !notification.read && "bg-highlight/[0.03]"
             )}
         >
             {getIconFromNotificationType(notification.type)}
-            <div className="flex-1 space-y-1">
-                {!notification.read && (
-                    <p className="bg-highlight/15 border-highlight/30 text-highlight w-max rounded border px-2 py-0.5 text-[11px] font-medium">
-                        New
-                    </p>
-                )}
-                {notification.archived && (
-                    <p className="bg-danger/15 border-danger/30 text-danger w-max rounded border px-2 py-0.5 text-[11px] font-medium">
-                        Archived
-                    </p>
-                )}
-                <p className="text-text-primary text-[13px]">
+            <div className="flex min-w-0 flex-1 flex-col gap-1">
+                <div className="flex items-center gap-2">
+                    {!notification.read && (
+                        <span className="bg-highlight size-1.5 shrink-0 rounded-full" />
+                    )}
+                    {notification.archived && (
+                        <span className="text-text-disabled font-mono text-[10px] font-medium uppercase tracking-wider">
+                            Archived
+                        </span>
+                    )}
+                    <span className="text-text-disabled font-mono text-[11px]">
+                        {getDaysAgoFromISO(notification.created_at)}
+                    </span>
+                </div>
+                <p className="text-text-primary text-[13px] leading-snug">
                     {notification.description}
-                </p>
-                <p className="text-text-secondary text-xs">
-                    {getDaysAgoFromISO(notification.created_at)}
                 </p>
             </div>
             {!notification.archived && (
-                <ClickableGroup
-                    className="p-1.5"
+                <button
+                    className="text-text-disabled hover:text-text-primary hover:bg-surface-muted shrink-0 cursor-pointer rounded-md p-1.5 opacity-0 transition-all group-hover:opacity-100"
                     title="Archive"
                     onClick={handleArchiveNotification}
                 >
-                    <ArchiveIcon size={14} className="text-text-secondary" />
-                </ClickableGroup>
+                    <ArchiveIcon size={14} />
+                </button>
             )}
         </div>
     );
@@ -201,20 +207,20 @@ const NotificationViewOption = ({
     onClick: () => void;
 }) => {
     return (
-        <p
+        <button
             className={twMerge(
-                "rounded-sm border px-2 py-1 font-mono text-xs font-medium tracking-wide transition-colors",
+                "rounded-md px-2.5 py-1 font-mono text-[11px] font-medium tracking-wide transition-colors",
                 active
                     ? twMerge(
-                          "bg-highlight/5 border-highlight/20 text-highlight/80 select-none",
+                          "bg-highlight/10 text-highlight select-none",
                           activeClassName
                       )
-                    : "hover:bg-surface-muted/50 border-layout-border text-text-disabled cursor-pointer"
+                    : "text-text-disabled hover:text-text-secondary hover:bg-surface-muted cursor-pointer"
             )}
             onClick={onClick}
         >
             {label}
-        </p>
+        </button>
     );
 };
 

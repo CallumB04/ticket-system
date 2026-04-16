@@ -8,7 +8,12 @@ interface CardTitleProps {
 
 const CardTitle = ({ className, children }: CardTitleProps) => {
     return (
-        <h2 className={twMerge("text-text-primary font-medium", className)}>
+        <h2
+            className={twMerge(
+                "text-text-primary text-[17px] font-medium tracking-[-0.01em]",
+                className
+            )}
+        >
             {children}
         </h2>
     );

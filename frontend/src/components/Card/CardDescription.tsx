@@ -8,7 +8,12 @@ interface CardDescriptionProps {
 
 const CardDescription = ({ className, children }: CardDescriptionProps) => {
     return (
-        <p className={twMerge("text-text-secondary text-sm", className)}>
+        <p
+            className={twMerge(
+                "text-text-secondary text-sm leading-relaxed",
+                className
+            )}
+        >
             {children}
         </p>
     );

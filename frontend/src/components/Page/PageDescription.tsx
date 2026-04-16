@@ -8,7 +8,14 @@ interface PageDescriptionProps {
 
 const PageDescription = ({ className, children }: PageDescriptionProps) => {
     return (
-        <p className={twMerge("text-text-secondary", className)}>{children}</p>
+        <p
+            className={twMerge(
+                "text-text-secondary text-[17px] leading-relaxed",
+                className
+            )}
+        >
+            {children}
+        </p>
     );
 };
 

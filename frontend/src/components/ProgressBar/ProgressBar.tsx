@@ -15,38 +15,29 @@ const ProgressBar = ({
     currentValue,
     currentLabel,
 }: ProgressBarProps) => {
+    const percent = Math.min((currentValue / targetValue) * 100, 100);
+
     return (
-        <div
-            className={twMerge(
-                "border-input-border relative h-11 w-72 rounded-xs border",
-                className
-            )}
-        >
-            <div
-                className={twMerge(
-                    "from-highlight/80 to-highlight/20 absolute top-0 left-0 flex h-10.5 items-center rounded-l-xs bg-linear-90",
-                    currentValue === targetValue && "rounded-r-xs",
-                    currentValue !== targetValue &&
-                        currentValue > 0 &&
-                        "border-r-input-border border-r",
-                    currentValue > 0 ? "justify-end" : "justify-start"
-                )}
-                style={{ width: `${(currentValue / targetValue) * 100}%` }}
-            >
-                {currentValue !== targetValue && (
-                    <p
-                        className={twMerge(
-                            "text-text-primary font-mono text-sm",
-                            currentValue > 0 ? "mr-3" : "ml-3"
-                        )}
-                    >
-                        {currentLabel}
-                    </p>
-                )}
+        <div className={twMerge("flex w-72 flex-col gap-2", className)}>
+            {/* Labels */}
+            <div className="flex items-baseline justify-between">
+                <span className="text-text-primary font-mono text-sm font-medium">
+                    {currentLabel}
+                </span>
+                <span className="text-text-disabled font-mono text-xs">
+                    {targetLabel}
+                </span>
             </div>
-            <p className="text-text-primary absolute top-1/2 right-3 -translate-y-1/2 transform font-mono text-sm">
-                {targetLabel}
-            </p>
+            {/* Bar */}
+            <div className="bg-surface-muted h-2 w-full overflow-hidden rounded-full">
+                <div
+                    className={twMerge(
+                        "h-full rounded-full transition-all duration-300",
+                        percent >= 100 ? "bg-highlight" : "bg-highlight/70"
+                    )}
+                    style={{ width: `${percent}%` }}
+                />
+            </div>
         </div>
     );
 };

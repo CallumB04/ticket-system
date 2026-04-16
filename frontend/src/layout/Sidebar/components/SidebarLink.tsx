@@ -15,20 +15,29 @@ const SidebarLink = ({ className, text, icon, to, open }: SidebarLinkProps) => {
         <Link
             to={to}
             className={twMerge(
-                "group flex h-max w-full items-center gap-3 rounded-md p-2.5 transition-colors",
-                open ? "bg-highlight/10" : "hover:bg-surface-muted/70",
+                "group flex w-full items-center gap-2.5 rounded-md px-2.5 py-[7px] transition-colors",
+                open
+                    ? "bg-highlight/10"
+                    : "hover:bg-surface-muted",
                 className
             )}
         >
-            <span className={open ? "text-highlight/80" : "text-text-primary"}>
+            <span
+                className={twMerge(
+                    "transition-colors",
+                    open
+                        ? "text-highlight"
+                        : "text-text-secondary group-hover:text-text-primary"
+                )}
+            >
                 {icon}
             </span>
             <p
                 className={twMerge(
-                    "text-[13px] font-medium tracking-wide",
+                    "text-[13px] font-medium",
                     open
-                        ? "text-highlight/80"
-                        : "text-text-secondary group-hover:text-text-primary transition-colors"
+                        ? "text-highlight"
+                        : "text-text-primary/80 group-hover:text-text-primary transition-colors"
                 )}
             >
                 {text}

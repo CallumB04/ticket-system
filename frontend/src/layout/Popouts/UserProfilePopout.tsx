@@ -39,16 +39,16 @@ const UserProfilePopout = ({
             title={"Account"}
         >
             {/* Primary Actions */}
-            <div className="flex min-w-52 flex-col gap-1">
+            <div className="flex min-w-48 flex-col gap-0.5">
                 {/* My Profile */}
                 <LinkButton
                     variant="secondary-transparent"
                     to="/profile"
                     onClick={closePopout}
                     linkClassName="w-full"
-                    buttonClassName="h-10 w-full justify-start gap-3"
+                    buttonClassName="h-9 w-full justify-start gap-2.5 px-3 text-sm normal-case"
                 >
-                    <UserIcon size={18} />
+                    <UserIcon size={16} />
                     My Profile
                 </LinkButton>
                 {/* Settings */}
@@ -57,9 +57,9 @@ const UserProfilePopout = ({
                     to="/settings"
                     onClick={closePopout}
                     className="w-full"
-                    buttonClassName="h-10 justify-start gap-3"
+                    buttonClassName="h-9 justify-start gap-2.5 px-3 text-sm normal-case"
                 >
-                    <SettingsIcon size={18} />
+                    <SettingsIcon size={16} />
                     Settings
                 </LinkButton>
             </div>
@@ -67,10 +67,10 @@ const UserProfilePopout = ({
             {/* Sign Out */}
             <Button
                 variant="danger-transparent"
-                className="h-10 w-full justify-start gap-3"
+                className="h-9 w-full justify-start gap-2.5 px-3 text-sm normal-case"
                 onClick={handleSignOut}
             >
-                <LogOutIcon size={18} />
+                <LogOutIcon size={16} />
                 Sign out
             </Button>
         </Popout>

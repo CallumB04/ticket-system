@@ -10,7 +10,7 @@ const PageHeader = ({ className, children }: PageHeaderProps) => {
     return (
         <h1
             className={twMerge(
-                "text-text-primary text-3xl font-semibold",
+                "text-text-primary text-4xl font-medium tracking-[-0.02em] leading-tight",
                 className
             )}
         >

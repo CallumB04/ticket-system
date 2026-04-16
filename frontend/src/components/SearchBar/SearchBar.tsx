@@ -45,8 +45,8 @@ const SearchBar = ({
                     )}
                 />
                 <SearchIcon
-                    size={18}
-                    className="text-text-primary absolute top-1/2 left-3 -translate-y-1/2"
+                    size={16}
+                    className="text-text-secondary absolute top-1/2 left-3 -translate-y-1/2"
                 />
             </div>
         </div>

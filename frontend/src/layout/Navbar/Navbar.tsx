@@ -60,11 +60,12 @@ const Navbar = ({ className }: NavbarProps) => {
     return (
         <nav
             className={twMerge(
-                "bg-surface border-b-layout-border h-navbar-height fixed top-0 left-0 z-99 flex w-screen items-center border-b px-4 sm:px-6",
+                "border-b-layout-border h-navbar-height fixed top-0 left-0 z-99 flex w-screen items-center border-b px-4 backdrop-blur-xl sm:px-8",
+                "bg-surface/80",
                 className
             )}
         >
-            <span className="mx-auto flex w-full max-w-5xl items-center justify-between gap-4">
+            <span className="mx-auto flex w-full max-w-5xl items-center justify-between gap-8">
                 {/* Logo / Brand text - Not visible on mobile unless on landing page */}
                 <Link
                     to="/"
@@ -164,7 +165,7 @@ const Navbar = ({ className }: NavbarProps) => {
                     <span className="flex gap-2">
                         <Button
                             variant="secondary"
-                            className="h-10 w-20 px-3"
+                            className="h-9 px-3 text-xs"
                             onClick={() =>
                                 pushPopup(
                                     <SignupLoginPopup
@@ -178,7 +179,7 @@ const Navbar = ({ className }: NavbarProps) => {
                         </Button>
                         <Button
                             variant="primary"
-                            className="h-10 w-20 px-3"
+                            className="h-9 px-3 text-xs"
                             onClick={() =>
                                 pushPopup(
                                     <SignupLoginPopup

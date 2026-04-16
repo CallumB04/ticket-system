@@ -61,7 +61,7 @@ const Sidebar = ({ className }: SidebarProps) => {
     return (
         <aside
             className={twMerge(
-                "bg-surface border-r-layout-border mt-navbar-height w-sidebar-width fixed top-0 left-0 z-99 h-[calc(100vh-var(--navbar-height))] flex-col gap-8 border-r px-3 py-4 lg:flex",
+                "bg-surface border-r-layout-border mt-navbar-height w-sidebar-width fixed top-0 left-0 z-99 h-[calc(100vh-var(--navbar-height))] flex-col gap-6 border-r px-3 py-4 lg:flex",
                 isMobileSidebarOpen ? "flex" : "hidden",
                 className
             )}
@@ -86,19 +86,19 @@ const Sidebar = ({ className }: SidebarProps) => {
             <SidebarGroup title="Tickets">
                 <SidebarLink
                     text="Dashboard"
-                    icon={<GaugeCircleIcon size={20} />}
+                    icon={<GaugeCircleIcon size={18} />}
                     to="/dashboard"
                     open={location.pathname.includes("dashboard")}
                 />
                 <SidebarLink
                     text="Inbox"
-                    icon={<InboxIcon size={20} />}
+                    icon={<InboxIcon size={18} />}
                     to="/inbox"
                     open={location.pathname.includes("inbox")}
                 />
                 <SidebarLink
                     text="My Tickets"
-                    icon={<TicketIcon size={20} />}
+                    icon={<TicketIcon size={18} />}
                     to="/tickets"
                     open={location.pathname.includes("tickets")}
                 />
@@ -107,13 +107,13 @@ const Sidebar = ({ className }: SidebarProps) => {
             <SidebarGroup title="AI">
                 <SidebarLink
                     text="New Request"
-                    icon={<BotIcon size={20} />}
+                    icon={<BotIcon size={18} />}
                     to="/request"
                     open={location.pathname.includes("request")}
                 />
                 <SidebarLink
                     text="Insights"
-                    icon={<ChartColumnIcon size={20} />}
+                    icon={<ChartColumnIcon size={18} />}
                     to="/insights"
                     open={location.pathname.includes("insights")}
                 />
@@ -122,13 +122,13 @@ const Sidebar = ({ className }: SidebarProps) => {
             <SidebarGroup title="My Organisation">
                 <SidebarLink
                     text="Teams"
-                    icon={<UsersIcon size={20} />}
+                    icon={<UsersIcon size={18} />}
                     to="/teams"
                     open={location.pathname.includes("teams")}
                 />
                 <SidebarLink
                     text="Activity"
-                    icon={<ChartLineIcon size={20} />}
+                    icon={<ChartLineIcon size={18} />}
                     to="/activity"
                     open={location.pathname.includes("activity")}
                 />
