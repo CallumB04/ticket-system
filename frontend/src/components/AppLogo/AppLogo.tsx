@@ -13,8 +13,10 @@ const AppLogo = ({ className }: AppLogoProps) => {
                 className
             )}
         >
-            <TicketIcon size={24} />
-            <p>booth</p>
+            <TicketIcon size={22} className="text-highlight" />
+            <p className="font-[Plus_Jakarta_Sans] text-[15px] font-medium tracking-tight">
+                booth
+            </p>
         </span>
     );
 };
