@@ -4,16 +4,13 @@ import { useLocation } from "react-router-dom";
 import {
     BotIcon,
     BrainIcon,
-    ChartColumnIcon,
     ChartLineIcon,
-    CogIcon,
     GaugeCircleIcon,
     InboxIcon,
     ListTodoIcon,
     SettingsIcon,
     TicketIcon,
     UsersIcon,
-    WorkflowIcon,
 } from "lucide-react";
 import { useSidebar } from "../../contexts/SidebarContext";
 import { useEffect } from "react";

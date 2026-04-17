@@ -10,8 +10,8 @@ import { useState } from "react";
 const TicketsPage = () => {
     usePageTitle("tickets / booth");
 
-    const [statusView, setStatusView] = useState<string>("");
-    const [priorityView, setPriorityView] = useState<string>("");
+    const [_statusView, setStatusView] = useState<string>("");
+    const [_priorityView, setPriorityView] = useState<string>("");
 
     return (
         <>
