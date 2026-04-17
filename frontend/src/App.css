@@ -154,13 +154,13 @@ body {
     --color-danger: var(--danger-color);
 
     /* Ticket Statuses */
-    --color-ticket-resolved: #10b981;
+    --color-ticket-resolved: #06b6d4;
     --color-ticket-inprogress: #3b82f6;
     --color-ticket-unassigned: #f59e0b;
-    --color-ticket-paused: #8b5cf6;
+    --color-ticket-paused: #a855f7;
     --color-ticket-cancelled: #6b7280;
-    --color-ticket-priority-low: #6b7280;
-    --color-ticket-priority-medium: #f59e0b;
+    --color-ticket-priority-low: #94a3b8;
+    --color-ticket-priority-medium: #fb923c;
     --color-ticket-priority-high: #ef4444;
 
     /* -- Fonts -- */
