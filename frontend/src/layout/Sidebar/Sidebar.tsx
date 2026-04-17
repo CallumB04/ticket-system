@@ -6,9 +6,11 @@ import {
     BrainIcon,
     ChartColumnIcon,
     ChartLineIcon,
+    CogIcon,
     GaugeCircleIcon,
     InboxIcon,
     ListTodoIcon,
+    SettingsIcon,
     TicketIcon,
     UsersIcon,
     WorkflowIcon,
@@ -140,6 +142,12 @@ const Sidebar = ({ className }: SidebarProps) => {
                     icon={<ChartLineIcon size={18} />}
                     to="/activity"
                     open={location.pathname.includes("activity")}
+                />
+                <SidebarLink
+                    text="Settings"
+                    icon={<SettingsIcon size={18} />}
+                    to="/settings"
+                    open={location.pathname.includes("settings")}
                 />
             </SidebarGroup>
         </aside>

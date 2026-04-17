@@ -13,6 +13,7 @@ import ActivityPage from "./pages/Activity/ActivityPage";
 import RequestPage from "./pages/Request/RequestPage";
 import KnowledgeBasePage from "./pages/KnowledgeBase/KnowledgeBasePage";
 import MyTasksPage from "./pages/MyTasks/MyTasksPage";
+import SettingsPage from "./pages/Settings/SettingsPage";
 
 function App() {
     return (
@@ -39,6 +40,7 @@ function App() {
                     {/* Organisation */}
                     <Route path="/teams" element={<TeamsPage />} />
                     <Route path="/activity" element={<ActivityPage />} />
+                    <Route path="/settings" element={<SettingsPage />} />
                 </Route>
                 {/* Not found page - all un-routed paths */}
                 <Route path="*" element={<NotFoundPage />} />
