@@ -26,7 +26,7 @@ const Popout = ({
     return (
         <div
             className={twMerge(
-                "bg-surface border-surface-border absolute z-90 w-max rounded-md border p-1.5 shadow-lg",
+                "bg-surface border-surface-border absolute z-90 w-max rounded-lg border p-1.5 shadow-xl",
                 xPos === "left" && "right-0",
                 xPos === "right" && "left-0",
                 yPos === "top" && "bottom-full mb-1.5",
@@ -37,9 +37,9 @@ const Popout = ({
             ref={ref}
         >
             {title && (
-                <h2 className="border-b-layout-border text-text-primary w-full border-b px-4 py-3 text-[15px] font-medium">
+                <p className="border-b-layout-border text-text-disabled w-full border-b px-3.5 py-2.5 font-mono text-[11px] font-medium tracking-[0.08em] uppercase">
                     {title}
-                </h2>
+                </p>
             )}
             {title ? (
                 <div

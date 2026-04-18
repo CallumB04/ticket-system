@@ -23,14 +23,14 @@ const Popup = ({
 }: PopupProps) => {
     return (
         <dialog
-            className="fixed top-0 left-0 z-99 flex h-screen w-screen items-center justify-center bg-[#00000099] p-4 sm:p-8"
+            className="fixed top-0 left-0 z-99 flex h-screen w-screen items-center justify-center bg-black/60 p-4 sm:p-8"
             onMouseDown={() => {
                 if (closePopup && !preventClose) closePopup();
             }}
         >
             <div
                 className={twMerge(
-                    "bg-surface border-popup-border flex max-w-full flex-col gap-5 rounded-md border p-6 shadow-xl",
+                    "bg-surface flex max-w-full flex-col gap-5 rounded-lg p-6 shadow-2xl",
                     className
                 )}
                 // prevent popup close if mouse is dragged and unclicks outside popup
@@ -38,16 +38,17 @@ const Popup = ({
             >
                 {/* Popup Header */}
                 <div className="flex flex-col gap-0.5">
-                    <span className="flex justify-between gap-8 sm:gap-16">
+                    <span className="flex items-start justify-between gap-8 sm:gap-16">
                         {/* Title */}
                         <PopupTitle>{title}</PopupTitle>
                         {/* Close Popup Icon */}
                         {!preventClose && (
-                            <XIcon
-                                size={22}
-                                className="hover:text-text-primary text-text-secondary shrink-0 cursor-pointer transition-colors"
+                            <button
+                                className="text-text-disabled hover:text-text-primary mt-0.5 shrink-0 cursor-pointer transition-colors"
                                 onClick={closePopup}
-                            />
+                            >
+                                <XIcon size={18} />
+                            </button>
                         )}
                     </span>
                     {/* Description (optional) */}

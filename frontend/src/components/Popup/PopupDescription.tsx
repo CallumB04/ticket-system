@@ -10,7 +10,7 @@ const PopupDescription = ({ className, children }: PopupDescriptionProps) => {
     return (
         <p
             className={twMerge(
-                "text-text-secondary text-[15px] leading-relaxed",
+                "text-text-secondary text-sm leading-relaxed",
                 className
             )}
         >

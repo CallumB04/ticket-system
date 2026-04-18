@@ -44,7 +44,7 @@ const Button = ({
                 variant === "secondary-transparent" &&
                     "text-text-secondary hover:text-text-primary hover:bg-btn-secondary-hover-bg",
                 variant === "danger-transparent" &&
-                    "text-danger/70 hover:bg-btn-danger-hover/10",
+                    "text-danger/70 hover:text-danger hover:bg-btn-danger-hover/10",
                 className
             )}
             disabled={disabled}

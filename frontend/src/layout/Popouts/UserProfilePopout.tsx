@@ -34,21 +34,21 @@ const UserProfilePopout = ({
         <Popout
             xPos="left"
             yPos="bottom"
-            contentClassName={twMerge("flex flex-col gap-2", className)}
+            contentClassName={twMerge("flex flex-col gap-1.5", className)}
             ref={popoutRef}
             title={"Account"}
         >
             {/* Primary Actions */}
-            <div className="flex min-w-48 flex-col gap-0.5">
+            <div className="flex min-w-52 flex-col gap-0.5">
                 {/* My Profile */}
                 <LinkButton
                     variant="secondary-transparent"
                     to="/profile"
                     onClick={closePopout}
                     linkClassName="w-full"
-                    buttonClassName="h-9 w-full justify-start gap-2.5 px-3 text-sm normal-case"
+                    buttonClassName="h-8 w-full justify-start gap-2.5 px-3 text-[13px] normal-case tracking-normal font-sans"
                 >
-                    <UserIcon size={16} />
+                    <UserIcon size={15} className="shrink-0" />
                     My Profile
                 </LinkButton>
                 {/* Settings */}
@@ -57,9 +57,9 @@ const UserProfilePopout = ({
                     to="/settings"
                     onClick={closePopout}
                     className="w-full"
-                    buttonClassName="h-9 justify-start gap-2.5 px-3 text-sm normal-case"
+                    buttonClassName="h-8 w-full justify-start gap-2.5 px-3 text-[13px] normal-case tracking-normal font-sans"
                 >
-                    <SettingsIcon size={16} />
+                    <SettingsIcon size={15} className="shrink-0" />
                     Settings
                 </LinkButton>
             </div>
@@ -67,10 +67,10 @@ const UserProfilePopout = ({
             {/* Sign Out */}
             <Button
                 variant="danger-transparent"
-                className="h-9 w-full justify-start gap-2.5 px-3 text-sm normal-case"
+                className="h-8 w-full justify-start gap-2.5 px-3 text-[13px] normal-case tracking-normal font-sans"
                 onClick={handleSignOut}
             >
-                <LogOutIcon size={16} />
+                <LogOutIcon size={15} className="shrink-0" />
                 Sign out
             </Button>
         </Popout>
