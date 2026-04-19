@@ -132,7 +132,7 @@ const NotificationsPopout = ({
             ) : (
                 <div className="text-text-disabled flex flex-1 flex-col items-center justify-center gap-2 pb-10">
                     <BellIcon size={28} strokeWidth={1.5} />
-                    <p className="text-sm">No {view} notifications</p>
+                    <p className="text-sm lowercase">no {view} notifications</p>
                 </div>
             )}
         </Popout>
@@ -170,8 +170,8 @@ const NotificationPopoutItem = ({
                         <span className="bg-highlight size-1.5 shrink-0 rounded-full" />
                     )}
                     {notification.archived && (
-                        <span className="text-text-disabled font-mono text-[10px] font-medium uppercase tracking-wider">
-                            Archived
+                        <span className="text-text-disabled font-mono text-[10px] font-medium lowercase tracking-wider">
+                            archived
                         </span>
                     )}
                     <span className="text-text-disabled font-mono text-[11px]">
@@ -209,7 +209,7 @@ const NotificationViewOption = ({
     return (
         <button
             className={twMerge(
-                "rounded-md px-2.5 py-1 font-mono text-[11px] font-medium tracking-wide transition-colors",
+                "rounded-md px-2.5 py-1 font-mono text-[11px] font-medium tracking-wide transition-colors lowercase",
                 active
                     ? twMerge(
                           "bg-highlight/10 text-highlight select-none",

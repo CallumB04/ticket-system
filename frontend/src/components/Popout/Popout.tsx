@@ -37,7 +37,7 @@ const Popout = ({
             ref={ref}
         >
             {title && (
-                <p className="border-b-layout-border text-text-disabled w-full border-b px-3.5 py-2.5 font-mono text-[11px] font-medium tracking-[0.08em] uppercase">
+                <p className="border-b-layout-border text-text-disabled w-full border-b px-3.5 py-2.5 font-mono text-[11px] font-medium tracking-[0.04em] lowercase">
                     {title}
                 </p>
             )}

@@ -10,7 +10,7 @@ const PageDescription = ({ className, children }: PageDescriptionProps) => {
     return (
         <p
             className={twMerge(
-                "text-text-secondary text-[17px] leading-relaxed",
+                "text-text-secondary text-[17px] leading-relaxed lowercase",
                 className
             )}
         >

@@ -34,7 +34,7 @@ const SidebarLink = ({ className, text, icon, to, open }: SidebarLinkProps) => {
             </span>
             <p
                 className={twMerge(
-                    "text-[13px] font-medium",
+                    "text-[13px] font-medium lowercase",
                     open
                         ? "text-highlight"
                         : "text-text-primary/80 group-hover:text-text-primary transition-colors"

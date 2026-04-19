@@ -46,7 +46,7 @@ const UserProfilePopout = ({
                     to="/profile"
                     onClick={closePopout}
                     linkClassName="w-full"
-                    buttonClassName="h-8 w-full justify-start gap-2.5 px-3 text-[13px] normal-case tracking-normal font-sans"
+                    buttonClassName="h-8 w-full justify-start gap-2.5 px-3 text-[13px] lowercase tracking-normal font-sans"
                 >
                     <UserIcon size={15} className="shrink-0" />
                     My Profile
@@ -57,7 +57,7 @@ const UserProfilePopout = ({
                     to="/settings"
                     onClick={closePopout}
                     className="w-full"
-                    buttonClassName="h-8 w-full justify-start gap-2.5 px-3 text-[13px] normal-case tracking-normal font-sans"
+                    buttonClassName="h-8 w-full justify-start gap-2.5 px-3 text-[13px] lowercase tracking-normal font-sans"
                 >
                     <SettingsIcon size={15} className="shrink-0" />
                     Settings
@@ -67,7 +67,7 @@ const UserProfilePopout = ({
             {/* Sign Out */}
             <Button
                 variant="danger-transparent"
-                className="h-8 w-full justify-start gap-2.5 px-3 text-[13px] normal-case tracking-normal font-sans"
+                className="h-8 w-full justify-start gap-2.5 px-3 text-[13px] lowercase tracking-normal font-sans"
                 onClick={handleSignOut}
             >
                 <LogOutIcon size={15} className="shrink-0" />

@@ -10,7 +10,7 @@ const PopupTitle = ({ className, children }: PopupTitleProps) => {
     return (
         <h2
             className={twMerge(
-                "text-text-primary text-[18px] font-medium tracking-[-0.02em]",
+                "text-text-primary text-[18px] font-medium tracking-[-0.02em] lowercase",
                 className
             )}
         >
