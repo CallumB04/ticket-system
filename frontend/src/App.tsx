@@ -14,6 +14,7 @@ import RequestPage from "./pages/Request/RequestPage";
 import KnowledgeBasePage from "./pages/KnowledgeBase/KnowledgeBasePage";
 import MyTasksPage from "./pages/MyTasks/MyTasksPage";
 import SettingsPage from "./pages/Settings/SettingsPage";
+import TestPage from "./pages/Test/TestPage";
 
 function App() {
     return (
@@ -24,6 +25,8 @@ function App() {
             <Routes>
                 {/* Landing Page */}
                 <Route path="/" element={<HomePage />} />
+                {/* TESTING PAGE - TODO: REMOVE WHEN DONE */}
+                <Route path="/test" element={<TestPage />} />
                 {/* Application Pages - Protected Routes, must been logged in */}
                 <Route element={<RequireUser />}>
                     {/* Workspace */}
