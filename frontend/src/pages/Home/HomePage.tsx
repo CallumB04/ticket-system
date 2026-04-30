@@ -1,7 +1,7 @@
 import Button from "../../components/Button/Button";
 import Page from "../../components/Page/Page";
 import usePageTitle from "../../hooks/usePageTitle";
-import LandingPageDivider from "./components/LandingPageDivider";
+import LandingPageDivider from "./components/HomePageDivider";
 
 const HomePage = () => {
     usePageTitle("booth / AI ticket system");
@@ -9,11 +9,11 @@ const HomePage = () => {
     return (
         <Page className="space-y-0">
             {/* landing page */}
-            <section className="max-w-3xl space-y-5 pt-24 pb-36">
+            <section className="max-w-3xl space-y-6 pt-24 pb-36">
                 <h1 className="text-text-primary text-7xl font-medium">
                     the AI-powered ticket system for cross-functional teams.
                 </h1>
-                <p className="text-text-secondary text-lg">
+                <p className="text-text-secondary max-w-2xl text-lg">
                     helps turn non-technical requests into structured technical
                     solutions. booth uses AI-powered workflows to simplify your
                     organisation wide project management.

@@ -1,20 +1,17 @@
 import { twMerge } from "tailwind-merge";
 import Divider from "../../../components/Divider/Divider";
 
-interface LandingPageDividerProps {
+interface HomePageDividerProps {
     className?: string;
     variant: "primary" | "secondary";
 }
 
-const LandingPageDivider = ({
-    className,
-    variant,
-}: LandingPageDividerProps) => {
+const HomePageDivider = ({ className, variant }: HomePageDividerProps) => {
     if (variant === "primary") {
         return (
             <span
                 className={twMerge(
-                    "landing-page-divider bg-highlight absolute left-0 h-3.5 w-screen",
+                    "home-page-divider bg-highlight absolute left-0 h-3.5 w-screen",
                     className
                 )}
             />
@@ -26,4 +23,4 @@ const LandingPageDivider = ({
     }
 };
 
-export default LandingPageDivider;
+export default HomePageDivider;
