@@ -93,6 +93,16 @@ body {
     @apply placeholder:text-text-placeholder text-text-primary border-input-border hover:border-input-border-hover bg-surface focus:outline-highlight disabled:text-text-disabled disabled:hover:border-input-border h-11 border px-3 font-mono text-[13px] tracking-wide transition-all focus:outline-1 disabled:cursor-not-allowed;
 }
 
+.landing-page-divider {
+    background-image: repeating-linear-gradient(
+        -45deg,
+        var(--highlight-color),
+        var(--highlight-color) 8px,
+        #16a34a 8px,
+        #16a34a 10px
+    );
+}
+
 @theme {
     /* -- Colors -- */
 
