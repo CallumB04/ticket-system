@@ -1,13 +1,15 @@
+import { BrainCogIcon, WaypointsIcon, ZapIcon } from "lucide-react";
 import Button from "../../components/Button/Button";
 import Page from "../../components/Page/Page";
 import usePageTitle from "../../hooks/usePageTitle";
 import LandingPageDivider from "./components/HomePageDivider";
+import HomePageStrip from "./components/HomePageStrip";
 
 const HomePage = () => {
     usePageTitle("booth / AI ticket system");
 
     return (
-        <Page className="space-y-0">
+        <Page className="max-w-7xl space-y-0">
             {/* landing page */}
             <section className="max-w-3xl space-y-6 pt-24 pb-36">
                 <h1 className="text-text-primary text-7xl font-medium">
@@ -28,32 +30,38 @@ const HomePage = () => {
                 </span>
             </section>
             <LandingPageDivider variant="secondary" />
-            <section className="py-12">
-                <p className="text-text-disabled text-center text-sm tracking-wide uppercase">
-                    trusted by 1,234+ teams worldwide
-                </p>
-                <span className="mt-6 flex flex-wrap items-center justify-center gap-12">
-                    <p className="text-text-secondary text-xl font-medium tracking-tight">
-                        test company
-                    </p>
-                    <p className="text-text-secondary text-xl font-medium tracking-tight">
-                        test company
-                    </p>
-                    <p className="text-text-secondary text-xl font-medium tracking-tight">
-                        test company
-                    </p>
-                    <p className="text-text-secondary text-xl font-medium tracking-tight">
-                        test company
-                    </p>
-                    <p className="text-text-secondary text-xl font-medium tracking-tight">
-                        test company
-                    </p>
-                    <p className="text-text-secondary text-xl font-medium tracking-tight">
-                        test company
-                    </p>
-                    <p className="text-text-secondary text-xl font-medium tracking-tight">
-                        test company
-                    </p>
+            <section className="py-16">
+                <span className="flex flex-wrap items-center justify-between gap-8 px-4">
+                    <HomePageStrip
+                        icon={
+                            <ZapIcon
+                                size={24}
+                                className="text-highlight mt-1 shrink-0"
+                            />
+                        }
+                        title="Smart Inbox"
+                        description="Every ticket categorised, prioritised, and assigned the moment it's created"
+                    />
+                    <HomePageStrip
+                        icon={
+                            <WaypointsIcon
+                                size={24}
+                                className="text-highlight mt-1 shrink-0"
+                            />
+                        }
+                        title="Works with your stack"
+                        description="Connects to Github, Notion, Granola, Slack and more. Your tools, all in one place"
+                    />
+                    <HomePageStrip
+                        icon={
+                            <BrainCogIcon
+                                size={24}
+                                className="text-highlight mt-1 shrink-0"
+                            />
+                        }
+                        title="Grows with you"
+                        description="Your AI is always learning when you use booth, becoming more personalised every day"
+                    />
                 </span>
             </section>
             <LandingPageDivider variant="primary" />
