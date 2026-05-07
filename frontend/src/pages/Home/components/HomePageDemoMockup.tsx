@@ -93,14 +93,14 @@ const HomePageDemoMockup = ({ className }: HomePageDemoMockupProps) => {
                         booth/{view}
                     </span>
                 </div>
-                {/* Body: minimal sidebar + main */}
-                <div className="flex min-h-120">
-                    <aside className="border-r-layout-border bg-surface-muted flex w-44 shrink-0 flex-col gap-1 border-r p-3 sm:w-52 sm:p-4">
+                {/* Body: minimal sidebar + main; sidebar collapses to top tabs on mobile */}
+                <div className="flex min-h-120 flex-col sm:flex-row">
+                    <aside className="border-b-layout-border bg-surface-muted sm:border-r-layout-border flex shrink-0 flex-row gap-1 border-b p-2 sm:w-52 sm:flex-col sm:border-r sm:border-b-0 sm:p-4">
                         <button
                             type="button"
                             onClick={() => setView("request")}
                             className={twMerge(
-                                "flex cursor-pointer items-center gap-2 rounded px-2 py-1.5 text-left text-sm transition-colors",
+                                "flex flex-1 cursor-pointer items-center justify-center gap-2 rounded px-2 py-1.5 text-left text-sm transition-colors sm:flex-none sm:justify-start",
                                 view === "request"
                                     ? "bg-highlight/10 text-highlight"
                                     : "text-text-secondary hover:text-text-primary"
@@ -118,7 +118,7 @@ const HomePageDemoMockup = ({ className }: HomePageDemoMockupProps) => {
                             type="button"
                             onClick={() => setView("inbox")}
                             className={twMerge(
-                                "flex cursor-pointer items-center justify-between gap-2 rounded px-2 py-1.5 text-left text-sm transition-colors",
+                                "flex flex-1 cursor-pointer items-center justify-center gap-2 rounded px-2 py-1.5 text-left text-sm transition-colors sm:flex-none sm:justify-between",
                                 view === "inbox"
                                     ? "bg-highlight/10 text-highlight"
                                     : "text-text-secondary hover:text-text-primary"
@@ -139,7 +139,7 @@ const HomePageDemoMockup = ({ className }: HomePageDemoMockupProps) => {
                         </button>
                     </aside>
                     {view === "request" ? (
-                        <div className="flex flex-1 flex-col p-4 sm:p-5">
+                        <div className="flex flex-1 flex-col p-3 sm:p-5">
                             <div className="border-b-layout-border mb-4 flex items-center justify-between border-b pb-3">
                                 <h4 className="text-text-primary text-sm font-medium">
                                     new request
@@ -150,7 +150,7 @@ const HomePageDemoMockup = ({ className }: HomePageDemoMockupProps) => {
                                     <div
                                         key={i}
                                         className={twMerge(
-                                            "flex max-w-[85%] gap-2",
+                                            "flex max-w-[90%] gap-2 sm:max-w-[85%]",
                                             msg.role === "user"
                                                 ? "ml-auto flex-row-reverse"
                                                 : "mr-auto"
@@ -172,23 +172,23 @@ const HomePageDemoMockup = ({ className }: HomePageDemoMockupProps) => {
                                 <button
                                     type="button"
                                     onClick={() => setView("inbox")}
-                                    className="border-highlight bg-highlight/5 hover:bg-highlight/10 mt-2 flex cursor-pointer items-center gap-2 self-start rounded-md border px-3 py-2 transition-colors"
+                                    className="border-highlight bg-highlight/5 hover:bg-highlight/10 mt-2 flex cursor-pointer flex-wrap items-center gap-x-2 gap-y-1 self-start rounded-md border px-3 py-2 transition-colors"
                                 >
                                     <CheckIcon
                                         size={14}
-                                        className="text-highlight"
+                                        className="text-highlight shrink-0"
                                     />
                                     <span className="text-highlight text-sm">
                                         created 3 tickets in the smart inbox
                                     </span>
-                                    <span className="text-text-tertiary ml-2 font-mono text-[11px] tracking-wider uppercase">
+                                    <span className="text-text-tertiary font-mono text-[11px] tracking-wider uppercase sm:ml-2">
                                         view →
                                     </span>
                                 </button>
                             </div>
                         </div>
                     ) : (
-                        <div className="flex-1 p-4 sm:p-5">
+                        <div className="flex-1 p-3 sm:p-5">
                             <div className="border-b-layout-border mb-4 flex items-center justify-between border-b pb-3">
                                 <h4 className="text-text-primary text-sm font-medium">
                                     inbox
@@ -203,11 +203,11 @@ const HomePageDemoMockup = ({ className }: HomePageDemoMockupProps) => {
                                         key={ticket.id}
                                         className="border-layout-border hover:border-surface-border-hover flex flex-col gap-2 rounded border px-3 py-2.5 transition-colors"
                                     >
-                                        <div className="flex flex-wrap items-center gap-2">
-                                            <span className="text-text-tertiary shrink-0 font-mono text-xs">
+                                        <div className="flex items-start gap-2">
+                                            <span className="text-text-tertiary mt-0.5 shrink-0 font-mono text-xs">
                                                 {ticket.id}
                                             </span>
-                                            <span className="text-text-primary flex-1 text-sm">
+                                            <span className="text-text-primary min-w-0 flex-1 text-sm wrap-break-word">
                                                 {ticket.title}
                                             </span>
                                         </div>
