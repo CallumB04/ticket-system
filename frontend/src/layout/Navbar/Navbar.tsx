@@ -69,6 +69,7 @@ const Navbar = ({ className }: NavbarProps) => {
                 {/* Logo / Brand text - Not visible on mobile unless on landing page */}
                 <Link
                     to="/"
+                    onClick={() => window.scrollTo({ top: 0 })}
                     className={twMerge(
                         "text-text-primary font-medium tracking-wide",
                         location.pathname !== "/" && "hidden lg:block"
@@ -88,6 +89,25 @@ const Navbar = ({ className }: NavbarProps) => {
                             <TextAlignJustifyIcon size={20} />
                         )}
                     </ClickableGroup>
+                )}
+                {/* Middle nav links - Only visible on landing page (desktop) */}
+                {location.pathname === "/" && (
+                    <nav className="hidden flex-1 justify-center gap-7 lg:flex">
+                        {[
+                            { label: "product", href: "#product" },
+                            { label: "ai", href: "#ai" },
+                            { label: "integrations", href: "#integrations" },
+                            { label: "pricing", href: "#pricing" },
+                        ].map((item) => (
+                            <a
+                                key={item.href}
+                                href={item.href}
+                                className="text-text-secondary hover:text-highlight font-mono text-xs tracking-wider uppercase transition-colors"
+                            >
+                                {item.label}
+                            </a>
+                        ))}
+                    </nav>
                 )}
                 {/* Navbar options */}
                 {sessionLoading ? (
